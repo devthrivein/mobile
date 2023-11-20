@@ -39,7 +39,7 @@ fun ThriveInInputText(
     value: String,
     placeholder: String = "",
     onChange: (String) -> Unit,
-    isObsecure: Boolean = false,
+    isObsecure: Boolean? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
 ) {
 
@@ -61,19 +61,21 @@ fun ThriveInInputText(
                 )
             },
             trailingIcon = {
-                if (isObsecure) {
+                if (isObsecure != null && isObsecure) {
                     IconButton(onClick = {
                         isShowPassword = !isShowPassword
                     }) {
                         Icon(
-                            painter = painterResource(id = if (isShowPassword) R.drawable.visible else R.drawable.visible_off),
+                            painter = painterResource(id = if (!isShowPassword) R.drawable.visible else R.drawable.visible_off),
                             contentDescription = "Toggle Password Visibility"
                         )
                     }
                 }
 
             },
-            visualTransformation = if (isShowPassword) VisualTransformation.None else PasswordVisualTransformation(),
+            visualTransformation = if (isObsecure != null && isObsecure) {
+                if (isShowPassword) VisualTransformation.None else PasswordVisualTransformation()
+            } else VisualTransformation.None,
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             singleLine = true,
             maxLines = 1,

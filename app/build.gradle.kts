@@ -64,8 +64,8 @@ dependencies {
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
 
 
-//    // Splash screen Api
-//    implementation("androidx.core:core-splashscreen:1.0.1")
+    // Splash screen Api
+    implementation("androidx.core:core-splashscreen:1.0.1")
 
     //    Coil
     implementation("io.coil-kt:coil-compose:2.4.0")

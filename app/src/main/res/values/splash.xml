@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.ThriveIn.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#21242D</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/thrive_in_splash</item>
+        <item name="postSplashScreenTheme">@style/Theme.ThriveIn</item>
+    </style>
+</resources>

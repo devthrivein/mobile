@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -57,7 +58,10 @@ fun LandingScreen(
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text(text = stringResource(R.string.thrivein))
+            Image(
+                painter = painterResource(id = R.drawable.thrive_in_landing),
+                contentDescription = stringResource(id = R.string.thrivein),
+            )
             Image(
                 painter = painterResource(id = R.drawable.landing),
                 contentDescription = stringResource(

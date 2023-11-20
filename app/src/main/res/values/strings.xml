@@ -6,9 +6,23 @@
     <string name="guarding_your_business_with">Guarding Your Business with</string>
     <string name="one_scan">One Scan</string>
     <string name="log_in">Log in</string>
-    <string name="sign_up">Sign up</string>
+    <string name="sign_up">Register</string>
     <string name="enter_your_email_address">Enter your email address</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="enter_your_password">Enter your password</string>
+    <string name="new_to_thrivein">New to ThriveIn?</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="name">Name</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="phone">Phone</string>
+    <string name="enter_you_phone_number">Enter you phone number</string>
+    <string name="register_your_business">Register\nYour Business</string>
+    <string name="enter_your_business_name">Enter your business name</string>
+    <string name="enter_your_business_email">Enter your business email</string>
+    <string name="address">Address</string>
+    <string name="enter_your_business_address">Enter your business address</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="type_of_business">Type of business</string>
 </resources>

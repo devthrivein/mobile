@@ -3,8 +3,6 @@
 build.gradle.kts,d\b\dbcff70658daf80b53ce624f6adcaa529df5ed8d
 D
 app/build.gradle.kts,d\2\d2a4383452aad84a18429a5844d31330a012a9e6
-y
-Iapp/src/main/java/com/example/thrivein/ui/screen/splash/SplashActivity.kt,b\4\b49fb3b1492109201d22783758c74302bc67eba3
 f
 6app/src/main/java/com/example/thrivein/MainActivity.kt,7\6\76d3e4bdc41f672a8bfdb35f35798aa1e7d48a12
 P
@@ -35,3 +33,11 @@ r
 Bapp/src/main/java/com/example/thrivein/ui/component/title/Title.kt,0\e\0ef0c81287c4085f8ca540b288cabc889e17d68d
 ~
 Napp/src/main/java/com/example/thrivein/ui/component/input/ThriveInInputText.kt,5\2\52b02ebd9b6a8966a49bf605132a86176f34895c
+€
+Papp/src/main/java/com/example/thrivein/ui/screen/auth/register/RegisterScreen.kt,d\4\d4350a8b06c67bd3552ef9705273b3fb8fd8e39c
+„
+Tapp/src/main/java/com/example/thrivein/ui/screen/auth/register/RegisterUserScreen.kt,9\4\94594d058f32955f94855bdf5a48df8388e4967f
+…
+Uapp/src/main/java/com/example/thrivein/ui/screen/auth/register/RegisterStoreScreen.kt,b\7\b79dae4b8631d6a33fa43e8a1f21d1e766c4ec99
+}
+Mapp/src/main/java/com/example/thrivein/ui/component/input/ThriveInDropdown.kt,b\6\b6f1fdad643555cd3d7759d317a40d8ef9ddf6ca
