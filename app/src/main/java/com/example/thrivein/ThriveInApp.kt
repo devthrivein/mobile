@@ -10,6 +10,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.thrivein.ui.navigation.Screen
 import com.example.thrivein.ui.screen.auth.landing.LandingScreen
+import com.example.thrivein.ui.screen.auth.login.LoginScreen
 
 @Composable
 fun ThriveInApp(
@@ -23,8 +24,19 @@ fun ThriveInApp(
         navController = navHostController,
         startDestination = Screen.Landing.route
     ) {
+//        AUTH
         composable(route = Screen.Landing.route) {
-            LandingScreen()
+            LandingScreen(
+                navigateToLogin = {
+                    navHostController.navigate(Screen.Login.route)
+                },
+                navigateToSignUp = {
+
+                },
+            )
+        }
+        composable(route = Screen.Login.route) {
+            LoginScreen()
         }
     }
 }

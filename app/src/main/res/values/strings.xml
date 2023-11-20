@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">ThriveIn</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="thrivein">ThriveIn</string>
+    <string name="welcome">Welcome to ThriveIn</string>
+    <string name="guarding_your_business_with">Guarding Your Business with</string>
+    <string name="one_scan">One Scan</string>
+    <string name="log_in">Log in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="enter_your_email_address">Enter your email address</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="enter_your_password">Enter your password</string>
 </resources>
