@@ -13,6 +13,7 @@ import com.example.thrivein.ui.screen.auth.landing.LandingScreen
 import com.example.thrivein.ui.screen.auth.login.LoginScreen
 import com.example.thrivein.ui.screen.auth.register.RegisterStoreScreen
 import com.example.thrivein.ui.screen.auth.register.RegisterUserScreen
+import com.example.thrivein.ui.screen.home.HomeScreen
 
 @Composable
 fun ThriveInApp(
@@ -41,7 +42,10 @@ fun ThriveInApp(
             LoginScreen(
                 navigateToRegisterUser = {
                     navHostController.navigate(Screen.RegisterUser.route)
-                }
+                },
+                navigateToHome = {
+                    navHostController.navigate(Screen.Home.route)
+                },
             )
         }
         composable(route = Screen.RegisterUser.route) {
@@ -62,6 +66,11 @@ fun ThriveInApp(
                     }
                 }
             })
+        }
+
+//        MAIN
+        composable(route = Screen.Home.route) {
+            HomeScreen(navHostController = navHostController)
         }
     }
 }

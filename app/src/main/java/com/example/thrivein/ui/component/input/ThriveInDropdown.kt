@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,7 +24,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,7 +45,10 @@ fun ThriveInDropdown(
     var selectedItem by remember { mutableStateOf("Select") }
 
     Column {
-        Text(text = label, style = TextStyle(fontWeight = FontWeight.Bold))
+        Text(
+            text = label,
+            style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold)
+        )
         Spacer(modifier = Modifier.height(8.dp))
         Box(
             modifier = modifier
@@ -62,7 +65,7 @@ fun ThriveInDropdown(
             ) {
                 Text(
                     text = selectedItem,
-                    style = TextStyle(color = Color.Gray)
+                    style = MaterialTheme.typography.titleSmall.copy(color = Color.Gray)
                 )
 
                 Icon(

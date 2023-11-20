@@ -25,4 +25,11 @@
     <string name="enter_your_business_address">Enter your business address</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="type_of_business">Type of business</string>
+    <string name="home">Home</string>
+    <string name="history">History</string>
+    <string name="consultation">Consultation</string>
+    <string name="setting">Setting</string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="waiting_list">Waiting List</string>
+    <string name="hello">Hello %1$s</string>
 </resources>

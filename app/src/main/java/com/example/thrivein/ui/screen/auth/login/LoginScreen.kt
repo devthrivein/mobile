@@ -24,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Devices
@@ -42,6 +41,7 @@ import com.example.thrivein.ui.theme.Primary
 fun LoginScreen(
     modifier: Modifier = Modifier,
     navigateToRegisterUser: () -> Unit,
+    navigateToHome: () -> Unit,
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -87,20 +87,21 @@ fun LoginScreen(
                     },
                     placeholder = stringResource(R.string.enter_your_password),
                     keyboardType = KeyboardType.Password
-                    )
+                )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = stringResource(R.string.forgot_password),
                     modifier = Modifier.clickable { },
-                    style = TextStyle(
-                        fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                    style = MaterialTheme.typography.bodyLarge.copy(
                         color = Primary,
                         fontWeight = FontWeight.Bold,
                     ),
                 )
                 Spacer(modifier = Modifier.height(50.dp))
                 ThriveInButton(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        navigateToHome()
+                    },
                     label = stringResource(id = R.string.log_in),
                 )
             }
@@ -111,7 +112,10 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = stringResource(R.string.create_an_account),
-                    style = TextStyle(color = Primary, fontWeight = FontWeight.Bold),
+                    style = MaterialTheme.typography.titleSmall.copy(
+                        color = Primary,
+                        fontWeight = FontWeight.Bold
+                    ),
                     modifier = Modifier.clickable { navigateToRegisterUser() }
                 )
             }
@@ -125,5 +129,5 @@ fun LoginScreen(
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(navigateToRegisterUser = {})
+    LoginScreen(navigateToRegisterUser = {}, navigateToHome = {})
 }

@@ -84,19 +84,17 @@ fun LandingScreen(
                 ) {
                     Text(
                         text = stringResource(R.string.guarding_your_business_with),
-                        style = TextStyle(
+                        style = MaterialTheme.typography.headlineMedium.copy(
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center,
-                            fontSize = MaterialTheme.typography.headlineMedium.fontSize
                         ),
                     )
                     Text(
                         text = stringResource(R.string.one_scan),
-                        style = TextStyle(
+                        style = MaterialTheme.typography.headlineMedium.copy(
                             color = Primary,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center,
-                            fontSize = MaterialTheme.typography.headlineMedium.fontSize
                         ),
                     )
                     Spacer(modifier = Modifier.height(21.dp))

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Devices
@@ -141,7 +141,10 @@ fun RegisterStoreScreen(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = stringResource(id = R.string.log_in),
-                    style = TextStyle(color = Primary, fontWeight = FontWeight.Bold),
+                    style = MaterialTheme.typography.titleSmall.copy(
+                        color = Primary,
+                        fontWeight = FontWeight.Bold
+                    ),
                     modifier = Modifier.clickable { navigateToLogin() }
                 )
             }
