@@ -33,4 +33,7 @@
     <string name="waiting_list">Waiting List</string>
     <string name="hello">Hello %1$s</string>
     <string name="services">Services</string>
+    <string name="today_s_news">Today\'s News</string>
+    <string name="dummy_image">https://www.littlethings.info/wp-content/uploads/2014/04/dummy-image-green-e1398449160839.jpg</string>
+    <string name="see_all">See all</string>
 </resources>

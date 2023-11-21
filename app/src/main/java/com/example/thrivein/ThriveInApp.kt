@@ -70,7 +70,18 @@ fun ThriveInApp(
 
 //        MAIN
         composable(route = Screen.Home.route) {
-            HomeScreen(navHostController = navHostController)
+            HomeScreen(
+                navHostController = navHostController,
+                navigateToListService = {
+
+                },
+                navigateToListArticle = {
+
+                },
+                navigateToDetailArticle = {
+
+                },
+            )
         }
     }
 }

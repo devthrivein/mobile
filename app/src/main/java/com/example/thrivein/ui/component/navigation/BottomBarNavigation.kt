@@ -48,12 +48,12 @@ fun BottomBarNavigation(
             ),
             NavigationItem(
                 title = stringResource(R.string.history),
-                icon = painterResource(id = R.drawable.ic_settings),
+                icon = painterResource(id = R.drawable.ic_history),
                 screen = Screen.History
             ),
             NavigationItem(
                 title = stringResource(R.string.consultation),
-                icon = painterResource(id = R.drawable.ic_home),
+                icon = painterResource(id = R.drawable.ic_consultation),
                 screen = Screen.Consultation
             ),
             NavigationItem(
