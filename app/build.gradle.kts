@@ -81,6 +81,11 @@ dependencies {
     implementation("androidx.compose.ui:ui-text-google-fonts:1.5.4")
 
 
+//    Carousel
+    implementation("com.google.accompanist:accompanist-pager:0.28.0")
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.28.0")
+
+
 //    test
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

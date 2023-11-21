@@ -32,4 +32,5 @@
     <string name="welcome_back">Welcome Back!</string>
     <string name="waiting_list">Waiting List</string>
     <string name="hello">Hello %1$s</string>
+    <string name="services">Services</string>
 </resources>

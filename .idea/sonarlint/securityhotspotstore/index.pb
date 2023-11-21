@@ -41,8 +41,6 @@ Uapp/src/main/java/com/example/thrivein/ui/screen/auth/register/RegisterStoreScr
 Mapp/src/main/java/com/example/thrivein/ui/component/input/ThriveInDropdown.kt,b\6\b6f1fdad643555cd3d7759d317a40d8ef9ddf6ca
 s
 Capp/src/main/java/com/example/thrivein/ui/screen/home/HomeScreen.kt,7\b\7b893fa38693ad0b79cc3e15f3b2c0313b9880fd
-s
-Capp/src/main/java/com/example/thrivein/ui/screen/home/MainScreen.kt,2\5\2542722698faf0bd745d028f0fda9afb31b05e25
 …
 Uapp/src/main/java/com/example/thrivein/ui/component/navigation/BottomBarNavigation.kt,e\1\e1eea8ef4ef94f09635085d2e2397a57068eb523
 g
@@ -51,3 +49,5 @@ g
 Lapp/src/main/java/com/example/thrivein/ui/component/button/FavoriteButton.kt,1\b\1bf054a44cc8c5bf60c143c5c31e72b595bd3828
 x
 Happ/src/main/java/com/example/thrivein/ui/component/header/HomeHeader.kt,8\3\83422cf5c9ba90914cc55a4f688add48bd61e276
+z
+Japp/src/main/java/com/example/thrivein/ui/component/slider/BannerSlider.kt,5\6\56caf68851a235d1129cc24a8a205e53c5f2e88f
