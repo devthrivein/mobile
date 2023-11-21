@@ -85,3 +85,13 @@ q
 Aapp/src/main/java/com/example/thrivein/data/dummy/ArticleDummy.kt,e\0\e044e92f386a3d1009747d02a4f4ccbcbc1741b9
 ƒ
 Sapp/src/main/java/com/example/thrivein/data/repository/article/ArticleRepository.kt,9\f\9fc33d40c275917efcd54febe31cf7fbc640d9a8
+‚
+Rapp/src/main/java/com/example/thrivein/ui/screen/service/list/ListServiceScreen.kt,d\7\d74b1429b10f8b00f0d2d168ff9c56592030558b
+z
+Japp/src/main/java/com/example/thrivein/ui/component/header/DetailTopBar.kt,d\8\d8633775136ffe58e14d626e652fb9483b80c203
+{
+Kapp/src/main/java/com/example/thrivein/ui/component/item/ServiceListItem.kt,f\3\f368e80d3ce4fe2bd5a5e022b9a5935a72fc40e2
+†
+Vapp/src/main/java/com/example/thrivein/ui/screen/service/detail/DetailServiceScreen.kt,a\0\a086bb1234693a1487f925ee77f37acc36527382
+z
+Japp/src/main/java/com/example/thrivein/ui/component/button/SeeAllButton.kt,5\f\5f0733a220873f8ecb323db6fa2a1e0645b79e70

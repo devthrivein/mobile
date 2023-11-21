@@ -36,4 +36,8 @@
     <string name="today_s_news">Today\'s News</string>
     <string name="dummy_image">https://www.littlethings.info/wp-content/uploads/2014/04/dummy-image-green-e1398449160839.jpg</string>
     <string name="see_all">See all</string>
+    <string name="back">Back</string>
+    <string name="to_detail">to detail %1$s</string>
+    <string name="portfolio">Portfolio</string>
+    <string name="consult">Consult</string>
 </resources>
