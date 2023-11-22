@@ -13,13 +13,13 @@ import com.example.thrivein.ui.component.card.ListArticleCard
 import com.example.thrivein.ui.theme.Background
 
 @Composable
-fun DetailArticleScreen(
+fun ListArticleScreen(
     modifier: Modifier = Modifier
 ) {
 }
 
 @Composable
-fun DetailArticleContent(
+fun ListArticleContent(
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -39,7 +39,7 @@ fun DetailArticleContent(
 
 @Preview
 @Composable
-fun DetailArticlePreview(
+fun ListArticlePreview(
 ) {
-    DetailArticleContent()
+    ListArticleContent()
 }

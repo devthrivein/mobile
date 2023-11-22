@@ -25,14 +25,9 @@
     <string name="enter_your_business_address">Enter your business address</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="type_of_business">Type of business</string>
-    <string name="home">Home</string>
-    <string name="history">History</string>
-    <string name="consultation">Consultation</string>
-    <string name="setting">Setting</string>
     <string name="welcome_back">Welcome Back!</string>
     <string name="waiting_list">Waiting List</string>
     <string name="hello">Hello %1$s</string>
-    <string name="services">Services</string>
     <string name="today_s_news">Today\'s News</string>
     <string name="dummy_image">https://www.littlethings.info/wp-content/uploads/2014/04/dummy-image-green-e1398449160839.jpg</string>
     <string name="see_all">See all</string>
@@ -40,4 +35,18 @@
     <string name="to_detail">to detail %1$s</string>
     <string name="portfolio">Portfolio</string>
     <string name="consult">Consult</string>
+
+    <!--Button-->
+    <string name="home">Home</string>
+    <string name="history">History</string>
+    <string name="consultation">Consultation</string>
+    <string name="setting">Setting</string>
+    <string name="services">Services</string>
+    <string name="trashbin">Trash-bin</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="camera">Camera</string>
+
+    <string name="your_photo">Your Photo</string>
+    <string name="photo">Photo</string>
+    <string name="thrive_in">Thrive In</string>
 </resources>
