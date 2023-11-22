@@ -1,7 +1,6 @@
-package com.example.thrivein.ui.component.card
+package com.example.thrivein.ui.component.item
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -13,24 +12,26 @@ import androidx.compose.material.Text
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.thrivein.R
+import coil.compose.AsyncImage
 
 @Composable
-fun ListArticleCard(
-    modifier: Modifier = Modifier
+fun ArticleItem(
+    modifier: Modifier = Modifier,
+    id: String,
+    title: String,
+    content: String,
+    bannerUrl: String,
 ) {
     var showFullText by remember {
         mutableStateOf(false)
@@ -38,19 +39,19 @@ fun ListArticleCard(
 
     Card(
         modifier = modifier
-            .padding(bottom = 30.dp)
+//            .padding(bottom = 30.dp)
             .animateContentSize(),
         shape = MaterialTheme.shapes.medium,
     ) {
         Column(
             modifier = Modifier.background(Color.White)
         ) {
-            Image(
+            AsyncImage(
+                model = bannerUrl,
+                contentDescription = title,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp),
-                painter = painterResource(id = R.drawable.ic_result_photo),
-                contentDescription = "",
                 contentScale = ContentScale.Crop
             )
 
@@ -59,17 +60,17 @@ fun ListArticleCard(
                     .padding(vertical = 20.dp, horizontal = 15.dp)
             ) {
                 Text(
-                    text = "Analysts project 32% upside for",
+                    text = title,
                     style = MaterialTheme.typography.bodyLarge.copy(
                         fontWeight = FontWeight.Medium
                     )
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    modifier = Modifier.clickable{
+                    modifier = Modifier.clickable {
                         showFullText = !showFullText
                     },
-                    text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt........Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt........Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt........Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt........",
+                    text = content,
                     style = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal
                     ),
@@ -83,6 +84,12 @@ fun ListArticleCard(
 
 @Preview(showBackground = true)
 @Composable
-fun ListArticleCardPreview() {
-    ListArticleCard()
+fun ArticleItemPreview() {
+    ArticleItem(
+        modifier = Modifier,
+        "1",
+        "Analysts project 32% upside for",
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "https://th.bing.com/th/id/OIP.TZGQs7bZPN6z3EIXrkJovQHaE8?rs=1&pid=ImgDetMain"
+    )
 }
