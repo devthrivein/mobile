@@ -14,5 +14,4 @@ val Black = Color(0xff21242D)
 val Primary = Color(0xffF5C249)
 val Gray = Color(0xff787A8D)
 val Background = Color(0xffF1F2F4)
-
-val White = Color(0xFFFFFFFF)
+val Pink = Color(0xffF46590)

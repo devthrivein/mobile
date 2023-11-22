@@ -4,16 +4,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.thrivein.ui.navigation.Screen
 import com.example.thrivein.ui.screen.auth.landing.LandingScreen
 import com.example.thrivein.ui.screen.auth.login.LoginScreen
 import com.example.thrivein.ui.screen.auth.register.RegisterStoreScreen
 import com.example.thrivein.ui.screen.auth.register.RegisterUserScreen
 import com.example.thrivein.ui.screen.home.HomeScreen
+import com.example.thrivein.ui.screen.service.detail.DetailServiceScreen
+import com.example.thrivein.ui.screen.service.list.ListServiceScreen
 
 @Composable
 fun ThriveInApp(
@@ -70,7 +74,50 @@ fun ThriveInApp(
 
 //        MAIN
         composable(route = Screen.Home.route) {
-            HomeScreen(navHostController = navHostController)
+            HomeScreen(
+                navHostController = navHostController,
+                navigateToListService = { serviceCategoryId ->
+                    navHostController.navigate(Screen.ListService.createRoute(serviceCategoryId))
+                },
+                navigateToListArticle = {
+
+                },
+                navigateToDetailArticle = {
+
+                },
+            )
+        }
+
+        composable(
+            route = Screen.ListService.route,
+            arguments = listOf(navArgument("serviceCategoryId") { type = NavType.StringType })
+        ) {
+            val id = it.arguments?.getString("serviceCategoryId") ?: ""
+
+            ListServiceScreen(
+                id = id,
+                title = id,
+                navigateBack = {
+                    navHostController.navigateUp()
+                },
+                navigateToDetailService = { serviceId ->
+                    navHostController.navigate(Screen.DetailService.createRoute(serviceId))
+                }
+            )
+        }
+
+        composable(
+            route = Screen.DetailService.route,
+            arguments = listOf(navArgument("serviceId") { type = NavType.StringType })
+        ) {
+            val id = it.arguments?.getString("serviceId") ?: ""
+
+            DetailServiceScreen(
+                id = id,
+                navigateBack = {
+                    navHostController.navigateUp()
+                }
+            )
         }
     }
 }

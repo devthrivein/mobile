@@ -12,4 +12,14 @@ sealed class Screen(val route: String) {
     object History : Screen("history")
     object Consultation : Screen("consultation")
     object Setting : Screen("setting")
+
+    //    List
+    object ListService : Screen("home/list-service/{serviceCategoryId}") {
+        fun createRoute(serviceCategoryId: String) = "home/list-service/$serviceCategoryId"
+    }
+
+    //    Detail
+    object DetailService : Screen("home/service/{serviceId}") {
+        fun createRoute(serviceId: String) = "home/service/$serviceId"
+    }
 }
