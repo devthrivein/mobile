@@ -7,6 +7,13 @@ sealed class Screen(val route: String) {
     object RegisterUser : Screen("register-user")
     object RegisterStore : Screen("register-store")
 
+    //    Scan and Score
+    object ScanStore : Screen("scan-store")
+
+    object ScoreStore : Screen("score-store/{storeId}") {
+        fun createRoute(storeId: String) = "home/score-store/$storeId"
+    }
+
     //    Main
     object Home : Screen("home")
     object History : Screen("history")
@@ -14,11 +21,16 @@ sealed class Screen(val route: String) {
     object Setting : Screen("setting")
 
     //    List
+    object ListArticle : Screen("home/article")
     object ListService : Screen("home/list-service/{serviceCategoryId}") {
         fun createRoute(serviceCategoryId: String) = "home/list-service/$serviceCategoryId"
     }
 
     //    Detail
+    object DetailArticle : Screen("home/article/{articleId}") {
+        fun createRoute(articleId: String) = "home/article/$articleId"
+    }
+
     object DetailService : Screen("home/service/{serviceId}") {
         fun createRoute(serviceId: String) = "home/service/$serviceId"
     }

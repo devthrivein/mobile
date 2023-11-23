@@ -118,7 +118,10 @@ fun HomeScreen(
             }
 
             item {
-                SeeAllButton(label = stringResource(R.string.today_s_news), onClickButton = {})
+                SeeAllButton(
+                    label = stringResource(R.string.today_s_news),
+                    onClickButton = navigateToListArticle
+                )
                 Spacer(modifier = Modifier.height(6.dp))
             }
             items(items = articles, key = { it.id }) { article ->

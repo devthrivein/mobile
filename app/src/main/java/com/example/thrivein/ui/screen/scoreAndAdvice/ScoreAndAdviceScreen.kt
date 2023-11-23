@@ -31,6 +31,7 @@ import com.example.thrivein.ui.theme.Primary
 
 @Composable
 fun ScoreAndAdviceScreen(
+    id: String,
 //inject //succes load
 ) {
 
@@ -38,7 +39,7 @@ fun ScoreAndAdviceScreen(
 
 @Composable
 fun ScoreAndAdviceContent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier

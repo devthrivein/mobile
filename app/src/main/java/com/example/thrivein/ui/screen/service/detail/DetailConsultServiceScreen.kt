@@ -12,8 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material.Icon
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -22,7 +22,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -39,7 +38,9 @@ import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.ui.theme.Primary
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+)
 @Composable
 fun DetailConsultServiceScreen(
     modifier: Modifier = Modifier,
@@ -48,7 +49,7 @@ fun DetailConsultServiceScreen(
     navigateToTransaction: (String) -> Unit,
 ) {
 
-    val chatValue by remember { mutableStateOf("") }
+    var chatValue by remember { mutableStateOf("") }
     var openAlertDialog by remember { mutableStateOf(false) }
     var price by remember {
         mutableStateOf("")
@@ -96,14 +97,14 @@ fun DetailConsultServiceScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(18.dp)
+                        .padding(8.dp)
                 ) {
                     LazyRow(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        items(count = 3) {
+                        items(count = 5) {
                             ThriveInPriceButton(
                                 label = "Rp ${it + 1}00K",
                                 onClick = {
@@ -112,8 +113,14 @@ fun DetailConsultServiceScreen(
                                 })
                         }
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
-                    ThriveInChatInput(value = chatValue, onSend = {})
+                    Spacer(modifier = Modifier.height(8.dp))
+                    ThriveInChatInput(
+                        value = chatValue, onSend = {},
+                        onChange = {
+                            chatValue = it
+                        },
+                        onOpenFileExplorer = {},
+                    )
                 }
             }
         },
@@ -122,7 +129,7 @@ fun DetailConsultServiceScreen(
         LazyColumn(
             modifier = modifier
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(innerPadding),
         ) {
             items(count = 10) {
                 ChatConsultItem(

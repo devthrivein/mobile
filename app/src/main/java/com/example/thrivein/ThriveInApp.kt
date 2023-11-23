@@ -11,14 +11,22 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.thrivein.ui.navigation.Screen
+import com.example.thrivein.ui.screen.article.DetailArticleScreen
+import com.example.thrivein.ui.screen.article.ListArticleScreen
 import com.example.thrivein.ui.screen.auth.landing.LandingScreen
 import com.example.thrivein.ui.screen.auth.login.LoginScreen
 import com.example.thrivein.ui.screen.auth.register.RegisterStoreScreen
 import com.example.thrivein.ui.screen.auth.register.RegisterUserScreen
+import com.example.thrivein.ui.screen.consultation.ConsultationScreen
+import com.example.thrivein.ui.screen.history_service.HistoryServiceScreen
 import com.example.thrivein.ui.screen.home.HomeScreen
+import com.example.thrivein.ui.screen.scoreAndAdvice.ScoreAndAdviceScreen
 import com.example.thrivein.ui.screen.service.detail.DetailConsultServiceScreen
 import com.example.thrivein.ui.screen.service.detail.DetailServiceScreen
+import com.example.thrivein.ui.screen.service.detail.DetailTransactionServiceScreen
 import com.example.thrivein.ui.screen.service.list.ListServiceScreen
+import com.example.thrivein.ui.screen.setting.SettingScreen
+import com.example.thrivein.ui.screen.storeScanner.StoreScannerScreen
 
 @Composable
 fun ThriveInApp(
@@ -48,8 +56,8 @@ fun ThriveInApp(
                 navigateToRegisterUser = {
                     navHostController.navigate(Screen.RegisterUser.route)
                 },
-                navigateToHome = {
-                    navHostController.navigate(Screen.Home.route)
+                navigateToScan = {
+                    navHostController.navigate(Screen.ScanStore.route)
                 },
             )
         }
@@ -73,6 +81,31 @@ fun ThriveInApp(
             })
         }
 
+//        Scan and Score
+        composable(route = Screen.ScanStore.route) {
+            StoreScannerScreen(
+                navigateToHome = {
+                    navHostController.navigate(Screen.Home.route)
+                },
+                navigateToScoreAndAdvice = { storeId ->
+                    navHostController.navigate(Screen.ScoreStore.createRoute(storeId))
+                }
+            )
+
+        }
+
+        composable(
+            route = Screen.ScoreStore.route,
+            arguments = listOf(navArgument("storeId") { type = NavType.StringType })
+        ) {
+            val id = it.arguments?.getString("articleId") ?: "1"
+
+            ScoreAndAdviceScreen(
+                id = id,
+            )
+
+        }
+
 //        MAIN
         composable(route = Screen.Home.route) {
             HomeScreen(
@@ -87,6 +120,33 @@ fun ThriveInApp(
 
                 },
             )
+        }
+
+        composable(route = Screen.History.route) {
+            HistoryServiceScreen(
+                navHostController = navHostController
+            )
+        }
+
+        composable(route = Screen.Consultation.route) {
+            ConsultationScreen(
+                navHostController = navHostController
+            )
+        }
+
+        composable(route = Screen.Setting.route) {
+            SettingScreen(
+                navHostController = navHostController
+            )
+        }
+
+//        List
+        composable(route = Screen.ListArticle.route) {
+            ListArticleScreen(navigateBack = {
+                navHostController.navigateUp()
+            }, navigateToDetailArticle = {
+
+            })
         }
 
         composable(
@@ -107,6 +167,17 @@ fun ThriveInApp(
             )
         }
 
+//        Detail
+        composable(
+            route = Screen.DetailArticle.route,
+            arguments = listOf(navArgument("articleId") { type = NavType.StringType })
+        ) {
+            val id = it.arguments?.getString("articleId") ?: ""
+
+            DetailArticleScreen(id = id, navigateBack = {
+                navHostController.navigateUp()
+            })
+        }
         composable(
             route = Screen.DetailService.route,
             arguments = listOf(navArgument("serviceId") { type = NavType.StringType })
@@ -135,9 +206,27 @@ fun ThriveInApp(
                 navigateBack = {
                     navHostController.navigateUp()
                 },
-                navigateToTransaction = {
-
+                navigateToTransaction = { transactionId ->
+                    navHostController.navigate(
+                        Screen.DetailTransactionService.createRoute(
+                            transactionId
+                        )
+                    )
                 }
+            )
+        }
+
+        composable(
+            route = Screen.DetailTransactionService.route,
+            arguments = listOf(navArgument("transactionId") { type = NavType.StringType })
+        ) {
+            val id = it.arguments?.getString("transactionId") ?: ""
+
+            DetailTransactionServiceScreen(
+                id = id,
+                navigateBack = {
+                    navHostController.navigateUp()
+                },
             )
         }
 

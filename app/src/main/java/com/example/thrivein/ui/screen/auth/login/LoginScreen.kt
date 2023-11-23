@@ -41,7 +41,7 @@ import com.example.thrivein.ui.theme.Primary
 fun LoginScreen(
     modifier: Modifier = Modifier,
     navigateToRegisterUser: () -> Unit,
-    navigateToHome: () -> Unit,
+    navigateToScan: () -> Unit,
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -100,7 +100,7 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(50.dp))
                 ThriveInButton(
                     onClick = {
-                        navigateToHome()
+                        navigateToScan()
                     },
                     label = stringResource(id = R.string.log_in),
                 )
@@ -129,5 +129,5 @@ fun LoginScreen(
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(navigateToRegisterUser = {}, navigateToHome = {})
+    LoginScreen(navigateToRegisterUser = {}, navigateToScan = {})
 }

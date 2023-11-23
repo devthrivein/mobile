@@ -55,4 +55,8 @@
     <string name="send_message">Send message</string>
     <string name="select">Select</string>
     <string name="cancel">Cancel</string>
+    <string name="consult_date">Consult date</string>
+    <string name="detail_package">Detail Package</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="payment_method">Payment Method</string>
 </resources>

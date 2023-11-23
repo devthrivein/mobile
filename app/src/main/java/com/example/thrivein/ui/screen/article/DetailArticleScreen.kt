@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -37,10 +36,6 @@ import java.util.Date
 fun DetailArticleScreen(
     modifier: Modifier = Modifier,
     id: String,
-    title: String,
-    content: String,
-    bannerUrl: String,
-    uploadedDate: Date,
     navigateBack: () -> Unit,
 ) {
 //    Scaffold(
@@ -150,8 +145,7 @@ fun Parallax(
                     .fillMaxHeight()
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp))
-                    .padding(horizontal = 12.dp)
-                ,
+                    .padding(horizontal = 12.dp),
             ) {
                 Column(
                     modifier = Modifier
@@ -169,7 +163,8 @@ fun Parallax(
                         modifier = Modifier.padding(top = 10.dp, bottom = 40.dp),
                         text = content,
                         style = MaterialTheme.typography.bodySmall.copy(
-                            fontWeight = FontWeight.Normal),
+                            fontWeight = FontWeight.Normal
+                        ),
                         textAlign = TextAlign.Justify,
                         overflow = TextOverflow.Visible,
                     )
@@ -201,10 +196,6 @@ fun DetailArticleScreenPreview() {
     DetailArticleScreen(
         modifier = Modifier,
         id = "1",
-        title = "Detail",
-        content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        bannerUrl = "https://th.bing.com/th/id/OIP.TZGQs7bZPN6z3EIXrkJovQHaE8?rs=1&pid=ImgDetMain",
-        uploadedDate = Date(2023, 1, 7, 10, 0),
         navigateBack = {}
     )
 }
