@@ -130,6 +130,7 @@ fun DetailConsultServiceScreen(
             modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding),
+            reverseLayout = true,
         ) {
             items(count = 10) {
                 ChatConsultItem(

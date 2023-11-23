@@ -113,3 +113,5 @@ y
 Iapp/src/main/java/com/example/thrivein/ui/screen/setting/SettingScreen.kt,0\7\0780860dfbdcbc9f59fffdfd57cee9feee3fc035
 
 Oapp/src/main/java/com/example/thrivein/ui/screen/article/DetailArticleScreen.kt,6\2\62afdbf97e0e4ec46a34f9e2ab89ec24abdc1655
+}
+Mapp/src/main/java/com/example/thrivein/ui/screen/article/ListArticleScreen.kt,1\5\15969725484842ff82f51fb39eccb878049eb6fc

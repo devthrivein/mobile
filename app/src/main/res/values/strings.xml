@@ -59,4 +59,9 @@
     <string name="detail_package">Detail Package</string>
     <string name="payment_details">Payment Details</string>
     <string name="payment_method">Payment Method</string>
+    <string name="news">News</string>
+    <string name="total_order">Total Order</string>
+    <string name="total">Total</string>
+    <string name="order_later">Order Later</string>
+    <string name="order_now">Order Now</string>
 </resources>

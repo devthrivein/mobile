@@ -36,6 +36,7 @@ fun HomeGridServiceCategoryView(
     modifier: Modifier = Modifier,
     listCategory: List<ThriveInServiceCategory>,
     navigateToListService: (String) -> Unit,
+    navigateToScanStore: () -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -61,6 +62,7 @@ fun HomeGridServiceCategoryView(
                     title = it.title,
                     iconUrl = it.iconUrl,
                     color = it.color,
+                    navigateToScanStore = navigateToScanStore
                 )
             }
         }
@@ -71,6 +73,7 @@ fun HomeGridServiceCategoryView(
 fun GridItem(
     modifier: Modifier = Modifier,
     navigateToListService: (String) -> Unit,
+    navigateToScanStore: () -> Unit,
     id: String,
     title: String,
     iconUrl: String,
@@ -84,7 +87,12 @@ fun GridItem(
                 shape = RoundedCornerShape(size = 16.dp)
             )
             .clickable {
-                navigateToListService(id)
+                if (title.contains("Detect")) {
+                    navigateToScanStore()
+                } else {
+                    navigateToListService(id)
+
+                }
             },
         contentAlignment = Alignment.BottomEnd
     ) {
@@ -121,7 +129,8 @@ fun GridItemPreview() {
         id = "1",
         title = "Online Solutions",
         iconUrl = "",
-        color = "A69BFB"
+        color = "A69BFB",
+        navigateToScanStore = {},
     )
 }
 

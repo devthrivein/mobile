@@ -41,6 +41,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     navHostController: NavHostController,
     navigateToListService: (String) -> Unit,
+    navigateToScanStore: () -> Unit,
     navigateToListArticle: () -> Unit,
     navigateToDetailArticle: (String) -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
@@ -64,6 +65,8 @@ fun HomeScreen(
             is UiState.Error -> {
                 Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
             }
+
+            else -> {}
         }
     }
 
@@ -81,6 +84,8 @@ fun HomeScreen(
             is UiState.Error -> {
                 Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
             }
+
+            else -> {}
         }
     }
 
@@ -111,6 +116,7 @@ fun HomeScreen(
                 HomeGridServiceCategoryView(
                     listCategory = serviceCategories,
                     navigateToListService = navigateToListService,
+                    navigateToScanStore = navigateToScanStore,
                     modifier = Modifier.padding(horizontal = 24.dp)
                 )
                 Spacer(modifier = Modifier.height(24.dp))
@@ -149,5 +155,6 @@ fun HomeScreenPreview() {
         navigateToListService = {},
         navigateToDetailArticle = {},
         navigateToListArticle = {},
+        navigateToScanStore = {},
     )
 }

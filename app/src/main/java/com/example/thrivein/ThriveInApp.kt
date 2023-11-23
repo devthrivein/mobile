@@ -119,6 +119,9 @@ fun ThriveInApp(
                 navigateToDetailArticle = { articleId ->
                     navHostController.navigate(Screen.DetailArticle.createRoute(articleId))
                 },
+                navigateToScanStore = {
+                    navHostController.navigate(Screen.ScanStore.route)
+                }
             )
         }
 
@@ -144,8 +147,8 @@ fun ThriveInApp(
         composable(route = Screen.ListArticle.route) {
             ListArticleScreen(navigateBack = {
                 navHostController.navigateUp()
-            }, navigateToDetailArticle = {
-
+            }, navigateToDetailArticle = { articleId ->
+                navHostController.navigate(Screen.DetailArticle.createRoute(articleId))
             })
         }
 

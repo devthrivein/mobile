@@ -10,8 +10,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.thrivein.R
 import com.example.thrivein.ui.component.header.DetailTopBar
 import com.example.thrivein.ui.component.item.ArticleItem
 import com.example.thrivein.ui.theme.Background
@@ -21,13 +23,12 @@ import com.example.thrivein.ui.theme.Background
 @Composable
 fun ListArticleScreen(
     modifier: Modifier = Modifier,
-    title: String = "",
     navigateBack: () -> Unit,
     navigateToDetailArticle: (String) -> Unit,
 ) {
     Scaffold(
         topBar = {
-            DetailTopBar(title = title, navigateBack = navigateBack)
+            DetailTopBar(title = stringResource(R.string.news), navigateBack = navigateBack)
         },
         containerColor = Background,
     ) { innerPadding ->
@@ -58,7 +59,6 @@ fun ListArticleScreenPreview(
 ) {
     ListArticleScreen(
         modifier = Modifier,
-        title = "Article",
         navigateBack = {},
         navigateToDetailArticle = {},
     )
