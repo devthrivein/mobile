@@ -43,7 +43,9 @@ fun StoreScannerScreen(
             CameraButton() {
                 navigateToHome()
             }
-            AddPhotoButton() {}
+            AddPhotoButton() {
+                navigateToScoreAndAdvice("1")
+            }
         }
     }
 }
