@@ -49,4 +49,10 @@
     <string name="your_photo">Your Photo</string>
     <string name="photo">Photo</string>
     <string name="thrive_in">Thrive In</string>
+    <string name="go_to_transaction">Go to Transaction</string>
+    <string name="dummy_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry</string>
+    <string name="type_here">Type here...</string>
+    <string name="send_message">Send message</string>
+    <string name="select">Select</string>
+    <string name="cancel">Cancel</string>
 </resources>

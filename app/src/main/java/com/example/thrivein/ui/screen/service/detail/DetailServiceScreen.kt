@@ -40,6 +40,7 @@ fun DetailServiceScreen(
     id: String,
     title: String = "",
     navigateBack: () -> Unit,
+    navigateToConsultService: (String) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -47,7 +48,7 @@ fun DetailServiceScreen(
         },
         floatingActionButton = {
             ThriveInButton(
-                onClick = { /*TODO*/ },
+                onClick = { navigateToConsultService(id) },
                 label = stringResource(R.string.consult),
                 modifier = Modifier.padding(horizontal = 48.dp, vertical = 24.dp),
             )
@@ -116,5 +117,10 @@ fun DetailServiceScreen(
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
 fun DetailServiceScreenPreview() {
-    DetailServiceScreen(id = "1", title = "Social Media Management", navigateBack = {})
+    DetailServiceScreen(
+        id = "1",
+        title = "Social Media Management",
+        navigateBack = {},
+        navigateToConsultService = {},
+    )
 }

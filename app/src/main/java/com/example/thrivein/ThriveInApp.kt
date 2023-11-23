@@ -16,6 +16,7 @@ import com.example.thrivein.ui.screen.auth.login.LoginScreen
 import com.example.thrivein.ui.screen.auth.register.RegisterStoreScreen
 import com.example.thrivein.ui.screen.auth.register.RegisterUserScreen
 import com.example.thrivein.ui.screen.home.HomeScreen
+import com.example.thrivein.ui.screen.service.detail.DetailConsultServiceScreen
 import com.example.thrivein.ui.screen.service.detail.DetailServiceScreen
 import com.example.thrivein.ui.screen.service.list.ListServiceScreen
 
@@ -116,8 +117,29 @@ fun ThriveInApp(
                 id = id,
                 navigateBack = {
                     navHostController.navigateUp()
+                },
+                navigateToConsultService = { serviceId ->
+                    navHostController.navigate(Screen.DetailConsultService.createRoute(serviceId))
                 }
             )
         }
+
+        composable(
+            route = Screen.DetailConsultService.route,
+            arguments = listOf(navArgument("serviceId") { type = NavType.StringType })
+        ) {
+            val id = it.arguments?.getString("serviceId") ?: ""
+
+            DetailConsultServiceScreen(
+                id = id,
+                navigateBack = {
+                    navHostController.navigateUp()
+                },
+                navigateToTransaction = {
+
+                }
+            )
+        }
+
     }
 }

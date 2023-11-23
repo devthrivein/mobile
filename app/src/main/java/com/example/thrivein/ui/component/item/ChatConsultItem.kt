@@ -1,0 +1,64 @@
+package com.example.thrivein.ui.component.item
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.example.thrivein.R
+import com.example.thrivein.ui.theme.Primary
+
+@Composable
+fun ChatConsultItem(
+    modifier: Modifier = Modifier,
+    isAdmin: Boolean,
+    content: String,
+) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(
+                horizontal = 24.dp
+            ),
+        horizontalAlignment = if (isAdmin) Alignment.Start else Alignment.End,
+    ) {
+        Spacer(modifier = Modifier.height(12.dp))
+        Box(
+            modifier = Modifier
+                .width((screenWidth.value * 0.6).dp)
+                .clip(RoundedCornerShape(18.dp))
+                .background(if (isAdmin) Color.White else Primary)
+                .padding(16.dp)
+        ) {
+            Text(text = content)
+        }
+        Spacer(modifier = Modifier.height(12.dp))
+    }
+}
+
+@Preview(showBackground = true, device = Devices.PIXEL_4)
+@Composable
+fun ChatConsultItemPreview() {
+    ChatConsultItem(
+        isAdmin = true,
+        content = stringResource(R.string.dummy_text)
+    )
+}

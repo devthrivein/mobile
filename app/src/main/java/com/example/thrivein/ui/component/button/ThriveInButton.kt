@@ -25,10 +25,19 @@ fun ThriveInButton(
     onClick: () -> Unit,
     label: String,
     isOutline: Boolean = false,
+    isNotWide: Boolean = false,
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier
+        modifier = if (isNotWide)
+            modifier
+                .clip(RoundedCornerShape(30.dp))
+                .border(
+                    width = 2.dp,
+                    color = if (!isOutline) Color.Transparent else Primary,
+                    shape = RoundedCornerShape(30.dp)
+                )
+                .background(color = if (!isOutline) Primary else Color.Transparent) else modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(30.dp))
             .border(

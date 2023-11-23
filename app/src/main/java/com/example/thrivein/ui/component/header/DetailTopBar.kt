@@ -1,5 +1,6 @@
 package com.example.thrivein.ui.component.header
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -21,6 +22,7 @@ fun DetailTopBar(
     modifier: Modifier = Modifier,
     title: String,
     navigateBack: () -> Unit,
+    actions: @Composable RowScope.() -> Unit = {},
 ) {
     TopAppBar(
         modifier = modifier,
@@ -45,6 +47,7 @@ fun DetailTopBar(
                     contentDescription = stringResource(R.string.back),
                 )
             }
-        }
+        },
+        actions = actions
     )
 }

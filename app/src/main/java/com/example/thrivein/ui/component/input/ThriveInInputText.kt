@@ -1,5 +1,6 @@
 package com.example.thrivein.ui.component.input
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,7 +20,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -35,27 +38,36 @@ import com.example.thrivein.ui.theme.Primary
 @Composable
 fun ThriveInInputText(
     modifier: Modifier = Modifier,
-    label: String,
+    label: String = "",
     value: String,
     placeholder: String = "",
-    onChange: (String) -> Unit,
+    onChange: (String) -> Unit = {},
     isObsecure: Boolean? = null,
+    isNotWide: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text,
 ) {
 
     var isShowPassword by remember { mutableStateOf(false) }
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
 
     Column {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold)
-        )
-        Spacer(modifier = Modifier.height(8.dp))
+        if (label != "") {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+        }
         OutlinedTextField(
             value = value,
             onValueChange = onChange,
-            modifier = modifier
-                .fillMaxWidth(),
+            modifier = if (isNotWide) modifier
+                .clip(RoundedCornerShape(15.dp))
+                .background(Color.White) else modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(15.dp))
+                .background(Color.White),
             shape = RoundedCornerShape(15.dp),
             placeholder = {
                 Text(
