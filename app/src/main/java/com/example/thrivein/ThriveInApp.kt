@@ -114,10 +114,10 @@ fun ThriveInApp(
                     navHostController.navigate(Screen.ListService.createRoute(serviceCategoryId))
                 },
                 navigateToListArticle = {
-
+                    navHostController.navigate(Screen.ListArticle.route)
                 },
-                navigateToDetailArticle = {
-
+                navigateToDetailArticle = { articleId ->
+                    navHostController.navigate(Screen.DetailArticle.createRoute(articleId))
                 },
             )
         }
