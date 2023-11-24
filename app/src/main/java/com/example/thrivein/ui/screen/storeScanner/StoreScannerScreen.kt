@@ -132,9 +132,7 @@ fun CameraView(
             }
 
             is CameraUIAction.OnGalleryViewClick -> {
-//                uncomment this code to use the gallery
-//                galleryLauncher.launch("image/*")
-                navigateToScoreAndAdvice("1")
+                galleryLauncher.launch("image/*")
             }
         }
     }
