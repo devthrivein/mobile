@@ -11,7 +11,7 @@ sealed class Screen(val route: String) {
     object ScanStore : Screen("scan-store")
 
     object ScoreStore : Screen("score-store/{storeId}") {
-        fun createRoute(storeId: String) = "home/score-store/$storeId"
+        fun createRoute(storeId: String) = "score-store/$storeId"
     }
 
     //    Main

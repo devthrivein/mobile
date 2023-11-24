@@ -29,16 +29,10 @@ import com.example.thrivein.R
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.ui.theme.Primary
 
+
 @Composable
 fun ScoreAndAdviceScreen(
     id: String,
-//inject //succes load
-) {
-
-}
-
-@Composable
-fun ScoreAndAdviceContent(
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -113,7 +107,7 @@ fun ScoreAndAdviceContent(
 
 @Preview
 @Composable
-fun ScoreAndAdviceContentPreview() {
-    ScoreAndAdviceContent()
+fun ScoreAndAdviceScreenPreview() {
+    ScoreAndAdviceScreen("1")
 }
 

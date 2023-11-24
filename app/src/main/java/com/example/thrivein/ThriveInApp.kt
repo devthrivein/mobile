@@ -98,7 +98,7 @@ fun ThriveInApp(
             route = Screen.ScoreStore.route,
             arguments = listOf(navArgument("storeId") { type = NavType.StringType })
         ) {
-            val id = it.arguments?.getString("articleId") ?: "1"
+            val id = it.arguments?.getString("storeId") ?: "1"
 
             ScoreAndAdviceScreen(
                 id = id,

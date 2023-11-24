@@ -85,6 +85,13 @@ dependencies {
     implementation("com.google.accompanist:accompanist-pager:0.28.0")
     implementation("com.google.accompanist:accompanist-pager-indicators:0.28.0")
 
+//Camera
+    implementation("androidx.camera:camera-camera2:1.4.0-alpha02")
+    implementation("androidx.camera:camera-view:1.4.0-alpha02")
+    implementation("androidx.camera:camera-lifecycle:1.3.0")
+
+    //Permissions
+    implementation("com.google.accompanist:accompanist-permissions:0.18.0")
 
 //    test
     testImplementation("junit:junit:4.13.2")

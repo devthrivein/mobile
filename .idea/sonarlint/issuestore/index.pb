@@ -115,3 +115,11 @@ Iapp/src/main/java/com/example/thrivein/ui/screen/setting/SettingScreen.kt,0\7\
 Oapp/src/main/java/com/example/thrivein/ui/screen/article/DetailArticleScreen.kt,6\2\62afdbf97e0e4ec46a34f9e2ab89ec24abdc1655
 }
 Mapp/src/main/java/com/example/thrivein/ui/screen/article/ListArticleScreen.kt,1\5\15969725484842ff82f51fb39eccb878049eb6fc
+{
+Kapp/src/main/java/com/example/thrivein/ui/screen/storeScanner/CameraView.kt,7\d\7d352ef97838ab00e51877c24793547015c3ece3
+l
+<app/src/main/java/com/example/thrivein/utils/CameraAction.kt,4\f\4f0150ad3bd17803044b7e129244314772598b91
+p
+@app/src/main/java/com/example/thrivein/utils/PermissionAction.kt,b\c\bca82ffe8daff0f740ff8e9728ed0ec8418acd31
+|
+Lapp/src/main/java/com/example/thrivein/ui/component/button/TrashbinButton.kt,9\7\97f915a472c97dbb47b904443e786cbd48fa5b68
