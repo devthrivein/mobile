@@ -7,12 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,7 +20,7 @@ import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.ui.theme.Primary
 
 @Composable
-fun TrashbinButton(
+fun SwitchButton(
     modifier: Modifier = Modifier,
     onCLick: () -> Unit,
 ) {
@@ -36,7 +34,7 @@ fun TrashbinButton(
     ) {
         Icon(
             modifier = Modifier.fillMaxSize(),
-            painter = painterResource(id = R.drawable.ic_trashbin),
+            painter = painterResource(id = R.drawable.ic_switch),
             contentDescription = stringResource(
                 id = R.string.trashbin
             ),
@@ -47,8 +45,8 @@ fun TrashbinButton(
 
 @Preview
 @Composable
-fun TrashbinButtonPreview() {
-    TrashbinButton {
+fun SwitchButtonPreview() {
+    SwitchButton {
 
     }
 }

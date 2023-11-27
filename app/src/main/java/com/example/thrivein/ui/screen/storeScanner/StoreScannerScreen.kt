@@ -44,7 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.example.thrivein.ui.component.button.AddPhotoButton
 import com.example.thrivein.ui.component.button.CameraButton
-import com.example.thrivein.ui.component.button.TrashbinButton
+import com.example.thrivein.ui.component.button.SwitchButton
 import com.example.thrivein.utils.CameraUIAction
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
@@ -121,6 +121,7 @@ fun CameraView(
 //                uncomment this code to use the camera
 //                imageCapture.takePicture(context, lensFacing, onImageCaptured, onError)
                 navigateToHome()
+//                navigateToScoreAndAdvice
 
             }
 
@@ -219,7 +220,7 @@ fun CameraControls(cameraUIAction: (CameraUIAction) -> Unit) {
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
 
-        TrashbinButton() {
+        SwitchButton() {
             cameraUIAction(CameraUIAction.OnSwitchCameraClick)
         }
         CameraButton() {

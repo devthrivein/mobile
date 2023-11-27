@@ -1,4 +1,4 @@
-package com.example.thrivein.ui.screen.storeScanner
+ package com.example.thrivein.ui.screen.storeScanner
 
 import android.content.Context
 import android.media.MediaScannerConnection
