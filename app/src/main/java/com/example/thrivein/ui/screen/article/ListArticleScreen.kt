@@ -33,7 +33,7 @@ fun ListArticleScreen(
         containerColor = Background,
     ) { innerPadding ->
         LazyColumn(
-            modifier = Modifier.padding(innerPadding),
+            modifier = modifier.padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             items(count = 10) {

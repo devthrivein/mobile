@@ -33,13 +33,9 @@ fun ArticleItem(
     content: String,
     bannerUrl: String,
 ) {
-    var showFullText by remember {
-        mutableStateOf(false)
-    }
 
     Card(
         modifier = modifier
-//            .padding(bottom = 30.dp)
             .animateContentSize(),
         shape = MaterialTheme.shapes.medium,
     ) {
@@ -67,14 +63,11 @@ fun ArticleItem(
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    modifier = Modifier.clickable {
-                        showFullText = !showFullText
-                    },
                     text = content,
                     style = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Normal
                     ),
-                    maxLines = if (showFullText) 5 else 2,
+                    maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
             }
