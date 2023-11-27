@@ -1,6 +1,5 @@
 package com.example.thrivein.ui.screen.scoreAndAdvice
 
-//import androidx.compose.foundation.layout.RowScopeInstance.align
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -13,6 +12,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -39,18 +39,14 @@ fun ScoreAndAdviceScreen(
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
-//        topBar = {
-//            DetailTopBar(title = id, ) {
-//
-//            }
-//        }
         floatingActionButton = {
             ThriveInButton(
                 onClick = {},
                 label = stringResource(id = R.string.go_to_home),
                 modifier = Modifier.padding(horizontal = 48.dp, vertical = 24.dp),
             )
-        }
+        },
+        floatingActionButtonPosition = FabPosition.Center,
     ) { innerpadding ->
 
         Box(

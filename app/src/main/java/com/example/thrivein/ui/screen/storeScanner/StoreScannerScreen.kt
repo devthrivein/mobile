@@ -120,8 +120,7 @@ fun CameraView(
             is CameraUIAction.OnCameraClick -> {
 //                uncomment this code to use the camera
 //                imageCapture.takePicture(context, lensFacing, onImageCaptured, onError)
-                navigateToHome()
-//                navigateToScoreAndAdvice
+                navigateToScoreAndAdvice("1")
 
             }
 
