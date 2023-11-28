@@ -10,9 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.thrivein.ui.component.header.DetailTopBar
 import com.example.thrivein.ui.component.item.HistoryListItem
 import com.example.thrivein.ui.component.item.ServiceListItem
+import com.example.thrivein.ui.component.navigation.BottomBarNavigation
 import com.example.thrivein.ui.theme.Background
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -28,10 +31,14 @@ fun HistoryServiceScreen(
     navigateBack: () -> Unit,
     date: Date,
     navigateToDetailHistoryService: (String) -> Unit,
-) {
+    navHostController: NavHostController,
+    ) {
     Scaffold(
         topBar = {
             DetailTopBar(title = title, navigateBack = navigateBack)
+        },
+        bottomBar = {
+            BottomBarNavigation(navHostController = navHostController)
         },
         containerColor = Background,
     ) { innerPadding ->
@@ -69,5 +76,6 @@ fun HistoryServiceScreenPreview() {
             ?: Date(),
         navigateBack = {},
         navigateToDetailHistoryService = {},
-    )
+        navHostController = rememberNavController(),
+        )
 }
