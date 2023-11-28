@@ -102,6 +102,9 @@ fun ThriveInApp(
 
             ScoreAndAdviceScreen(
                 id = id,
+                navigateToHome = {
+                    navHostController.navigate(Screen.Home.route)
+                },
             )
 
         }
@@ -127,7 +130,13 @@ fun ThriveInApp(
 
         composable(route = Screen.History.route) {
             HistoryServiceScreen(
-                navHostController = navHostController
+                navHostController = navHostController,
+//                navigateBack = {
+//                    navHostController.navigateUp()
+//                }
+//                navigateToDetailHistoryService = { historyServiceId ->
+//                    navHostController.navigate(Screen.DetailHistory)
+//                }
             )
         }
 

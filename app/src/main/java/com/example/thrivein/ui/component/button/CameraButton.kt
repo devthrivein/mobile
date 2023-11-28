@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -38,7 +39,9 @@ fun CameraButton(
         contentAlignment = Alignment.Center
     ) {
         Icon(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .scale(0.8f),
             painter = painterResource(id = R.drawable.ic_camera),
             contentDescription = stringResource(
                 id = R.string.camera

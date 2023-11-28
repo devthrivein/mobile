@@ -37,11 +37,14 @@ import com.example.thrivein.ui.theme.Primary
 fun ScoreAndAdviceScreen(
     id: String,
     modifier: Modifier = Modifier,
+    navigateToHome: () -> Unit,
 ) {
     Scaffold(
         floatingActionButton = {
             ThriveInButton(
-                onClick = {},
+                onClick = {
+                    navigateToHome()
+                },
                 label = stringResource(id = R.string.go_to_home),
                 modifier = Modifier.padding(horizontal = 48.dp, vertical = 24.dp),
             )
@@ -121,14 +124,13 @@ fun ScoreAndAdviceScreen(
                     )
                 }
 
-            }
-        }
+            }        }
     }
 }
 
 @Preview
 @Composable
 fun ScoreAndAdviceScreenPreview() {
-    ScoreAndAdviceScreen("1")
+    ScoreAndAdviceScreen("1", navigateToHome = {})
 }
 

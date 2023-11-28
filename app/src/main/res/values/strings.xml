@@ -64,7 +64,11 @@
     <string name="total">Total</string>
     <string name="order_later">Order Later</string>
     <string name="order_now">Order Now</string>
+    <string name="order_detail">Order Detail</string>
 
     <string name="published">Published</string>
     <string name="go_to_home">Go to Home</string>
+    
+    <string name="rate">Rate</string>
+    <string name="re_order">Re-Order</string>
 </resources>
