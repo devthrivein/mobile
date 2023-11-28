@@ -42,4 +42,6 @@ sealed class Screen(val route: String) {
     object DetailTransactionService : Screen("home/transaction-service/{transactionId}") {
         fun createRoute(transactionId: String) = "home/transaction-service/$transactionId"
     }
+
+    object DetailHistoryService: Screen("home/")
 }
