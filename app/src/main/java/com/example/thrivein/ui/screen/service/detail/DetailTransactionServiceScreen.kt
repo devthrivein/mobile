@@ -55,6 +55,7 @@ fun DetailTransactionServiceScreen(
     id: String,
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
+    navigateToHistoryService: () -> Unit
 ) {
 
 
@@ -122,7 +123,7 @@ fun DetailTransactionServiceScreen(
                             isNotWide = true
                         )
                         ThriveInButton(
-                            onClick = { },
+                            onClick = { navigateToHistoryService },
                             label = stringResource(R.string.order_now),
                             isNotWide = true,
                         )
@@ -176,9 +177,7 @@ fun DetailTransactionServiceScreen(
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
 fun DetailTransactionServiceScreenPreview() {
-    DetailTransactionServiceScreen(id = "1") {
-
-    }
+    DetailTransactionServiceScreen(id = "1", navigateToHistoryService = {}, navigateBack = {})
 }
 
 

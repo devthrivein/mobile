@@ -1,4 +1,4 @@
-package com.example.thrivein.ui.screen.service.detail
+package com.example.thrivein.ui.screen.history_service
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -44,7 +44,6 @@ fun DetailConsultHistoryServiceScreen(
     modifier: Modifier = Modifier,
     id: String,
     navigateBack: () -> Unit,
-    navigateToTransaction: (String) -> Unit,
 ) {
 
     var chatValue by remember { mutableStateOf("") }
@@ -75,7 +74,6 @@ fun DetailConsultHistoryServiceScreen(
         topBar = {
             DetailTopBar(title = id, navigateBack = navigateBack, actions = {
                 IconButton(onClick = {
-                    navigateToTransaction(id)
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_thrivein),
@@ -135,5 +133,5 @@ fun DetailConsultHistoryServiceScreen(
 @Composable
 fun DetailConsultHistoryServiceScreenPreview() {
 
-    DetailConsultHistoryServiceScreen(id = "1", navigateToTransaction = {}, navigateBack = {})
+    DetailConsultHistoryServiceScreen(id = "1", navigateBack = {})
 }

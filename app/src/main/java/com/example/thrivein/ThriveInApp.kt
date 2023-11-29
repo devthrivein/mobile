@@ -18,6 +18,8 @@ import com.example.thrivein.ui.screen.auth.login.LoginScreen
 import com.example.thrivein.ui.screen.auth.register.RegisterStoreScreen
 import com.example.thrivein.ui.screen.auth.register.RegisterUserScreen
 import com.example.thrivein.ui.screen.consultation.ConsultationScreen
+import com.example.thrivein.ui.screen.history_service.DetailConsultHistoryServiceScreen
+import com.example.thrivein.ui.screen.history_service.DetailHistoryServiceScreen
 import com.example.thrivein.ui.screen.history_service.HistoryServiceScreen
 import com.example.thrivein.ui.screen.home.HomeScreen
 import com.example.thrivein.ui.screen.scoreAndAdvice.ScoreAndAdviceScreen
@@ -131,12 +133,14 @@ fun ThriveInApp(
         composable(route = Screen.History.route) {
             HistoryServiceScreen(
                 navHostController = navHostController,
-//                navigateBack = {
-//                    navHostController.navigateUp()
-//                }
-//                navigateToDetailHistoryService = { historyServiceId ->
-//                    navHostController.navigate(Screen.DetailHistory)
-//                }
+                navigateBack = {
+//                    navHostController.navigate(Screen.Home.route)
+                    navHostController.navigateUp()
+
+                },
+                navigateToDetailHistoryService = { historyId ->
+                    navHostController.navigate(Screen.DetailHistoryService.createRoute(historyId))
+                }
             )
         }
 
@@ -239,8 +243,42 @@ fun ThriveInApp(
                 navigateBack = {
                     navHostController.navigateUp()
                 },
+                navigateToHistoryService = {
+                    navHostController.navigate(Screen.History.route)
+                }
             )
         }
 
+        composable(
+            route = Screen.DetailHistoryService.route,
+            arguments = listOf(navArgument("historyId") { type = NavType.StringType })
+        ) {
+            val id = it.arguments?.getString("historyId") ?: ""
+
+            DetailHistoryServiceScreen(
+                id = id,
+                navigateBack = {
+                    navHostController.navigateUp()
+                },
+                navigateToConsultation = {
+                    navHostController.navigate(Screen.Consultation.route)
+                },
+                navigateToListService = { serviceCategoryId ->
+                    navHostController.navigate(Screen.ListService.createRoute(serviceCategoryId))
+                },
+            )
+        }
+
+        composable(
+            route = Screen.DetailConsultHistoryService.route,
+            arguments = listOf(navArgument("consultHistoryId") { type = NavType.StringType})
+        ){
+            val id = it.arguments?.getString("consultHistoryId") ?: ""
+            
+            DetailConsultHistoryServiceScreen(
+                id = id,
+                navigateBack = {navHostController.navigateUp() },
+            )
+        }
     }
 }

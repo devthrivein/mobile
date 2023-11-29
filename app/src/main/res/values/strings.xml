@@ -71,4 +71,13 @@
     
     <string name="rate">Rate</string>
     <string name="re_order">Re-Order</string>
+
+    <!--Setting-->
+    <string name="store_profile">Store Profile</string>
+    <string name="FAQ">FAQ</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="logout">Logout</string>
+    <string name="your_store">Your Store</string>
+    <string name="authentication">Authentication</string>
 </resources>

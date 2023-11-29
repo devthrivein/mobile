@@ -1,4 +1,4 @@
-package com.example.thrivein.ui.screen.service.history
+package com.example.thrivein.ui.screen.history_service
 
 //package com.example.thrivein.ui.screen.service.detail
 
@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,6 +18,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -28,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -47,16 +49,34 @@ import com.example.thrivein.ui.theme.Primary
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun DetailHistoryServiceScreen(
-    id: String,
+    id: String = "2",
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
+    navigateToConsultation: () -> Unit,
+    navigateToListService: (String) -> Unit
 ) {
 
     val items = listOf<String>("Transfer Bank", "COD", "Check")
 
     Scaffold(
         topBar = {
-            DetailTopBar(title = id, navigateBack = navigateBack)
+            DetailTopBar(title = id, navigateBack = navigateBack, actions = {
+                IconButton(onClick = {
+                    navigateToConsultation()
+                }) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_consultation),
+                            contentDescription = stringResource(id = R.string.consultation),
+                        )
+                    }
+                }
+            })
         },
         bottomBar = {
             Box(
@@ -99,9 +119,9 @@ fun DetailHistoryServiceScreen(
                     Divider(color = Primary)
                     Spacer(modifier = Modifier.height(18.dp))
                     Column(
-                      modifier = Modifier
-                          .fillMaxWidth()
-                          .padding(horizontal = 48.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 48.dp)
                     ) {
                         PaymentDetailItem(
                             isImportant = true,
@@ -124,7 +144,7 @@ fun DetailHistoryServiceScreen(
                             )
                             Spacer(modifier = Modifier.width(20.dp))
                             ThriveInButton(
-                                onClick = { },
+                                onClick = { navigateToListService(id) },
                                 label = stringResource(R.string.re_order),
                                 isNotWide = true,
                                 modifier = Modifier.fillMaxWidth()
@@ -180,8 +200,7 @@ fun DetailHistoryServiceScreen(
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
 fun DetailHistoryServiceScreenPreview() {
-    DetailHistoryServiceScreen(id = "1") {
-
+    DetailHistoryServiceScreen(id = "1", navigateBack = {}, navigateToConsultation = {}) {
     }
 }
 
