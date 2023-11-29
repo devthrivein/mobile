@@ -146,7 +146,10 @@ fun ThriveInApp(
 
         composable(route = Screen.Consultation.route) {
             ConsultationScreen(
-                navHostController = navHostController
+                navHostController = navHostController,
+                navigateBack = {
+                    navHostController.navigate(Screen.Home.route)
+                }
             )
         }
 
