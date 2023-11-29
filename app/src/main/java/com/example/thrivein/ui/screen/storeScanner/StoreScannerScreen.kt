@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -33,18 +34,24 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.TopCenter
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.example.thrivein.R
 import com.example.thrivein.ui.component.button.AddPhotoButton
 import com.example.thrivein.ui.component.button.CameraButton
 import com.example.thrivein.ui.component.button.SwitchButton
+import com.example.thrivein.ui.component.button.ThriveInButton
 import com.example.thrivein.utils.CameraUIAction
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
@@ -201,12 +208,27 @@ private fun CameraPreviewView(
             modifier = Modifier.align(Alignment.BottomCenter),
             verticalArrangement = Arrangement.Bottom
         ) {
+            ThriveInButton(
+                modifier = Modifier
+                    .offset(y = (-550).dp)
+                    .padding(50.dp)
+                    .scale(0.8f),
+                onClick = {},
+                label = stringResource(id = R.string.go_to_home),
+                isOutline = true
+            )
+//            Spacer(modifier = Modifier.height((-100).dp))
             CameraControls(cameraUIAction)
         }
 
 
     }
 }
+
+//@Composable
+//fun HomeAction(buttonUIAction: ) {
+//
+//}
 
 @Composable
 fun CameraControls(cameraUIAction: (CameraUIAction) -> Unit) {
