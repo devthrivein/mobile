@@ -25,6 +25,9 @@ sealed class Screen(val route: String) {
     object ListService : Screen("home/list-service/{serviceCategoryId}") {
         fun createRoute(serviceCategoryId: String) = "home/list-service/$serviceCategoryId"
     }
+    object WaitingListService: Screen("home/waiting-list-service/{waitingListId}") {
+        fun createRoute(waitingListId: String) = "home/waiting-list-service/$waitingListId"
+    }
 
     //    Detail
     object DetailArticle : Screen("home/article/{articleId}") {
@@ -49,5 +52,9 @@ sealed class Screen(val route: String) {
 
     object DetailConsultHistoryService: Screen("home/consult-history-service/{consultHistoryId}") {
         fun createRoute(consultHistoryId: String) = "home/consult-history-service/$consultHistoryId"
+    }
+
+    object DetailWaitingList: Screen("home/waiting-list-service/{detailWaitingListId}") {
+        fun createRoute(detailWaitingListId: String) = "home/waiting-list-service/$detailWaitingListId"
     }
 }

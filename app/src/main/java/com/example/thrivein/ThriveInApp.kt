@@ -20,6 +20,7 @@ import com.example.thrivein.ui.screen.auth.register.RegisterUserScreen
 import com.example.thrivein.ui.screen.consultation.ConsultationScreen
 import com.example.thrivein.ui.screen.history_service.DetailConsultHistoryServiceScreen
 import com.example.thrivein.ui.screen.history_service.DetailHistoryServiceScreen
+import com.example.thrivein.ui.screen.history_service.DetailWaitingListScreen
 import com.example.thrivein.ui.screen.history_service.HistoryServiceScreen
 import com.example.thrivein.ui.screen.home.HomeScreen
 import com.example.thrivein.ui.screen.scoreAndAdvice.ScoreAndAdviceScreen
@@ -27,6 +28,7 @@ import com.example.thrivein.ui.screen.service.detail.DetailConsultServiceScreen
 import com.example.thrivein.ui.screen.service.detail.DetailServiceScreen
 import com.example.thrivein.ui.screen.service.detail.DetailTransactionServiceScreen
 import com.example.thrivein.ui.screen.service.list.ListServiceScreen
+import com.example.thrivein.ui.screen.service.list.WaitingListServiceScreen
 import com.example.thrivein.ui.screen.setting.SettingScreen
 import com.example.thrivein.ui.screen.storeScanner.StoreScannerScreen
 
@@ -40,7 +42,7 @@ fun ThriveInApp(
 
     NavHost(
         navController = navHostController,
-        startDestination = Screen.Landing.route
+        startDestination = Screen.WaitingListService.route
     ) {
 //        AUTH
         composable(route = Screen.Landing.route) {
@@ -186,6 +188,23 @@ fun ThriveInApp(
             )
         }
 
+        composable(
+            route = Screen.WaitingListService.route,
+            arguments = listOf(navArgument("waitingListId") { type = NavType.StringType })
+        ) {
+            val id = it.arguments?.getString("waitingListId") ?: ""
+
+            WaitingListServiceScreen(
+                id = id,
+                navigateBack = {
+                    navHostController.navigateUp()
+                },
+                navigateToDetailWaitingList = { detailWaitingListId ->
+                    navHostController.navigate(Screen.DetailWaitingList.createRoute(detailWaitingListId))
+                }
+            )
+        }
+
 //        Detail
         composable(
             route = Screen.DetailArticle.route,
@@ -274,13 +293,26 @@ fun ThriveInApp(
 
         composable(
             route = Screen.DetailConsultHistoryService.route,
-            arguments = listOf(navArgument("consultHistoryId") { type = NavType.StringType})
-        ){
+            arguments = listOf(navArgument("consultHistoryId") { type = NavType.StringType })
+        ) {
             val id = it.arguments?.getString("consultHistoryId") ?: ""
-            
+
             DetailConsultHistoryServiceScreen(
                 id = id,
-                navigateBack = {navHostController.navigateUp() },
+                navigateBack = { navHostController.navigateUp() },
+            )
+        }
+
+        composable(
+            route = Screen.DetailWaitingList.route,
+            arguments = listOf(navArgument("detailWaitingListId") { type = NavType.StringType })
+        ) {
+            val id = it.arguments?.getString("detailWaitingListId") ?: ""
+
+            DetailWaitingListScreen(
+                navigateBack = { navHostController.navigateUp() },
+                navigateToConsultation = {navHostController.navigate(Screen.Consultation.route)},
+                navigateToHome = {navHostController.navigate(Screen.Home.route)}
             )
         }
     }

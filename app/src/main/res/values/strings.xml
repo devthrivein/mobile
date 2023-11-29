@@ -71,6 +71,7 @@
     
     <string name="rate">Rate</string>
     <string name="re_order">Re-Order</string>
+    <string name="delete">Delete</string>
 
     <!--Setting-->
     <string name="store_profile">Store Profile</string>
