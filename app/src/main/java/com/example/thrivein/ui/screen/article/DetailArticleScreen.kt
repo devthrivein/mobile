@@ -60,7 +60,6 @@ fun DetailArticleScreen(
             modifier = Modifier.fillMaxSize(),
             color = Background
         ) {
-
             Box(
                 modifier = modifier
                     .background(Background)
