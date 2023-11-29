@@ -155,7 +155,7 @@ fun ThriveInApp(
 
         composable(route = Screen.Setting.route) {
             SettingScreen(
-                navHostController = navHostController
+                navHostController = navHostController,
             )
         }
 

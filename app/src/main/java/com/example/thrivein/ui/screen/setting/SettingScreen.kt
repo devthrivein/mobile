@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.thrivein.R
+import com.example.thrivein.ui.component.header.DetailTopBar
 import com.example.thrivein.ui.component.item.SettingItem
 import com.example.thrivein.ui.component.navigation.BottomBarNavigation
 import com.example.thrivein.ui.theme.Background
@@ -86,24 +87,24 @@ fun SettingScreen(
                     SettingItem(
                         id = "2",
                         title = stringResource(id = R.string.FAQ),
-                        icon = painterResource(id = R.drawable.ic_store_profile)
+                        icon = painterResource(id = R.drawable.ic_faq)
                     )
                     SettingItem(
                         id = "3",
-                        title = stringResource(id = R.string.store_profile),
-                        icon = painterResource(id = R.drawable.ic_store_profile)
+                        title = stringResource(id = R.string.terms_and_conditions),
+                        icon = painterResource(id = R.drawable.ic_terms_and_conditions)
                     )
                     //Authentication
                     Text(text = stringResource(id = R.string.authentication))
                     SettingItem(
                         id = "4",
-                        title = stringResource(id = R.string.store_profile),
-                        icon = painterResource(id = R.drawable.ic_store_profile)
+                        title = stringResource(id = R.string.delete_account),
+                        icon = painterResource(id = R.drawable.ic_delete_account)
                     )
                     SettingItem(
                         id = "5",
-                        title = stringResource(id = R.string.store_profile),
-                        icon = painterResource(id = R.drawable.ic_store_profile)
+                        title = stringResource(id = R.string.logout),
+                        icon = painterResource(id = R.drawable.ic_logout)
                     )
                 }
             }
