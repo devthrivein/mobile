@@ -52,8 +52,6 @@ fun ServiceListItem(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-
-
             AsyncImage(
                 model = iconUrl,
                 contentDescription = title,
@@ -73,7 +71,7 @@ fun ServiceListItem(
             ) {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                    style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
                     maxLines = 3,
                 )
                 Spacer(modifier = Modifier.width(16.dp))

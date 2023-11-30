@@ -79,7 +79,7 @@ fun HistoryListItem(
                 ) {
                     Text(
                         text = title,
-                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                        style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
                         maxLines = 3,
                     )
                     Spacer(modifier = Modifier.width(16.dp))
@@ -97,7 +97,7 @@ fun HistoryListItem(
                 ) {
                     Text(
                         text = date.toString(),
-                        style = MaterialTheme.typography.titleSmall.copy(
+                        style = MaterialTheme.typography.bodySmall.copy(
                             fontWeight = FontWeight.Normal
                         ),
                         color = Gray
