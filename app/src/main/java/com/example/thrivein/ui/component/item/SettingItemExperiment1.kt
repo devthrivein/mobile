@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -37,7 +36,7 @@ import com.example.thrivein.ui.theme.Pink
 import com.example.thrivein.ui.theme.Primary
 
 @Composable
-fun SettingItem(
+fun SettingItemExperiment1(
     modifier: Modifier = Modifier,
     id: String,
     title: String,
@@ -63,7 +62,17 @@ fun SettingItem(
         ) {
             Box(
                 modifier = Modifier
-                    .size(50.dp)
+                    .height(118.dp)
+                    .width(118.dp)
+                    .clip(
+                        RoundedCornerShape(
+                            topStart = 22.dp,
+                            bottomStart = 22.dp,
+                            topEnd = 50.dp,
+                            bottomEnd = 50.dp
+                        )
+                    )
+                    .background(Primary),
             ) {
                 Image(
                     painter = icon,
@@ -75,7 +84,7 @@ fun SettingItem(
                 )
             }
 
-//            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(8.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -100,8 +109,8 @@ fun SettingItem(
 
 @Preview(showBackground = false, device = Devices.PIXEL_4)
 @Composable
-fun SettingItemPreview() {
-    SettingItem(
+fun SettingItemExperiment1Preview() {
+    SettingItemExperiment1(
         id = "1",
         title = "Social Media Management",
         icon = painterResource(id = R.drawable.ic_store_profile)
