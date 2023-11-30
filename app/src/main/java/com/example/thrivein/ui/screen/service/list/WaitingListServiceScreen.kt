@@ -22,7 +22,6 @@ import com.example.thrivein.ui.theme.Background
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WaitingListServiceScreen(
-    id: String,
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
     navigateToDetailWaitingList: (String) -> Unit,
@@ -47,7 +46,7 @@ fun WaitingListServiceScreen(
                     ),
                     modifier = Modifier
                         .padding(horizontal = 24.dp, vertical = 12.dp)
-                        .clickable { navigateToDetailWaitingList(id) }
+                        .clickable { navigateToDetailWaitingList(it.toString()) }
                 )
             }
         }
@@ -58,7 +57,6 @@ fun WaitingListServiceScreen(
 @Composable
 fun WaitingListServiceScreenPreview() {
     WaitingListServiceScreen(
-        id = "1",
         navigateBack = {},
         navigateToDetailWaitingList = {},
     )

@@ -190,12 +190,12 @@ fun ThriveInApp(
 
         composable(
             route = Screen.WaitingListService.route,
-            arguments = listOf(navArgument("waitingListId") { type = NavType.StringType })
+//            arguments = listOf(navArgument("waitingListId") { type = NavType.StringType })
         ) {
-            val id = it.arguments?.getString("waitingListId") ?: ""
+//            val id = it.arguments?.getString("waitingListId") ?: ""
 
             WaitingListServiceScreen(
-                id = id,
+//                id = id,
                 navigateBack = {
                     navHostController.navigateUp()
                 },
@@ -310,6 +310,7 @@ fun ThriveInApp(
             val id = it.arguments?.getString("detailWaitingListId") ?: ""
 
             DetailWaitingListScreen(
+                id = id,
                 navigateBack = { navHostController.navigateUp() },
                 navigateToConsultation = {navHostController.navigate(Screen.Consultation.route)},
                 navigateToHome = {navHostController.navigate(Screen.Home.route)}

@@ -49,7 +49,7 @@ import com.example.thrivein.ui.theme.Primary
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun DetailWaitingListScreen(
-    id: String = "2",
+    id: String,
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
     navigateToHome: () -> Unit,
