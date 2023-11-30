@@ -70,7 +70,7 @@ fun SettingScreenExperimen1(
                         .padding(10.dp)
                         .verticalScroll(scrollState)
                 ) {
-                    TopBarSetting(
+                    TopBarSetting1(
                         name = "Fika",
                         iconUrl = "https://th.bing.com/th/id/OIP.SdB_qPhbKS73WKzeP25VOgHaK9?rs=1&pid=ImgDetMain"
                     ) {
@@ -144,7 +144,7 @@ fun SettingScreenExperimen1Preview() {
 }
 
 @Composable
-fun TopBarSetting(
+fun TopBarSetting1(
     name: String,
     iconUrl: String,
     modifier: Modifier = Modifier,
@@ -192,8 +192,8 @@ fun TopBarSetting(
 
 @Preview(showBackground = true)
 @Composable
-fun TopBarSettingPreview() {
-    TopBarSetting(
+fun TopBarSetting1Preview() {
+    TopBarSetting1(
         name = "Fika",
         iconUrl = "https://th.bing.com/th/id/OIP.SdB_qPhbKS73WKzeP25VOgHaK9?rs=1&pid=ImgDetMain",
         onClick = {}
