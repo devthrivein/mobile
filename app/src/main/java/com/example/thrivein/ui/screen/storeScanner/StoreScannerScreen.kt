@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -34,8 +33,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.TopCenter
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
@@ -121,28 +118,30 @@ fun CameraView(
     CameraPreviewView(
         modifier = modifier,
         imageCapture,
-        lensFacing
-    ) { cameraUIAction ->
-        when (cameraUIAction) {
-            is CameraUIAction.OnCameraClick -> {
+        lensFacing,
+        navigateToHome = navigateToHome,
+        cameraUIAction = { cameraUIAction ->
+            when (cameraUIAction) {
+                is CameraUIAction.OnCameraClick -> {
 //                uncomment this code to use the camera
 //                imageCapture.takePicture(context, lensFacing, onImageCaptured, onError)
-                navigateToScoreAndAdvice("1")
+                    navigateToScoreAndAdvice("1")
 
-            }
+                }
 
-            is CameraUIAction.OnSwitchCameraClick -> {
-                lensFacing =
-                    if (lensFacing == CameraSelector.LENS_FACING_BACK) CameraSelector.LENS_FACING_FRONT
-                    else
-                        CameraSelector.LENS_FACING_BACK
-            }
+                is CameraUIAction.OnSwitchCameraClick -> {
+                    lensFacing =
+                        if (lensFacing == CameraSelector.LENS_FACING_BACK) CameraSelector.LENS_FACING_FRONT
+                        else
+                            CameraSelector.LENS_FACING_BACK
+                }
 
-            is CameraUIAction.OnGalleryViewClick -> {
-                galleryLauncher.launch("image/*")
+                is CameraUIAction.OnGalleryViewClick -> {
+                    galleryLauncher.launch("image/*")
+                }
             }
         }
-    }
+    )
 }
 
 @SuppressLint("RestrictedApi")
@@ -152,6 +151,7 @@ private fun CameraPreviewView(
     imageCapture: ImageCapture,
     lensFacing: Int = CameraSelector.LENS_FACING_BACK,
     cameraUIAction: (CameraUIAction) -> Unit,
+    navigateToHome: () -> Unit,
 ) {
 
     val context = LocalContext.current
@@ -213,22 +213,16 @@ private fun CameraPreviewView(
                     .offset(y = (-550).dp)
                     .padding(50.dp)
                     .scale(0.8f),
-                onClick = {},
+                onClick = navigateToHome,
                 label = stringResource(id = R.string.go_to_home),
                 isOutline = true
             )
-//            Spacer(modifier = Modifier.height((-100).dp))
             CameraControls(cameraUIAction)
         }
 
 
     }
 }
-
-//@Composable
-//fun HomeAction(buttonUIAction: ) {
-//
-//}
 
 @Composable
 fun CameraControls(cameraUIAction: (CameraUIAction) -> Unit) {
