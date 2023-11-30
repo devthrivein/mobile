@@ -109,8 +109,6 @@ Gapp/src/main/java/com/example/thrivein/ui/component/item/PackageItem.kt,0\2\02
 Xapp/src/main/java/com/example/thrivein/ui/screen/history_service/HistoryServiceScreen.kt,f\6\f680093cc750cf4b1ef2b7da3980f05f0803e353
 ƒ
 Sapp/src/main/java/com/example/thrivein/ui/screen/consultation/ConsultationScreen.kt,3\6\365e24f96a6b2d3ef9f36fbbd713215012b40663
-y
-Iapp/src/main/java/com/example/thrivein/ui/screen/setting/SettingScreen.kt,0\7\0780860dfbdcbc9f59fffdfd57cee9feee3fc035
 
 Oapp/src/main/java/com/example/thrivein/ui/screen/article/DetailArticleScreen.kt,6\2\62afdbf97e0e4ec46a34f9e2ab89ec24abdc1655
 }
@@ -121,17 +119,5 @@ l
 <app/src/main/java/com/example/thrivein/utils/CameraAction.kt,4\f\4f0150ad3bd17803044b7e129244314772598b91
 p
 @app/src/main/java/com/example/thrivein/utils/PermissionAction.kt,b\c\bca82ffe8daff0f740ff8e9728ed0ec8418acd31
-|
-Lapp/src/main/java/com/example/thrivein/ui/component/button/TrashbinButton.kt,9\7\97f915a472c97dbb47b904443e786cbd48fa5b68
-}
-Mapp/src/main/java/com/example/thrivein/data/repository/auth/AuthRepository.kt,d\3\d3fb8cd8267300f5a21e3c4072e127664794b591
-s
-Capp/src/main/java/com/example/thrivein/data/local/UserPreference.kt,e\d\ed3eddcf7eac34d0885f77e95fd649421ea6628c
-y
-Iapp/src/main/java/com/example/thrivein/data/network/retrofit/ApiConfig.kt,5\0\5036f89b39f6b9806ca3a254a6bfeb14d057f594
-ƒ
-Sapp/src/main/java/com/example/thrivein/ui/screen/auth/register/RegisterViewModel.kt,4\5\454655cd780ce8f3cc34a246e4b4f4660795b0b9
-z
-Japp/src/main/java/com/example/thrivein/data/network/retrofit/ApiService.kt,0\a\0af6e6b66f5864f96f1307733e7ecf31129a906a
 z
 Japp/src/main/java/com/example/thrivein/ui/component/button/SwitchButton.kt,1\4\14154e943ba4bc87427a30e60fd54fcaee2660e4
