@@ -29,7 +29,9 @@ import com.example.thrivein.ui.screen.service.detail.DetailServiceScreen
 import com.example.thrivein.ui.screen.service.detail.DetailTransactionServiceScreen
 import com.example.thrivein.ui.screen.service.list.ListServiceScreen
 import com.example.thrivein.ui.screen.service.list.WaitingListServiceScreen
+import com.example.thrivein.ui.screen.setting.SettingScreen
 import com.example.thrivein.ui.screen.setting.SettingScreenExperimen1
+import com.example.thrivein.ui.screen.setting.StoreProfileScreen
 import com.example.thrivein.ui.screen.storeScanner.StoreScannerScreen
 
 @Composable
@@ -42,7 +44,7 @@ fun ThriveInApp(
 
     NavHost(
         navController = navHostController,
-        startDestination = Screen.Login.route
+        startDestination = Screen.Setting.route
     ) {
 //        AUTH
         composable(route = Screen.Landing.route) {
@@ -156,10 +158,15 @@ fun ThriveInApp(
         }
 
         composable(route = Screen.Setting.route) {
-            SettingScreenExperimen1(
+            SettingScreen(
                 navHostController = navHostController,
-                navigateToProfile = {}
+                navigateToProfile = {},
+                navigateToStoreProfile = {navHostController.navigate(Screen.StoreProfile.route)}
             )
+        }
+
+        composable(route = Screen.StoreProfile.route){
+            StoreProfileScreen()
         }
 
 //        List

@@ -1,5 +1,6 @@
 package com.example.thrivein.ui.component.navigation
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -9,11 +10,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -31,10 +35,19 @@ fun BottomBarNavigation(
 ) {
 
     NavigationBar(
-        modifier = modifier,
+        modifier = Modifier
+            .shadow(
+                elevation = 25.dp,
+                spotColor = Primary,
+                ambientColor = Color.Blue,
+                shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
+                clip = true
+            )
+            .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)),
         contentColor = Color.Transparent,
-        containerColor = Color.White
-    ) {
+        containerColor = Color.White,
+
+        ) {
 
         val navBackStackEntry by navHostController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
