@@ -81,4 +81,6 @@
     <string name="logout">Logout</string>
     <string name="your_store">Your Store</string>
     <string name="authentication">Authentication</string>
+    <string name="profile">Profile</string>
+    <string name="go_to_profile">Go to Profile</string>
 </resources>
