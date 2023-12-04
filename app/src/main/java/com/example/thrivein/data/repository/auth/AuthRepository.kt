@@ -11,6 +11,7 @@ import com.example.thrivein.data.network.response.UserResponse
 import com.example.thrivein.data.network.retrofit.ApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import retrofit2.HttpException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -58,9 +59,9 @@ class AuthRepository @Inject constructor(
             var user = UserModel(
                 name = response.user?.name ?: "",
                 email = response.user?.email ?: "",
-                userId = response.user?.userId ?: "",
+                userId = response.user?.userId,
                 phone = response.user?.phone ?: "",
-                token = response.user?.token ?: "",
+                token = response.user?.token,
                 avatarUrl = response.user?.avatarUrl,
             )
 
@@ -73,6 +74,49 @@ class AuthRepository @Inject constructor(
             val errorMessage = errorBody.message
             Log.d("AuthRepository", "register: $errorMessage ")
             emit(Result.Error(errorMessage.toString()))
+        }
+
+    }
+
+    suspend fun registerFlow(
+        name: String,
+        email: String,
+        password: String,
+        phone: String,
+        storeName: String,
+        storeEmail: String,
+        storePhone: String,
+        storeType: String,
+        address: String,
+    ): Flow<UserResponse> {
+
+        try {
+            val response = apiService.register(
+                name = name,
+                email = email,
+                password = password,
+                phone = phone,
+                storeName, storeEmail, storePhone, storeType, address,
+            )
+
+            val user = UserModel(
+                name = response.user?.name ?: "",
+                email = response.user?.email ?: "",
+                userId = response.user?.userId,
+                phone = response.user?.phone ?: "",
+                token = response.user?.token,
+                avatarUrl = response.user?.avatarUrl,
+            )
+
+            saveUser(user)
+
+            return flowOf(response)
+        } catch (e: HttpException) {
+            val jsonInString = e.response()?.errorBody()?.string()
+            val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
+            val errorMessage = errorBody.message
+            Log.d("AuthRepository", "register: $errorMessage ")
+            throw Throwable(errorMessage)
         }
 
     }

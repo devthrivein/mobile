@@ -15,7 +15,7 @@ import javax.inject.Singleton
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
 
 @Singleton
-class UserPreference @Inject private constructor(private val dataStore: DataStore<Preferences>) {
+class UserPreference @Inject constructor(private val dataStore: DataStore<Preferences>) {
 
     fun getUser(): Flow<UserModel> {
         return dataStore.data.map { preferences ->
@@ -32,9 +32,9 @@ class UserPreference @Inject private constructor(private val dataStore: DataStor
 
     suspend fun saveUser(user: UserModel) {
         dataStore.edit { preferences ->
-            preferences[ID_KEY] = user.userId
+            preferences[ID_KEY] = user.userId ?: ""
             preferences[NAME_KEY] = user.name
-            preferences[TOKEN_KEY] = user.token
+            preferences[TOKEN_KEY] = user.token ?: ""
             preferences[EMAIL_KEY] = user.email
             preferences[PHONE_KEY] = user.phone
             preferences[AVATAR_KEY] = user.email
@@ -48,8 +48,6 @@ class UserPreference @Inject private constructor(private val dataStore: DataStor
     }
 
     companion object {
-        @Volatile
-        private var INSTANCE: UserPreference? = null
 
         private val ID_KEY = stringPreferencesKey("userId")
         private val TOKEN_KEY = stringPreferencesKey("token")
@@ -58,13 +56,6 @@ class UserPreference @Inject private constructor(private val dataStore: DataStor
         private val PHONE_KEY = stringPreferencesKey("phone")
         private val AVATAR_KEY = stringPreferencesKey("avatarUrl")
 
-        fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
-            return INSTANCE ?: synchronized(this) {
-                val instance = UserPreference(dataStore)
-                INSTANCE = instance
-                instance
-            }
-        }
     }
 
 }

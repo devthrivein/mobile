@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -30,6 +29,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.thrivein.R
 import com.example.thrivein.ui.component.button.ThriveInButton
 import com.example.thrivein.ui.component.input.ThriveInInputText
@@ -42,7 +42,8 @@ import com.example.thrivein.ui.theme.Primary
 fun RegisterUserScreen(
     modifier: Modifier = Modifier,
     navigateToLogin: () -> Unit,
-    navigateToRegisterStore: () -> Unit,
+    navigateToRegisterStore: (name: String, email: String, password: String, phone: String) -> Unit,
+    registerViewModel: RegisterViewModel = hiltViewModel(),
 ) {
 
     var name by remember { mutableStateOf("") }
@@ -50,11 +51,10 @@ fun RegisterUserScreen(
     var password by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
 
-    val scrollState = rememberScrollState()
-
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val screenHeight = configuration.screenHeightDp.dp
+
 
     Scaffold(
         modifier = modifier
@@ -116,7 +116,9 @@ fun RegisterUserScreen(
                     )
                     Spacer(modifier = Modifier.height(50.dp))
                     ThriveInButton(
-                        onClick = navigateToRegisterStore,
+                        onClick = {
+                            navigateToRegisterStore(name, email, password, phone)
+                        },
                         label = stringResource(id = R.string.sign_up),
                     )
                 }
@@ -146,5 +148,5 @@ fun RegisterUserScreen(
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
 fun RegisterUserScreenPreview() {
-    RegisterUserScreen(navigateToLogin = {}, navigateToRegisterStore = {})
+//    RegisterUserScreen(navigateToLogin = {}, navigateToRegisterStore = {})
 }

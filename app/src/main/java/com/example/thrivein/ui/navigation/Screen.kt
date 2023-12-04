@@ -5,7 +5,10 @@ sealed class Screen(val route: String) {
     object Landing : Screen("landing")
     object Login : Screen("login")
     object RegisterUser : Screen("register-user")
-    object RegisterStore : Screen("register-store")
+    object RegisterStore : Screen("register-store/{name}/{email}/{password}/{phone}") {
+        fun createRoute(name: String, email: String, password: String, phone: String) =
+            "register-store/$name/$email/$password/$phone"
+    }
 
     //    Scan and Score
     object ScanStore : Screen("scan-store")

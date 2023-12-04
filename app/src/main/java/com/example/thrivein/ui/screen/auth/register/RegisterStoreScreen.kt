@@ -1,6 +1,7 @@
 package com.example.thrivein.ui.screen.auth.register
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,18 +26,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.thrivein.R
 import com.example.thrivein.ui.component.button.ThriveInButton
 import com.example.thrivein.ui.component.input.ThriveInDropdown
 import com.example.thrivein.ui.component.input.ThriveInInputText
+import com.example.thrivein.ui.component.loading.ThriveInLoading
 import com.example.thrivein.ui.component.title.Title
 import com.example.thrivein.ui.theme.Primary
+import com.example.thrivein.utils.UiState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,6 +49,12 @@ import com.example.thrivein.ui.theme.Primary
 fun RegisterStoreScreen(
     modifier: Modifier = Modifier,
     navigateToLogin: () -> Unit,
+    navigateToScanStore: () -> Unit,
+    name: String,
+    email: String,
+    password: String,
+    phone: String,
+    registerViewModel: RegisterViewModel = hiltViewModel(),
 ) {
 
 
@@ -51,16 +63,36 @@ fun RegisterStoreScreen(
         mutableStateOf("")
     }
 
-    var name by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
+    var storeName by remember { mutableStateOf("") }
+    var storeEmail by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
-    var phone by remember { mutableStateOf("") }
+    var storePhone by remember { mutableStateOf("") }
 
     val scrollState = rememberScrollState()
 
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val screenHeight = configuration.screenHeightDp.dp
+
+    val context = LocalContext.current
+
+
+    registerViewModel.uiRegisterState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
+            is UiState.Loading -> {
+                ThriveInLoading()
+            }
+
+            is UiState.Success -> {
+                navigateToScanStore()
+            }
+
+            is UiState.Error -> {
+                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+            }
+
+        }
+    }
 
     Scaffold(
         modifier = modifier
@@ -83,18 +115,18 @@ fun RegisterStoreScreen(
                 Spacer(modifier = Modifier.height(50.dp))
                 ThriveInInputText(
                     label = stringResource(R.string.name),
-                    value = name,
+                    value = storeName,
                     onChange = {
-                        name = it
+                        storeName = it
                     },
                     placeholder = stringResource(R.string.enter_your_business_name),
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 ThriveInInputText(
                     label = stringResource(R.string.email),
-                    value = email,
+                    value = storeEmail,
                     onChange = {
-                        email = it
+                        storeEmail = it
                     },
                     placeholder = stringResource(R.string.enter_your_business_email),
                     keyboardType = KeyboardType.Email,
@@ -102,9 +134,9 @@ fun RegisterStoreScreen(
                 Spacer(modifier = Modifier.height(24.dp))
                 ThriveInInputText(
                     label = stringResource(R.string.phone),
-                    value = phone,
+                    value = storePhone,
                     onChange = {
-                        phone = it
+                        storePhone = it
                     },
                     placeholder = stringResource(R.string.enter_you_phone_number),
                     keyboardType = KeyboardType.Phone,
@@ -128,7 +160,20 @@ fun RegisterStoreScreen(
                 )
                 Spacer(modifier = Modifier.height(50.dp))
                 ThriveInButton(
-                    onClick = {},
+                    onClick = {
+
+                        registerViewModel.registerFlow(
+                            name = name,
+                            email = email,
+                            phone = phone,
+                            password = password,
+                            storeName = storeName,
+                            storeEmail = storeEmail,
+                            storePhone = storePhone,
+                            storeType = selectedBusiness,
+                            address = address,
+                        )
+                    },
                     label = stringResource(id = R.string.sign_up),
                 )
                 Spacer(modifier = Modifier.height(50.dp))
@@ -155,9 +200,14 @@ fun RegisterStoreScreen(
     }
 }
 
-
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
 fun RegisterStoreScreenPreview() {
-    RegisterStoreScreen(navigateToLogin = {})
+    RegisterStoreScreen(
+        name = "",
+        email = "",
+        password = "",
+        phone = "",
+        navigateToLogin = {},
+        navigateToScanStore = {})
 }

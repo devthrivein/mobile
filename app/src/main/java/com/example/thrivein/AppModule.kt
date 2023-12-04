@@ -11,6 +11,7 @@ import com.example.thrivein.data.repository.service.ServiceCategoryRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
 @Module
@@ -18,9 +19,31 @@ import dagger.hilt.components.SingletonComponent
 object AppModule {
 
     @Provides
-    fun provideAuthRepository(context: Context): AuthRepository {
-        val pref = UserPreference.getInstance(context.dataStore)
-        val apiService = ApiConfig.getApiService(context)
+    fun provideUserPreference(@ApplicationContext context: Context): UserPreference {
+
+        try {
+            return UserPreference(context.dataStore)
+        } catch (e: Exception) {
+            Log.e("AppModule", "Error providing UserPreference: ${e.message}", e)
+            throw e
+        }
+    }
+
+    @Provides
+    fun provideApiConfig(): ApiConfig {
+
+        try {
+            return ApiConfig()
+        } catch (e: Exception) {
+            Log.e("AppModule", "Error providing ApiConfig: ${e.message}", e)
+            throw e
+        }
+    }
+
+    @Provides
+    fun provideAuthRepository(@ApplicationContext context: Context): AuthRepository {
+        val pref = provideUserPreference(context)
+        val apiService = provideApiConfig().getApiService(context)
 
         try {
             return AuthRepository(

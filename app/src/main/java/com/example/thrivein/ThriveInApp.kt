@@ -89,19 +89,52 @@ fun ThriveInApp(
                     navigateToLogin = {
                         navHostController.navigateUp()
                     },
-                    navigateToRegisterStore = {
-                        navHostController.navigate(Screen.RegisterStore.route)
+                    navigateToRegisterStore = { name, email, password, phone ->
+                        navHostController.navigate(
+                            Screen.RegisterStore.createRoute(
+                                name = name,
+                                email,
+                                password,
+                                phone
+                            )
+                        )
                     },
                 )
             }
-            composable(route = Screen.RegisterStore.route) {
-                RegisterStoreScreen(navigateToLogin = {
-                    navHostController.navigate(Screen.Login.route) {
-                        popUpTo(Screen.Login.route) {
-                            saveState = true
+            composable(
+                route = Screen.RegisterStore.route,
+                arguments = listOf(
+                    navArgument("email") { type = NavType.StringType },
+                    navArgument("phone") { type = NavType.StringType },
+                    navArgument("name") { type = NavType.StringType },
+                    navArgument("password") { type = NavType.StringType },
+                )
+            ) {
+
+                val name = it.arguments?.getString("name") ?: ""
+                val email = it.arguments?.getString("email") ?: ""
+                val password = it.arguments?.getString("password") ?: ""
+                val phone = it.arguments?.getString("phone") ?: ""
+
+                RegisterStoreScreen(
+                    name = name,
+                    email = email,
+                    password = password,
+                    phone = phone,
+                    navigateToLogin = {
+                        navHostController.navigate(Screen.Login.route) {
+                            popUpTo(Screen.Login.route) {
+                                saveState = true
+                            }
                         }
-                    }
-                })
+                    },
+                    navigateToScanStore = {
+                        navHostController.navigate(Screen.ScanStore.route) {
+                            popUpTo(Screen.Landing.route) {
+                                saveState = true
+                            }
+                        }
+                    })
             }
 
 //        Scan and Score
