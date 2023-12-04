@@ -21,14 +21,15 @@ sealed class Screen(val route: String) {
 
     //  Setting
     object Setting : Screen("setting")
-    object StoreProfile: Screen("home/setting-store-profile")
+    object StoreProfile : Screen("home/setting-store-profile")
 
     //    List
     object ListArticle : Screen("home/article")
     object ListService : Screen("home/list-service/{serviceCategoryId}") {
         fun createRoute(serviceCategoryId: String) = "home/list-service/$serviceCategoryId"
     }
-    object WaitingListService: Screen("home/waiting-list-service")
+
+    object WaitingListService : Screen("home/waiting-list-service")
 
     //    Detail
     object DetailArticle : Screen("home/article/{articleId}") {
@@ -47,16 +48,17 @@ sealed class Screen(val route: String) {
         fun createRoute(transactionId: String) = "home/transaction-service/$transactionId"
     }
 
-    object DetailHistoryService: Screen("home/history-service/{historyId}") {
+    object DetailHistoryService : Screen("home/history-service/{historyId}") {
         fun createRoute(historyId: String) = "home/history-service/$historyId"
     }
 
-    object DetailConsultHistoryService: Screen("home/consult-history-service/{consultHistoryId}") {
+    object DetailConsultHistoryService : Screen("home/consult-history-service/{consultHistoryId}") {
         fun createRoute(consultHistoryId: String) = "home/consult-history-service/$consultHistoryId"
     }
 
-    object DetailWaitingList: Screen("home/waiting-list-service/{detailWaitingListId}") {
-        fun createRoute(detailWaitingListId: String) = "home/waiting-list-service/$detailWaitingListId"
+    object DetailWaitingList : Screen("home/waiting-list-service/{detailWaitingListId}") {
+        fun createRoute(detailWaitingListId: String) =
+            "home/waiting-list-service/$detailWaitingListId"
     }
 
 }

@@ -24,8 +24,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterStart
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.TopCenter
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,12 +33,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.thrivein.R
 import com.example.thrivein.ui.component.item.SettingItem
-import com.example.thrivein.ui.component.navigation.BottomBarNavigation
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.ui.theme.Gray
 import com.example.thrivein.ui.theme.Primary
@@ -50,14 +45,10 @@ import com.example.thrivein.ui.theme.Primary
 @Composable
 fun SettingScreen(
     modifier: Modifier = Modifier,
-    navHostController: NavHostController,
     navigateToProfile: () -> Unit,
-    navigateToStoreProfile: () -> Unit
+    navigateToStoreProfile: () -> Unit,
 ) {
     Scaffold(
-        bottomBar = {
-            BottomBarNavigation(navHostController = navHostController)
-        },
     ) { innerpadding ->
         val scrollState = rememberScrollState()
         Surface(
@@ -154,7 +145,9 @@ fun SettingScreen(
 @Preview
 @Composable
 fun SettingScreenPreview() {
-    SettingScreen(navHostController = rememberNavController(), navigateToProfile = {}, navigateToStoreProfile = {})
+    SettingScreen(
+        navigateToProfile = {},
+        navigateToStoreProfile = {})
 }
 
 @Composable
@@ -162,7 +155,7 @@ fun TopBarSetting(
     name: String,
     iconUrl: String,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Box(
         modifier = modifier

@@ -1,6 +1,6 @@
 package com.example.thrivein.data.dummy
 
-import com.example.thrivein.data.model.Article
+import com.example.thrivein.data.local.model.Article
 import java.util.Date
 
 object ArticleDummy {

@@ -22,13 +22,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.thrivein.R
-import com.example.thrivein.data.model.Article
-import com.example.thrivein.data.model.ThriveInServiceCategory
+import com.example.thrivein.data.local.model.Article
+import com.example.thrivein.data.local.model.ThriveInServiceCategory
 import com.example.thrivein.ui.component.button.SeeAllButton
 import com.example.thrivein.ui.component.grid.HomeGridServiceCategoryView
 import com.example.thrivein.ui.component.header.HomeHeader
 import com.example.thrivein.ui.component.item.ArticleHomeItem
-import com.example.thrivein.ui.component.navigation.BottomBarNavigation
 import com.example.thrivein.ui.component.slider.BannerSlider
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.utils.UiState
@@ -44,6 +43,7 @@ fun HomeScreen(
     navigateToScanStore: () -> Unit,
     navigateToListArticle: () -> Unit,
     navigateToDetailArticle: (String) -> Unit,
+    navigateToWaitingList: () -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
@@ -91,9 +91,6 @@ fun HomeScreen(
 
 
     Scaffold(
-        bottomBar = {
-            BottomBarNavigation(navHostController = navHostController)
-        },
         containerColor = Background,
     ) { innerPadding ->
 
@@ -104,7 +101,7 @@ fun HomeScreen(
             item {
                 HomeHeader(
                     username = "Fika",
-                    navigateToWaitingList = {},
+                    navigateToWaitingList = navigateToWaitingList,
                     modifier = Modifier.padding(24.dp)
                 )
             }
@@ -156,5 +153,6 @@ fun HomeScreenPreview() {
         navigateToDetailArticle = {},
         navigateToListArticle = {},
         navigateToScanStore = {},
+        navigateToWaitingList = {},
     )
 }

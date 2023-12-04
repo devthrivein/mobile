@@ -102,12 +102,22 @@ fun BottomBarNavigation(
                 onClick = {
                     navHostController.navigate(item.screen.route) {
 
-                        popUpTo(navHostController.graph.findStartDestination().id) {
-                            saveState = true
+                        if (item.screen.route == Screen.Home.route) {
+                            popUpTo(navHostController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+
+                            restoreState = true
+                            launchSingleTop = true
+                        } else {
+                            popUpTo(Screen.Home.route) {
+                                saveState = true
+                            }
+
+                            restoreState = true
+                            launchSingleTop = true
                         }
 
-                        restoreState = true
-                        launchSingleTop = true
 
                     }
 

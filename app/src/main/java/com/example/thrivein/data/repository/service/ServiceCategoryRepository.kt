@@ -1,7 +1,7 @@
 package com.example.thrivein.data.repository.service
 
 import com.example.thrivein.data.dummy.ServiceCategoryDummy
-import com.example.thrivein.data.model.ThriveInServiceCategory
+import com.example.thrivein.data.local.model.ThriveInServiceCategory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject

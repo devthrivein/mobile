@@ -1,4 +1,4 @@
-package com.example.thrivein.data.model
+package com.example.thrivein.data.local.model
 
 data class ThriveInServiceCategory(
     val id: String,

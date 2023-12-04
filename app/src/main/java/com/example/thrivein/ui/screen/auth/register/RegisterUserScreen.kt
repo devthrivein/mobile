@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -61,78 +61,80 @@ fun RegisterUserScreen(
             .fillMaxSize()
     ) {
 
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .height(screenHeight)
                 .width(screenWidth)
-                .verticalScroll(scrollState)
                 .padding(horizontal = 24.dp, vertical = 50.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
-            Column(
-                horizontalAlignment = Alignment.Start,
-            ) {
-                Title(title = stringResource(id = R.string.sign_up))
-                Spacer(modifier = Modifier.height(50.dp))
-                ThriveInInputText(
-                    label = stringResource(R.string.name),
-                    value = name,
-                    onChange = {
-                        name = it
-                    },
-                    placeholder = stringResource(R.string.enter_your_name),
-                )
-                Spacer(modifier = Modifier.height(24.dp))
-                ThriveInInputText(
-                    label = stringResource(R.string.email),
-                    value = email,
-                    onChange = {
-                        email = it
-                    },
-                    placeholder = stringResource(R.string.enter_your_email_address),
-                    keyboardType = KeyboardType.Email,
-                )
-                Spacer(modifier = Modifier.height(24.dp))
-                ThriveInInputText(
-                    label = stringResource(R.string.password),
-                    value = password,
-                    isObsecure = true,
-                    onChange = {
-                        password = it
-                    },
-                    placeholder = stringResource(R.string.enter_your_password),
-                    keyboardType = KeyboardType.Password
-                )
-                Spacer(modifier = Modifier.height(24.dp))
-                ThriveInInputText(
-                    label = stringResource(R.string.phone),
-                    value = phone,
-                    onChange = {
-                        phone = it
-                    },
-                    placeholder = stringResource(R.string.enter_you_phone_number),
-                    keyboardType = KeyboardType.Phone,
-                )
-                Spacer(modifier = Modifier.height(50.dp))
-                ThriveInButton(
-                    onClick = navigateToRegisterStore,
-                    label = stringResource(id = R.string.sign_up),
-                )
+            item {
+                Column(
+                    horizontalAlignment = Alignment.Start,
+                ) {
+                    Title(title = stringResource(id = R.string.sign_up))
+                    Spacer(modifier = Modifier.height(50.dp))
+                    ThriveInInputText(
+                        label = stringResource(R.string.name),
+                        value = name,
+                        onChange = {
+                            name = it
+                        },
+                        placeholder = stringResource(R.string.enter_your_name),
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+                    ThriveInInputText(
+                        label = stringResource(R.string.email),
+                        value = email,
+                        onChange = {
+                            email = it
+                        },
+                        placeholder = stringResource(R.string.enter_your_email_address),
+                        keyboardType = KeyboardType.Email,
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+                    ThriveInInputText(
+                        label = stringResource(R.string.password),
+                        value = password,
+                        isObsecure = true,
+                        onChange = {
+                            password = it
+                        },
+                        placeholder = stringResource(R.string.enter_your_password),
+                        keyboardType = KeyboardType.Password
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+                    ThriveInInputText(
+                        label = stringResource(R.string.phone),
+                        value = phone,
+                        onChange = {
+                            phone = it
+                        },
+                        placeholder = stringResource(R.string.enter_you_phone_number),
+                        keyboardType = KeyboardType.Phone,
+                    )
+                    Spacer(modifier = Modifier.height(50.dp))
+                    ThriveInButton(
+                        onClick = navigateToRegisterStore,
+                        label = stringResource(id = R.string.sign_up),
+                    )
+                }
             }
 
-
-            Row {
-                Text(text = stringResource(R.string.already_have_an_account))
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = stringResource(id = R.string.log_in),
-                    style = MaterialTheme.typography.titleSmall.copy(
-                        color = Primary,
-                        fontWeight = FontWeight.Bold
-                    ),
-                    modifier = Modifier.clickable { navigateToLogin() }
-                )
+            item {
+                Row {
+                    Text(text = stringResource(R.string.already_have_an_account))
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(id = R.string.log_in),
+                        style = MaterialTheme.typography.titleSmall.copy(
+                            color = Primary,
+                            fontWeight = FontWeight.Bold
+                        ),
+                        modifier = Modifier.clickable { navigateToLogin() }
+                    )
+                }
             }
 
 

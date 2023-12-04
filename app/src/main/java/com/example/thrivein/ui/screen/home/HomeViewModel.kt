@@ -2,8 +2,8 @@ package com.example.thrivein.ui.screen.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.thrivein.data.model.Article
-import com.example.thrivein.data.model.ThriveInServiceCategory
+import com.example.thrivein.data.local.model.Article
+import com.example.thrivein.data.local.model.ThriveInServiceCategory
 import com.example.thrivein.data.repository.article.ArticleRepository
 import com.example.thrivein.data.repository.service.ServiceCategoryRepository
 import com.example.thrivein.utils.UiState

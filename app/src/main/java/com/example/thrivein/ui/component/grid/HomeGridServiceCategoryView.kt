@@ -28,7 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.thrivein.R
-import com.example.thrivein.data.model.ThriveInServiceCategory
+import com.example.thrivein.data.local.model.ThriveInServiceCategory
 import com.example.thrivein.utils.hexStringToColor
 
 @Composable

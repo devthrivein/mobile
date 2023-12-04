@@ -1,6 +1,6 @@
 package com.example.thrivein.data.dummy
 
-import com.example.thrivein.data.model.ThriveInServiceCategory
+import com.example.thrivein.data.local.model.ThriveInServiceCategory
 
 object ServiceCategoryDummy {
 

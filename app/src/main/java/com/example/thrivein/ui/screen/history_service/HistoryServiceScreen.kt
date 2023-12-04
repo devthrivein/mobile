@@ -11,16 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.thrivein.R
 import com.example.thrivein.ui.component.header.DetailTopBar
 import com.example.thrivein.ui.component.item.HistoryListItem
-import com.example.thrivein.ui.component.navigation.BottomBarNavigation
 import com.example.thrivein.ui.theme.Background
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,14 +24,10 @@ fun HistoryServiceScreen(
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
     navigateToDetailHistoryService: (String) -> Unit,
-    navHostController: NavHostController,
-    ) {
+) {
     Scaffold(
         topBar = {
             DetailTopBar(title = stringResource(id = R.string.history), navigateBack = navigateBack)
-        },
-        bottomBar = {
-            BottomBarNavigation(navHostController = navHostController)
         },
         containerColor = Background,
     ) { innerPadding ->
@@ -67,6 +58,5 @@ fun HistoryServiceScreenPreview() {
     HistoryServiceScreen(
         navigateBack = {},
         navigateToDetailHistoryService = {},
-        navHostController = rememberNavController(),
-        )
+    )
 }

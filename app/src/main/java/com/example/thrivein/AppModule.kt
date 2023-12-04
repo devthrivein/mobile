@@ -1,7 +1,12 @@
 package com.example.thrivein
 
+import android.content.Context
 import android.util.Log
+import com.example.thrivein.data.local.preferences.UserPreference
+import com.example.thrivein.data.local.preferences.dataStore
+import com.example.thrivein.data.network.retrofit.ApiConfig
 import com.example.thrivein.data.repository.article.ArticleRepository
+import com.example.thrivein.data.repository.auth.AuthRepository
 import com.example.thrivein.data.repository.service.ServiceCategoryRepository
 import dagger.Module
 import dagger.Provides
@@ -11,6 +16,21 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    fun provideAuthRepository(context: Context): AuthRepository {
+        val pref = UserPreference.getInstance(context.dataStore)
+        val apiService = ApiConfig.getApiService(context)
+
+        try {
+            return AuthRepository(
+                pref, apiService
+            )
+        } catch (e: Exception) {
+            Log.e("AppModule", "Error providing AuthRepository: ${e.message}", e)
+            throw e
+        }
+    }
 
     @Provides
     fun provideServiceCategoryRepository(): ServiceCategoryRepository {

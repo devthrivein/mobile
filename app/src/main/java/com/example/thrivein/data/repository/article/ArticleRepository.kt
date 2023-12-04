@@ -1,7 +1,7 @@
 package com.example.thrivein.data.repository.article
 
 import com.example.thrivein.data.dummy.ArticleDummy
-import com.example.thrivein.data.model.Article
+import com.example.thrivein.data.local.model.Article
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
