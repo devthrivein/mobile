@@ -141,3 +141,15 @@ Oapp/src/main/java/com/example/thrivein/data/local/preferences/UserPreference.kt
 Mapp/src/main/java/com/example/thrivein/data/network/response/ErrorResponse.kt,f\2\f2476184d5817be1ff80be7a95cf5776369b0b68
 ~
 Napp/src/main/java/com/example/thrivein/ui/component/loading/ThriveInLoading.kt,2\9\2903f90745be621fd3ec24b2d4a1b27b1f527da8
+v
+Fapp/src/main/java/com/example/thrivein/data/network/RegisterRequest.kt,e\3\e338b68e2b23cddd5d72b59ac59f0a41eb922ac6
+~
+Napp/src/main/java/com/example/thrivein/data/network/request/RegisterRequest.kt,9\7\97f22bfcb7730a5d6096c6e112d89219f2f894f3
+{
+Kapp/src/main/java/com/example/thrivein/data/network/request/LoginRequest.kt,7\6\76f00d4f0d90b1cabf4bd064ee34561e6ad90306
+g
+7app/src/main/java/com/example/thrivein/AuthViewModel.kt,0\9\0934e56cfac8556424d2174e0ae64b91593dc991
+w
+Gapp/src/main/java/com/example/thrivein/ui/component/item/SettingItem.kt,e\7\e777596fb75e3cd953a403c59ab9731f69f6b846
+}
+Mapp/src/main/java/com/example/thrivein/ui/screen/auth/login/LoginViewModel.kt,b\f\bf28e0f7b5a0c44b4e9b65d376a1e147b722e68c

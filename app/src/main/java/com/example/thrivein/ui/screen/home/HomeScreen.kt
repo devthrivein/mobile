@@ -12,6 +12,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -21,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.thrivein.AuthViewModel
 import com.example.thrivein.R
 import com.example.thrivein.data.local.model.Article
 import com.example.thrivein.data.local.model.ThriveInServiceCategory
@@ -45,10 +48,13 @@ fun HomeScreen(
     navigateToDetailArticle: (String) -> Unit,
     navigateToWaitingList: () -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
+    authViewModel: AuthViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
     var serviceCategories: List<ThriveInServiceCategory> = arrayListOf<ThriveInServiceCategory>()
     var articles: List<Article> = arrayListOf<Article>()
+
+    val user by authViewModel.getUser().observeAsState()
 
 
     homeViewModel.uiListThriveInServiceCategoryState.collectAsState(initial = UiState.Loading).value.let { uiState ->
@@ -100,7 +106,7 @@ fun HomeScreen(
         ) {
             item {
                 HomeHeader(
-                    username = "Fika",
+                    username = user?.name ?: "-",
                     navigateToWaitingList = navigateToWaitingList,
                     modifier = Modifier.padding(24.dp)
                 )

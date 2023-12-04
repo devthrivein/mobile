@@ -27,10 +27,10 @@ class ApiConfig @Inject constructor() {
 
             val requestHeaders = req.newBuilder()
                 .addHeader("Authorization", "Bearer $token")
+                .addHeader("Content-Type", "application/json")
                 .build()
             chain.proceed(requestHeaders)
         }
-
 
         val client = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)

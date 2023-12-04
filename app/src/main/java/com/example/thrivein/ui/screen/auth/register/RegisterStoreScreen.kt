@@ -16,12 +16,15 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,13 +38,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.thrivein.R
+import com.example.thrivein.data.network.request.RegisterRequest
 import com.example.thrivein.ui.component.button.ThriveInButton
 import com.example.thrivein.ui.component.input.ThriveInDropdown
 import com.example.thrivein.ui.component.input.ThriveInInputText
-import com.example.thrivein.ui.component.loading.ThriveInLoading
 import com.example.thrivein.ui.component.title.Title
 import com.example.thrivein.ui.theme.Primary
 import com.example.thrivein.utils.UiState
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -68,6 +72,10 @@ fun RegisterStoreScreen(
     var address by remember { mutableStateOf("") }
     var storePhone by remember { mutableStateOf("") }
 
+    var isLoading by remember {
+        mutableStateOf<Boolean>(false)
+    }
+
     val scrollState = rememberScrollState()
 
     val configuration = LocalConfiguration.current
@@ -76,19 +84,24 @@ fun RegisterStoreScreen(
 
     val context = LocalContext.current
 
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
-    registerViewModel.uiRegisterState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+
+    registerViewModel.uiRegisterState.collectAsState().value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {
-                ThriveInLoading()
+                isLoading = true
             }
 
             is UiState.Success -> {
                 navigateToScanStore()
+                isLoading = false
             }
 
             is UiState.Error -> {
                 Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+                isLoading = false
             }
 
         }
@@ -96,7 +109,10 @@ fun RegisterStoreScreen(
 
     Scaffold(
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        }
     ) {
 
         Column(
@@ -160,19 +176,41 @@ fun RegisterStoreScreen(
                 )
                 Spacer(modifier = Modifier.height(50.dp))
                 ThriveInButton(
+                    isLoading = !isLoading,
                     onClick = {
 
-                        registerViewModel.registerFlow(
-                            name = name,
-                            email = email,
-                            phone = phone,
-                            password = password,
-                            storeName = storeName,
-                            storeEmail = storeEmail,
-                            storePhone = storePhone,
-                            storeType = selectedBusiness,
-                            address = address,
-                        )
+                        if (
+                            name == ""
+                            || email == ""
+                            || password == ""
+                            || phone == ""
+                            || storeEmail == ""
+                            || storeName == ""
+                            || storePhone == ""
+                            || address == ""
+                            || selectedBusiness == ""
+                        ) {
+                            scope.launch {
+                                snackbarHostState.showSnackbar(
+                                    "Data is invalid!",
+                                    withDismissAction = true,
+                                )
+                            }
+                        } else {
+                            val registerRequest = RegisterRequest(
+                                name = name,
+                                email = email,
+                                phone = phone,
+                                password = password,
+                                storeName = storeName,
+                                storeEmail = storeEmail,
+                                storePhone = storePhone,
+                                storeType = selectedBusiness,
+                                address = address,
+                            )
+                            registerViewModel.register(registerRequest)
+                        }
+
                     },
                     label = stringResource(id = R.string.sign_up),
                 )

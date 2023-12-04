@@ -14,11 +14,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +38,7 @@ import com.example.thrivein.ui.component.button.ThriveInButton
 import com.example.thrivein.ui.component.input.ThriveInInputText
 import com.example.thrivein.ui.component.title.Title
 import com.example.thrivein.ui.theme.Primary
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,9 +60,15 @@ fun RegisterUserScreen(
     val screenHeight = configuration.screenHeightDp.dp
 
 
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+
     Scaffold(
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
     ) {
 
         LazyColumn(
@@ -117,7 +127,18 @@ fun RegisterUserScreen(
                     Spacer(modifier = Modifier.height(50.dp))
                     ThriveInButton(
                         onClick = {
-                            navigateToRegisterStore(name, email, password, phone)
+
+                            if (name == "" || email == "" || password == "" || phone == "") {
+                                scope.launch {
+                                    snackbarHostState.showSnackbar(
+                                        "Data is invalid!",
+                                        withDismissAction = true,
+                                    )
+                                }
+                            } else {
+                                navigateToRegisterStore(name, email, password, phone)
+
+                            }
                         },
                         label = stringResource(id = R.string.sign_up),
                     )

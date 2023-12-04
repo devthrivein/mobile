@@ -1,8 +1,8 @@
-package com.example.thrivein.ui.screen.auth.register
+package com.example.thrivein.ui.screen.auth.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.thrivein.data.network.request.RegisterRequest
+import com.example.thrivein.data.network.request.LoginRequest
 import com.example.thrivein.data.network.response.UserResponse
 import com.example.thrivein.data.repository.auth.AuthRepository
 import com.example.thrivein.utils.UiState
@@ -14,25 +14,24 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterViewModel @Inject constructor(
+class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository,
 ) : ViewModel() {
 
-    private val _uiRegisterState: MutableStateFlow<UiState<UserResponse>> =
+    private val _uiLoginState: MutableStateFlow<UiState<UserResponse>> =
         MutableStateFlow(UiState.Loading)
 
-    val uiRegisterState: StateFlow<UiState<UserResponse>>
-        get() = _uiRegisterState
+    val uiLoginState: StateFlow<UiState<UserResponse>>
+        get() = _uiLoginState
 
-    fun register(registerRequest: RegisterRequest) {
+    fun login(loginRequest: LoginRequest) {
         viewModelScope.launch {
-            authRepository.register(registerRequest).catch {
-                _uiRegisterState.value = UiState.Error(it.message ?: "")
+            authRepository.login(loginRequest).catch {
+                _uiLoginState.value = UiState.Error(it.message ?: "")
             }.collect {
-                _uiRegisterState.value = UiState.Success(it)
+                _uiLoginState.value = UiState.Success(it)
             }
         }
     }
-
 
 }

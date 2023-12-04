@@ -44,7 +44,7 @@ fun SettingItem(
     id: String,
     title: String,
     icon: Painter,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Box(
         modifier = modifier
@@ -58,7 +58,7 @@ fun SettingItem(
                 shape = RoundedCornerShape(22.dp)
             )
             .background(Color.White)
-            .clickable { onClick },
+            .clickable { onClick() },
     ) {
         Row(
             modifier = Modifier
@@ -67,7 +67,7 @@ fun SettingItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Row(
-                modifier  = Modifier
+                modifier = Modifier
                     .width(300.dp)
                     .padding(start = 20.dp),
                 verticalAlignment = Alignment.CenterVertically

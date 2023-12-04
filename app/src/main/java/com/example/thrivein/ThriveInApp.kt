@@ -5,7 +5,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -43,9 +46,13 @@ import com.example.thrivein.ui.screen.storeScanner.StoreScannerScreen
 fun ThriveInApp(
     modifier: Modifier = Modifier,
     navHostController: NavHostController = rememberNavController(),
+    authViewModel: AuthViewModel = hiltViewModel(),
 ) {
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+
+
+    val user by authViewModel.getUser().observeAsState()
 
     Scaffold(
         bottomBar = {
@@ -61,7 +68,7 @@ fun ThriveInApp(
     ) { innerPadding ->
         NavHost(
             navController = navHostController,
-            startDestination = Screen.Landing.route
+            startDestination = if (user?.token.toString() != "") Screen.Home.route else Screen.Landing.route,
         ) {
 //        AUTH
             composable(route = Screen.Landing.route) {
@@ -79,10 +86,18 @@ fun ThriveInApp(
                     navigateToRegisterUser = {
                         navHostController.navigate(Screen.RegisterUser.route)
                     },
-                    navigateToScan = {
-                        navHostController.navigate(Screen.ScanStore.route)
+                    navigateToHome = {
+                        navHostController.navigate(Screen.Home.route) {
+                            popUpTo(navHostController.graph.startDestinationId) {
+                                saveState = true
+                            }
+
+                            restoreState = true
+                            launchSingleTop = true
+                        }
                     },
-                )
+
+                    )
             }
             composable(route = Screen.RegisterUser.route) {
                 RegisterUserScreen(
@@ -123,16 +138,21 @@ fun ThriveInApp(
                     phone = phone,
                     navigateToLogin = {
                         navHostController.navigate(Screen.Login.route) {
-                            popUpTo(Screen.Login.route) {
+                            popUpTo(Screen.Landing.route) {
                                 saveState = true
                             }
+                            restoreState = true
+                            launchSingleTop = true
                         }
                     },
                     navigateToScanStore = {
                         navHostController.navigate(Screen.ScanStore.route) {
-                            popUpTo(Screen.Landing.route) {
+                            popUpTo(navHostController.graph.startDestinationId) {
                                 saveState = true
                             }
+
+                            restoreState = true
+                            launchSingleTop = true
                         }
                     })
             }
@@ -141,7 +161,13 @@ fun ThriveInApp(
             composable(route = Screen.ScanStore.route) {
                 StoreScannerScreen(
                     navigateToHome = {
-                        navHostController.navigate(Screen.Home.route)
+                        navHostController.navigate(Screen.Home.route) {
+                            popUpTo(navHostController.graph.findStartDestination().id) {
+                            }
+
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     },
                     navigateToScoreAndAdvice = { storeId ->
                         navHostController.navigate(Screen.ScoreStore.createRoute(storeId))
@@ -211,7 +237,8 @@ fun ThriveInApp(
             composable(route = Screen.Setting.route) {
                 SettingScreen(
                     navigateToProfile = {},
-                    navigateToStoreProfile = { navHostController.navigate(Screen.StoreProfile.route) }
+                    navigateToStoreProfile = { navHostController.navigate(Screen.StoreProfile.route) },
+                    navHostController = navHostController,
                 )
             }
 

@@ -213,7 +213,9 @@ private fun CameraPreviewView(
                     .offset(y = (-550).dp)
                     .padding(50.dp)
                     .scale(0.8f),
-                onClick = navigateToHome,
+                onClick = {
+                    navigateToHome()
+                },
                 label = stringResource(id = R.string.go_to_home),
                 isOutline = true
             )

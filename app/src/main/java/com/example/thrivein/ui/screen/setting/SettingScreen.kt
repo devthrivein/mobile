@@ -33,9 +33,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import com.example.thrivein.AuthViewModel
 import com.example.thrivein.R
 import com.example.thrivein.ui.component.item.SettingItem
+import com.example.thrivein.ui.navigation.Screen
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.ui.theme.Gray
 import com.example.thrivein.ui.theme.Primary
@@ -47,6 +53,8 @@ fun SettingScreen(
     modifier: Modifier = Modifier,
     navigateToProfile: () -> Unit,
     navigateToStoreProfile: () -> Unit,
+    navHostController: NavHostController,
+    authViewModel: AuthViewModel = hiltViewModel(),
 ) {
     Scaffold(
     ) { innerpadding ->
@@ -133,7 +141,18 @@ fun SettingScreen(
                         id = "5",
                         title = stringResource(id = R.string.logout),
                         icon = painterResource(id = R.drawable.ic_store_profile),
-                        onClick = {}
+                        onClick = {
+                            authViewModel.logout()
+                            navHostController.navigate(Screen.Landing.route) {
+                                popUpTo(navHostController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+
+                                restoreState = true
+                                launchSingleTop = true
+
+                            }
+                        }
                     )
                 }
             }
@@ -147,7 +166,9 @@ fun SettingScreen(
 fun SettingScreenPreview() {
     SettingScreen(
         navigateToProfile = {},
-        navigateToStoreProfile = {})
+        navigateToStoreProfile = {},
+        navHostController = rememberNavController(),
+    )
 }
 
 @Composable
