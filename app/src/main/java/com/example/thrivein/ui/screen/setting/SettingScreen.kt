@@ -145,7 +145,7 @@ fun SettingScreen(
                             authViewModel.logout()
                             navHostController.navigate(Screen.Landing.route) {
                                 popUpTo(navHostController.graph.findStartDestination().id) {
-                                    saveState = true
+
                                 }
 
                                 restoreState = true

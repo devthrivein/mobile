@@ -3,7 +3,7 @@ package com.example.thrivein.ui.screen.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.thrivein.data.local.model.Article
-import com.example.thrivein.data.local.model.ThriveInServiceCategory
+import com.example.thrivein.data.network.response.service.ServiceCategoriesResponse
 import com.example.thrivein.data.repository.article.ArticleRepository
 import com.example.thrivein.data.repository.service.ServiceCategoryRepository
 import com.example.thrivein.utils.UiState
@@ -20,10 +20,10 @@ class HomeViewModel @Inject constructor(
     private val articleRepository: ArticleRepository,
 ) : ViewModel() {
 
-    private val _uiListThriveInServiceCategoryState: MutableStateFlow<UiState<List<ThriveInServiceCategory>>> =
+    private val _uiListThriveInServiceCategoryState: MutableStateFlow<UiState<ServiceCategoriesResponse>> =
         MutableStateFlow(UiState.Loading)
 
-    val uiListThriveInServiceCategoryState: StateFlow<UiState<List<ThriveInServiceCategory>>>
+    val uiListThriveInServiceCategoryState: StateFlow<UiState<ServiceCategoriesResponse>>
         get() = _uiListThriveInServiceCategoryState
 
     private val _uiListArticleState: MutableStateFlow<UiState<List<Article>>> =
@@ -35,12 +35,12 @@ class HomeViewModel @Inject constructor(
 
     fun getAllServiceCategory() {
         viewModelScope.launch {
-            serviceCategoryRepository.getAllService()
+            serviceCategoryRepository.getAllServiceCategories()
                 .catch {
                     _uiListThriveInServiceCategoryState.value = UiState.Error(it.message.toString())
                 }
-                .collect { serviceCategory ->
-                    _uiListThriveInServiceCategoryState.value = UiState.Success(serviceCategory)
+                .collect { serviceCategories ->
+                    _uiListThriveInServiceCategoryState.value = UiState.Success(serviceCategories)
                 }
         }
     }

@@ -28,14 +28,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.thrivein.R
-import com.example.thrivein.data.local.model.ThriveInServiceCategory
+import com.example.thrivein.data.network.response.service.ServiceCategoriesResponse
 import com.example.thrivein.utils.hexStringToColor
 
 @Composable
 fun HomeGridServiceCategoryView(
     modifier: Modifier = Modifier,
-    listCategory: List<ThriveInServiceCategory>,
-    navigateToListService: (String) -> Unit,
+    listCategory: ServiceCategoriesResponse?,
+    navigateToListService: (id: String, title: String) -> Unit,
     navigateToScanStore: () -> Unit,
 ) {
     Column(
@@ -55,13 +55,15 @@ fun HomeGridServiceCategoryView(
             horizontalArrangement = Arrangement.SpaceBetween,
             userScrollEnabled = false,
         ) {
-            items(listCategory, key = { it.id }) {
+            items(listCategory?.services ?: arrayListOf(), key = { it?.id ?: "" }) {
                 GridItem(
-                    navigateToListService = navigateToListService,
-                    id = it.id,
-                    title = it.title,
-                    iconUrl = it.iconUrl,
-                    color = it.color,
+                    navigateToListService = { id, title ->
+                        navigateToListService(id, title)
+                    },
+                    id = it?.id ?: "",
+                    title = it?.title ?: "",
+                    iconUrl = it?.iconUrl ?: "",
+                    color = it?.color ?: "",
                     navigateToScanStore = navigateToScanStore
                 )
             }
@@ -72,7 +74,7 @@ fun HomeGridServiceCategoryView(
 @Composable
 fun GridItem(
     modifier: Modifier = Modifier,
-    navigateToListService: (String) -> Unit,
+    navigateToListService: (id: String, title: String) -> Unit,
     navigateToScanStore: () -> Unit,
     id: String,
     title: String,
@@ -87,10 +89,10 @@ fun GridItem(
                 shape = RoundedCornerShape(size = 16.dp)
             )
             .clickable {
-                if (title.contains("Detect")) {
+                if (title.contains("Scan")) {
                     navigateToScanStore()
                 } else {
-                    navigateToListService(id)
+                    navigateToListService(id, title)
 
                 }
             },
@@ -125,7 +127,8 @@ fun GridItem(
 @Composable
 fun GridItemPreview() {
     GridItem(
-        navigateToListService = {},
+        navigateToListService = { id, title ->
+        },
         id = "1",
         title = "Online Solutions",
         iconUrl = "",

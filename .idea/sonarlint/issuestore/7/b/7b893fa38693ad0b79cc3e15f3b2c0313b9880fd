@@ -1,6 +1,6 @@
 
-jkotlin:S107*"GThis function has 9 parameters, which is greater than the 7 authorized.(›¼¾“üÿÿÿÿ8Éú‰¤Ã1
-Lkotlin:S108K")Either remove or fill this block of code.(€¸¦’üÿÿÿÿ8Êú‰¤Ã1
-Lkotlin:S108^")Either remove or fill this block of code.(€¸¦’üÿÿÿÿ8Êú‰¤Ã1
-^kotlin:S1172,":Remove this unused function parameter "navHostController".(ªøÈ‹şÿÿÿÿ8Ìú‰¤Ã1
-9kotlin:S1128"Remove this unused import.(ŠëÙ 8Ğú‰¤Ã1
+jkotlin:S107("GThis function has 8 parameters, which is greater than the 7 authorized.(›¼¾“üÿÿÿÿ8çÙõÇÃ1
+Lkotlin:S108H")Either remove or fill this block of code.(€¸¦’üÿÿÿÿ8éÙõÇÃ1
+Lkotlin:S108[")Either remove or fill this block of code.(€¸¦’üÿÿÿÿ8éÙõÇÃ1
+Wkotlin:S1172œ"2Use "_" instead of these unused lambda parameters.(è•ÒÏùÿÿÿÿ8 ¼ÿÇÃ1
+9kotlin:S1128"Remove this unused import.(ŠëÙ 8ñÙõÇÃ1

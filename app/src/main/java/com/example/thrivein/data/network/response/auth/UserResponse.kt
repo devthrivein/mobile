@@ -1,4 +1,4 @@
-package com.example.thrivein.data.network.response
+package com.example.thrivein.data.network.response.auth
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -7,10 +7,10 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class UserResponse(
 
-	@field:SerializedName("store")
+    @field:SerializedName("store")
 	val store: Store? = null,
 
-	@field:SerializedName("user")
+    @field:SerializedName("user")
 	val user: User? = null,
 ) : Parcelable
 

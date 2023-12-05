@@ -1,29 +1,33 @@
 package com.example.thrivein.data.repository.service
 
-import com.example.thrivein.data.dummy.ServiceCategoryDummy
-import com.example.thrivein.data.local.model.ThriveInServiceCategory
+import android.util.Log
+import com.example.thrivein.data.network.response.ErrorResponse
+import com.example.thrivein.data.network.response.service.ServiceCategoriesResponse
+import com.example.thrivein.data.network.retrofit.ApiService
+import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flow
+import retrofit2.HttpException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ServiceCategoryRepository @Inject constructor() {
+class ServiceCategoryRepository @Inject constructor(
+    private val apiService: ApiService,
+) {
 
-    private val serviceCategories = mutableListOf<ThriveInServiceCategory>()
-
-
-    init {
-        if (serviceCategories.isEmpty()) {
-            for (thriveInService in ServiceCategoryDummy.dummyService) {
-                serviceCategories.add(thriveInService)
-            }
+    suspend fun getAllServiceCategories(): Flow<ServiceCategoriesResponse> {
+        try {
+            val response = apiService.getAllServiceCategories()
+            return flow { emit(response) }
+        } catch (e: HttpException) {
+            e.printStackTrace()
+            val jsonInString = e.response()?.errorBody()?.string()
+            val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
+            val errorMessage = errorBody?.message ?: "Unknown error"
+            Log.d("ServiceCategoryRepository", "getAllServiceCategories: $errorMessage ")
+            throw Throwable(errorMessage)
         }
-    }
-
-
-    fun getAllService(): Flow<List<ThriveInServiceCategory>> {
-        return flowOf(serviceCategories)
     }
 
 }

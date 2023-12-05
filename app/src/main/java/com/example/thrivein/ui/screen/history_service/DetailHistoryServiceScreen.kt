@@ -53,7 +53,6 @@ fun DetailHistoryServiceScreen(
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
     navigateToConsultation: () -> Unit,
-    navigateToListService: (String) -> Unit
 ) {
 
     val items = listOf<String>("Transfer Bank", "COD", "Check")
@@ -144,7 +143,7 @@ fun DetailHistoryServiceScreen(
                             )
                             Spacer(modifier = Modifier.width(20.dp))
                             ThriveInButton(
-                                onClick = { navigateToListService(id) },
+                                onClick = { },
                                 label = stringResource(R.string.re_order),
                                 isNotWide = true,
                                 modifier = Modifier.fillMaxWidth()
@@ -200,8 +199,7 @@ fun DetailHistoryServiceScreen(
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
 fun DetailHistoryServiceScreenPreview() {
-    DetailHistoryServiceScreen(id = "1", navigateBack = {}, navigateToConsultation = {}) {
-    }
+    DetailHistoryServiceScreen(id = "1", navigateBack = {}, navigateToConsultation = {})
 }
 
 

@@ -3,7 +3,7 @@ package com.example.thrivein.ui.screen.auth.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.thrivein.data.network.request.LoginRequest
-import com.example.thrivein.data.network.response.UserResponse
+import com.example.thrivein.data.network.response.auth.UserResponse
 import com.example.thrivein.data.repository.auth.AuthRepository
 import com.example.thrivein.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
