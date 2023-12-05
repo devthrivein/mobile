@@ -1,4 +1,4 @@
-package com.example.thrivein.ui.screen.service.detail
+package com.example.thrivein.ui.screen.service.detail.detailTransactionService
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi

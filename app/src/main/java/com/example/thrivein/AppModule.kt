@@ -8,6 +8,7 @@ import com.example.thrivein.data.network.retrofit.ApiConfig
 import com.example.thrivein.data.repository.article.ArticleRepository
 import com.example.thrivein.data.repository.auth.AuthRepository
 import com.example.thrivein.data.repository.service.ServiceCategoryRepository
+import com.example.thrivein.data.repository.service.ServiceRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -56,11 +57,25 @@ object AppModule {
     }
 
     @Provides
-    fun provideServiceCategoryRepository(): ServiceCategoryRepository {
+    fun provideServiceCategoryRepository(@ApplicationContext context: Context): ServiceCategoryRepository {
+        val apiService = provideApiConfig().getApiService(context)
+
         try {
-            return ServiceCategoryRepository()
+            return ServiceCategoryRepository(apiService)
         } catch (e: Exception) {
             Log.e("AppModule", "Error providing ServiceCategoryRepository: ${e.message}", e)
+            throw e
+        }
+    }
+
+    @Provides
+    fun provideServiceRepository(@ApplicationContext context: Context): ServiceRepository {
+        val apiService = provideApiConfig().getApiService(context)
+
+        try {
+            return ServiceRepository(apiService)
+        } catch (e: Exception) {
+            Log.e("AppModule", "Error providing ServiceRepository: ${e.message}", e)
             throw e
         }
     }

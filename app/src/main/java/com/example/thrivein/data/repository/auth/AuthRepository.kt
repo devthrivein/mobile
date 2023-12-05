@@ -6,7 +6,7 @@ import com.example.thrivein.data.local.preferences.UserPreference
 import com.example.thrivein.data.network.request.LoginRequest
 import com.example.thrivein.data.network.request.RegisterRequest
 import com.example.thrivein.data.network.response.ErrorResponse
-import com.example.thrivein.data.network.response.UserResponse
+import com.example.thrivein.data.network.response.auth.UserResponse
 import com.example.thrivein.data.network.retrofit.ApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow

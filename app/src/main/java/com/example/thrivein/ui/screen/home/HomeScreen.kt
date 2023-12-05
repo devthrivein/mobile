@@ -21,12 +21,10 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.thrivein.AuthViewModel
 import com.example.thrivein.R
 import com.example.thrivein.data.local.model.Article
-import com.example.thrivein.data.local.model.ThriveInServiceCategory
+import com.example.thrivein.data.network.response.service.ServiceCategoriesResponse
 import com.example.thrivein.ui.component.button.SeeAllButton
 import com.example.thrivein.ui.component.grid.HomeGridServiceCategoryView
 import com.example.thrivein.ui.component.header.HomeHeader
@@ -41,8 +39,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    navHostController: NavHostController,
-    navigateToListService: (String) -> Unit,
+    navigateToListService: (id: String, title: String) -> Unit,
     navigateToScanStore: () -> Unit,
     navigateToListArticle: () -> Unit,
     navigateToDetailArticle: (String) -> Unit,
@@ -51,7 +48,7 @@ fun HomeScreen(
     authViewModel: AuthViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
-    var serviceCategories: List<ThriveInServiceCategory> = arrayListOf<ThriveInServiceCategory>()
+    var serviceCategories: ServiceCategoriesResponse? = null
     var articles: List<Article> = arrayListOf<Article>()
 
     val user by authViewModel.getUser().observeAsState()
@@ -118,7 +115,9 @@ fun HomeScreen(
             item {
                 HomeGridServiceCategoryView(
                     listCategory = serviceCategories,
-                    navigateToListService = navigateToListService,
+                    navigateToListService = { id, title ->
+                        navigateToListService(id, title)
+                    },
                     navigateToScanStore = navigateToScanStore,
                     modifier = Modifier.padding(horizontal = 24.dp)
                 )
@@ -154,8 +153,8 @@ fun HomeScreen(
 @Composable
 fun HomeScreenPreview() {
     HomeScreen(
-        navHostController = rememberNavController(),
-        navigateToListService = {},
+        navigateToListService = { id, title ->
+        },
         navigateToDetailArticle = {},
         navigateToListArticle = {},
         navigateToScanStore = {},

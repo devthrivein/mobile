@@ -1,6 +1,7 @@
 package com.example.thrivein
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -31,9 +32,9 @@ import com.example.thrivein.ui.screen.history_service.DetailWaitingListScreen
 import com.example.thrivein.ui.screen.history_service.HistoryServiceScreen
 import com.example.thrivein.ui.screen.home.HomeScreen
 import com.example.thrivein.ui.screen.scoreAndAdvice.ScoreAndAdviceScreen
-import com.example.thrivein.ui.screen.service.detail.DetailConsultServiceScreen
-import com.example.thrivein.ui.screen.service.detail.DetailServiceScreen
-import com.example.thrivein.ui.screen.service.detail.DetailTransactionServiceScreen
+import com.example.thrivein.ui.screen.service.detail.detailConsultService.DetailConsultServiceScreen
+import com.example.thrivein.ui.screen.service.detail.detailService.DetailServiceScreen
+import com.example.thrivein.ui.screen.service.detail.detailTransactionService.DetailTransactionServiceScreen
 import com.example.thrivein.ui.screen.service.list.ListServiceScreen
 import com.example.thrivein.ui.screen.service.list.WaitingListServiceScreen
 import com.example.thrivein.ui.screen.setting.SettingScreen
@@ -69,6 +70,7 @@ fun ThriveInApp(
         NavHost(
             navController = navHostController,
             startDestination = if (user?.token.toString() != "") Screen.Home.route else Screen.Landing.route,
+            modifier = Modifier.padding(innerPadding)
         ) {
 //        AUTH
             composable(route = Screen.Landing.route) {
@@ -194,9 +196,13 @@ fun ThriveInApp(
 //        MAIN
             composable(route = Screen.Home.route) {
                 HomeScreen(
-                    navHostController = navHostController,
-                    navigateToListService = { serviceCategoryId ->
-                        navHostController.navigate(Screen.ListService.createRoute(serviceCategoryId))
+                    navigateToListService = { serviceCategoryId, serviceTitle ->
+                        navHostController.navigate(
+                            Screen.ListService.createRoute(
+                                serviceCategoryId,
+                                serviceTitle
+                            )
+                        )
                     },
                     navigateToListArticle = {
                         navHostController.navigate(Screen.ListArticle.route)
@@ -257,18 +263,27 @@ fun ThriveInApp(
 
             composable(
                 route = Screen.ListService.route,
-                arguments = listOf(navArgument("serviceCategoryId") { type = NavType.StringType })
+                arguments = listOf(
+                    navArgument("serviceCategoryId") { type = NavType.StringType },
+                    navArgument("serviceTitle") { type = NavType.StringType }
+                )
             ) {
                 val id = it.arguments?.getString("serviceCategoryId") ?: ""
+                val title = it.arguments?.getString("serviceTitle") ?: ""
 
                 ListServiceScreen(
                     id = id,
-                    title = id,
+                    title = title,
                     navigateBack = {
                         navHostController.navigateUp()
                     },
-                    navigateToDetailService = { serviceId ->
-                        navHostController.navigate(Screen.DetailService.createRoute(serviceId))
+                    navigateToDetailService = { serviceId, titleService ->
+                        navHostController.navigate(
+                            Screen.DetailService.createRoute(
+                                serviceId,
+                                titleService
+                            )
+                        )
                     }
                 )
             }
@@ -304,12 +319,18 @@ fun ThriveInApp(
             }
             composable(
                 route = Screen.DetailService.route,
-                arguments = listOf(navArgument("serviceId") { type = NavType.StringType })
+                arguments = listOf(
+                    navArgument("serviceId") { type = NavType.StringType },
+                    navArgument("title") { type = NavType.StringType },
+
+                    )
             ) {
                 val id = it.arguments?.getString("serviceId") ?: ""
+                val title = it.arguments?.getString("title") ?: ""
 
                 DetailServiceScreen(
                     id = id,
+                    title = title,
                     navigateBack = {
                         navHostController.navigateUp()
                     },
@@ -370,9 +391,6 @@ fun ThriveInApp(
                     },
                     navigateToConsultation = {
                         navHostController.navigate(Screen.Consultation.route)
-                    },
-                    navigateToListService = { serviceCategoryId ->
-                        navHostController.navigate(Screen.ListService.createRoute(serviceCategoryId))
                     },
                 )
             }

@@ -81,6 +81,8 @@ dependencies {
 //    Google Font
     implementation("androidx.compose.ui:ui-text-google-fonts:1.5.4")
 
+//    Swipe Refresh
+    implementation("com.google.accompanist:accompanist-swiperefresh:0.31.5-beta")
 
 //    Carousel
     implementation("com.google.accompanist:accompanist-pager:0.28.0")
@@ -108,8 +110,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    implementation ("androidx.compose.runtime:runtime-livedata:1.5.4")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
 
 //    test
     testImplementation("junit:junit:4.13.2")
