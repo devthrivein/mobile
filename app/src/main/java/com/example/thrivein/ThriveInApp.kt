@@ -38,6 +38,7 @@ import com.example.thrivein.ui.screen.service.list.ListServiceScreen
 import com.example.thrivein.ui.screen.service.list.WaitingListServiceScreen
 import com.example.thrivein.ui.screen.setting.SettingScreen
 import com.example.thrivein.ui.screen.setting.StoreProfileScreen
+import com.example.thrivein.ui.screen.setting.UserProfileScreen
 import com.example.thrivein.ui.screen.storeScanner.StoreScannerScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -243,7 +244,19 @@ fun ThriveInApp(
             }
 
             composable(route = Screen.StoreProfile.route) {
-                StoreProfileScreen()
+                StoreProfileScreen(
+                    navigateBack = {
+                        navHostController.navigateUp()
+                    }
+                )
+            }
+
+            composable(route = Screen.UserProfile.route) {
+                UserProfileScreen(
+                    navigateBack = {
+                        navHostController.navigateUp()
+                    }
+                )
             }
 
 //        List

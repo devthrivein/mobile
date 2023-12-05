@@ -25,6 +25,8 @@ sealed class Screen(val route: String) {
     //  Setting
     object Setting : Screen("setting")
     object StoreProfile : Screen("home/setting-store-profile")
+    object UserProfile : Screen("home/setting-user-profile")
+
 
     //    List
     object ListArticle : Screen("home/article")
