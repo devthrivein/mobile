@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 data class ListServicesResponse(
 
 	@field:SerializedName("list-services")
-	val listServices: List<ListServicesItem?>? = null
+	val listServices: List<ListServicesItem?>? = null,
 ) : Parcelable
 
 @Parcelize
@@ -23,9 +23,9 @@ data class ListServicesItem(
 	@field:SerializedName("description")
 	val description: String? = null,
 
-	@field:SerializedName("id")
-	val id: String? = null,
+	@field:SerializedName("category")
+	val category: String? = null,
 
 	@field:SerializedName("title")
-	val title: String? = null
+	val title: String? = null,
 ) : Parcelable

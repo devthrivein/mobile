@@ -24,9 +24,9 @@ class ListServiceViewModel @Inject constructor(
         get() = _uiListServicesState
 
 
-    fun getAllServices(id: String) {
+    fun getAllServices(category: String) {
         viewModelScope.launch {
-            serviceRepository.getAllServices(id)
+            serviceRepository.getAllServices(category)
                 .catch {
                     _uiListServicesState.value = UiState.Error(it.message.toString())
                 }

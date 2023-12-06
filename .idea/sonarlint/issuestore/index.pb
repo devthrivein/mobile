@@ -169,3 +169,7 @@ Qapp/src/main/java/com/example/thrivein/data/network/response/auth/UserResponse.
 Papp/src/main/java/com/example/thrivein/data/local/preferences/StorePreference.kt,9\3\93132d13d45c82a8d3a702af203d15d050a5f3f5
 n
 >app/src/main/java/com/example/thrivein/ui/component/Shimmer.kt,6\2\62371c252c280613078fd269f4f5fe5ac63ea0b4
+‘
+aapp/src/main/java/com/example/thrivein/data/network/response/service/ServiceCategoriesResponse.kt,d\2\d2e70c8d7e8c038a1fdc2d7e808b06c4ee0d5d5c
+“
+capp/src/main/java/com/example/thrivein/data/repository/service/ConsultationServiceChatRepository.kt,9\a\9af3351b6b3634d0342f1304f112d8ff908f0952

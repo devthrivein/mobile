@@ -4,6 +4,7 @@ plugins {
     id("kotlin-parcelize")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -75,6 +76,7 @@ dependencies {
 
 //    Hilt
     implementation("com.google.dagger:hilt-android:2.48")
+    implementation("com.google.firebase:firebase-database:20.3.0")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 

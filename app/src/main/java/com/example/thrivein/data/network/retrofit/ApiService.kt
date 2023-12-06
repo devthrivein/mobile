@@ -34,9 +34,9 @@ interface ApiService {
 
 
     //    Service
-    @GET("list-services/{id}")
+    @GET("list-services/{category}")
     suspend fun getAllServices(
-        @Path("id") id: String,
+        @Path("category") category: String,
     ): ListServicesResponse
 
     @GET("detail-services/{service_id}")

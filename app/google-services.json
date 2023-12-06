@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "355596557227",
+    "firebase_url": "https://absolute-brook-402712-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "absolute-brook-402712",
+    "storage_bucket": "absolute-brook-402712.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355596557227:android:485d6301c32d9350f710ee",
+        "android_client_info": {
+          "package_name": "com.example.thrivein"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3_oW6-LIpMh03RcnHNT4dUXudAXKuLns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
