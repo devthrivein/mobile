@@ -167,3 +167,5 @@ Kapp/src/main/java/com/example/thrivein/ui/component/header/ProfileHeader.kt,b\
 Qapp/src/main/java/com/example/thrivein/data/network/response/auth/UserResponse.kt,4\9\49e8bc90006e5a0c8776c2ed02b67a6f49ca274a
 €
 Papp/src/main/java/com/example/thrivein/data/local/preferences/StorePreference.kt,9\3\93132d13d45c82a8d3a702af203d15d050a5f3f5
+n
+>app/src/main/java/com/example/thrivein/ui/component/Shimmer.kt,6\2\62371c252c280613078fd269f4f5fe5ac63ea0b4
