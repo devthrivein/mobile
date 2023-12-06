@@ -37,12 +37,13 @@ fun ThriveInDropdown(
     onSelected: (String) -> Unit,
     items: List<String>,
     label: String,
+    selected: String = "Select",
 ) {
     var isExpanded by remember {
         mutableStateOf(false)
     }
 
-    var selectedItem by remember { mutableStateOf("Select") }
+    var selectedItem by remember { mutableStateOf(selected) }
 
     Column {
         Text(

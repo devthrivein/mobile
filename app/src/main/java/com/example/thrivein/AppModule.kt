@@ -2,8 +2,10 @@ package com.example.thrivein
 
 import android.content.Context
 import android.util.Log
+import com.example.thrivein.data.local.preferences.StorePreference
 import com.example.thrivein.data.local.preferences.UserPreference
-import com.example.thrivein.data.local.preferences.dataStore
+import com.example.thrivein.data.local.preferences.dataUserStore
+import com.example.thrivein.data.local.preferences.dataUserStoreStore
 import com.example.thrivein.data.network.retrofit.ApiConfig
 import com.example.thrivein.data.repository.article.ArticleRepository
 import com.example.thrivein.data.repository.auth.AuthRepository
@@ -23,9 +25,20 @@ object AppModule {
     fun provideUserPreference(@ApplicationContext context: Context): UserPreference {
 
         try {
-            return UserPreference(context.dataStore)
+            return UserPreference(context.dataUserStore)
         } catch (e: Exception) {
             Log.e("AppModule", "Error providing UserPreference: ${e.message}", e)
+            throw e
+        }
+    }
+
+    @Provides
+    fun provideStorePreference(@ApplicationContext context: Context): StorePreference {
+
+        try {
+            return StorePreference(context.dataUserStoreStore)
+        } catch (e: Exception) {
+            Log.e("AppModule", "Error providing StorePreference: ${e.message}", e)
             throw e
         }
     }
@@ -44,11 +57,12 @@ object AppModule {
     @Provides
     fun provideAuthRepository(@ApplicationContext context: Context): AuthRepository {
         val pref = provideUserPreference(context)
+        val storePref = provideStorePreference(context)
         val apiService = provideApiConfig().getApiService(context)
 
         try {
             return AuthRepository(
-                pref, apiService
+                pref, storePref, apiService
             )
         } catch (e: Exception) {
             Log.e("AppModule", "Error providing AuthRepository: ${e.message}", e)

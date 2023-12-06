@@ -12,13 +12,13 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
+val Context.dataUserStore: DataStore<Preferences> by preferencesDataStore(name = "user")
 
 @Singleton
-class UserPreference @Inject constructor(private val dataStore: DataStore<Preferences>) {
+class UserPreference @Inject constructor(private val dataUserStore: DataStore<Preferences>) {
 
     fun getUser(): Flow<UserModel> {
-        return dataStore.data.map { preferences ->
+        return dataUserStore.data.map { preferences ->
             UserModel(
                 userId = preferences[ID_KEY] ?: "",
                 token = preferences[TOKEN_KEY] ?: "",
@@ -31,7 +31,7 @@ class UserPreference @Inject constructor(private val dataStore: DataStore<Prefer
     }
 
     suspend fun saveUser(user: UserModel) {
-        dataStore.edit { preferences ->
+        dataUserStore.edit { preferences ->
             preferences[ID_KEY] = user.userId ?: ""
             preferences[NAME_KEY] = user.name
             preferences[TOKEN_KEY] = user.token ?: ""
@@ -42,7 +42,7 @@ class UserPreference @Inject constructor(private val dataStore: DataStore<Prefer
     }
 
     suspend fun logout() {
-        dataStore.edit { preferences ->
+        dataUserStore.edit { preferences ->
             preferences.clear()
         }
     }

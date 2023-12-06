@@ -23,6 +23,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.TopCenter
 import androidx.compose.ui.Modifier
@@ -56,6 +58,9 @@ fun SettingScreen(
     navHostController: NavHostController,
     authViewModel: AuthViewModel = hiltViewModel(),
 ) {
+
+    val user by authViewModel.getUser().observeAsState()
+
     Scaffold(
     ) { innerpadding ->
         val scrollState = rememberScrollState()
@@ -75,10 +80,10 @@ fun SettingScreen(
                         .verticalScroll(scrollState)
                 ) {
                     TopBarSetting(
-                        name = "Fika",
-                        iconUrl = "https://th.bing.com/th/id/OIP.SdB_qPhbKS73WKzeP25VOgHaK9?rs=1&pid=ImgDetMain"
+                        name = user?.name ?: "",
+                        iconUrl = user?.avatarUrl ?: ""
                     ) {
-                        navigateToProfile
+                        navigateToProfile()
                     }
                     Spacer(modifier = Modifier.height(10.dp))
                     //your store

@@ -84,7 +84,7 @@ fun ProfileHeader(
                     .size(40.dp)
                     .clip(CircleShape)
                     .background(color = Background)
-                    .clickable { navigateBack },
+                    .clickable { navigateBack() },
                 imageVector = Icons.Default.ArrowBack,
                 tint = Primary,
                 contentDescription = stringResource(R.string.to_detail),
