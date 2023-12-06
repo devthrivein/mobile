@@ -62,7 +62,6 @@ fun UserProfileScreen(
             SnackbarHost(hostState = snackbarHostState)
         },
     ) {
-
         Column(
             modifier = Modifier
                 .height(screenHeight)
