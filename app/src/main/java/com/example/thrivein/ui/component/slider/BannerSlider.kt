@@ -18,7 +18,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.thrivein.R
+import com.example.thrivein.data.network.response.banner.BannerResponse
 import com.example.thrivein.ui.theme.Primary
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -31,14 +33,10 @@ import kotlinx.coroutines.yield
 @Composable
 fun BannerSlider(
     modifier: Modifier = Modifier,
+    listBanner: BannerResponse?
 ) {
 
     val pagerState = rememberPagerState(initialPage = 0)
-    val imageSlider = listOf(
-        painterResource(id = R.drawable.img_banner1),
-        painterResource(id = R.drawable.img_banner2),
-        painterResource(id = R.drawable.img_banner3)
-    )
 
     LaunchedEffect(Unit) {
         while (true) {
@@ -52,7 +50,7 @@ fun BannerSlider(
 
     Column {
         HorizontalPager(
-            count = imageSlider.size,
+            count = listBanner?.banners?.size ?: 0,
             state = pagerState,
             userScrollEnabled = true,
             itemSpacing = 16.dp,
@@ -60,18 +58,21 @@ fun BannerSlider(
                 .height(160.dp)
                 .fillMaxWidth()
         ) { page ->
+            val banner = listBanner?.banners?.getOrNull(page)
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(16.dp))
                     .background(Primary)
             ) {
-                Image(
-                    painter = imageSlider[page],
-                    contentDescription = "",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxSize()
-                )
+                banner?.bannerUrl?.let { imageUrl ->
+                    AsyncImage(
+                        model = banner.bannerUrl,
+                        contentDescription = banner.title ?: "",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
+                }
 
             }
         }
@@ -84,8 +85,9 @@ fun BannerSlider(
         )
     }
 }
+
 @Preview
 @Composable
-fun BannerSliderPreview(){
-    BannerSlider()
+fun BannerSliderPreview() {
+    BannerSlider(listBanner = BannerResponse())
 }
