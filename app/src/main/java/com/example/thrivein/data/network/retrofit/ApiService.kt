@@ -4,7 +4,9 @@ package com.example.thrivein.data.network.retrofit
 import com.example.thrivein.data.network.request.LoginRequest
 import com.example.thrivein.data.network.request.RegisterRequest
 import com.example.thrivein.data.network.response.MessageResponse
+import com.example.thrivein.data.network.response.article.ArticlesResponse
 import com.example.thrivein.data.network.response.auth.UserResponse
+import com.example.thrivein.data.network.response.banner.BannerResponse
 import com.example.thrivein.data.network.response.service.ListServicesResponse
 import com.example.thrivein.data.network.response.service.ServiceCategoriesResponse
 import com.example.thrivein.data.network.response.service.ServiceResponse
@@ -31,7 +33,10 @@ interface ApiService {
     //    HOME
     @GET("services")
     suspend fun getAllServiceCategories(): ServiceCategoriesResponse
-
+    @GET("banners")
+    suspend fun getAllBannerSlider(): BannerResponse
+    @GET("articles")
+    suspend fun getAllArticles(): ArticlesResponse
 
     //    Service
     @GET("list-services/{category}")
@@ -43,4 +48,6 @@ interface ApiService {
     suspend fun getServiceById(
         @Path("service_id") serviceId: String,
     ): ServiceResponse
+
+
 }

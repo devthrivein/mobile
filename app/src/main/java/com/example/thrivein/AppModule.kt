@@ -9,6 +9,7 @@ import com.example.thrivein.data.local.preferences.dataUserStoreStore
 import com.example.thrivein.data.network.retrofit.ApiConfig
 import com.example.thrivein.data.repository.article.ArticleRepository
 import com.example.thrivein.data.repository.auth.AuthRepository
+import com.example.thrivein.data.repository.banner.BannerRepository
 import com.example.thrivein.data.repository.service.ServiceCategoryRepository
 import com.example.thrivein.data.repository.service.ServiceRepository
 import dagger.Module
@@ -95,12 +96,25 @@ object AppModule {
     }
 
     @Provides
-    fun provideArticleRepository(): ArticleRepository {
+    fun provideArticleRepository(@ApplicationContext context: Context): ArticleRepository {
+        val apiService = provideApiConfig().getApiService(context)
         try {
-            return ArticleRepository()
+            return ArticleRepository(apiService)
         } catch (e: Exception) {
             Log.e("AppModule", "Error providing ArticleRepository: ${e.message}", e)
             throw e
         }
     }
+
+    @Provides
+    fun providerBannerRepository(@ApplicationContext context: Context): BannerRepository {
+        val apiService = provideApiConfig().getApiService(context)
+        try {
+            return BannerRepository(apiService)
+        } catch (e: Exception) {
+            Log.e("AppModule", "Error providing BannerRepository: ${e.message}", e)
+            throw e
+        }
+    }
+
 }

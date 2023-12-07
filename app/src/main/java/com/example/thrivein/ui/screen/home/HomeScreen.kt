@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -24,6 +25,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.thrivein.AuthViewModel
 import com.example.thrivein.R
 import com.example.thrivein.data.local.model.Article
+import com.example.thrivein.data.network.response.article.ArticlesResponse
+import com.example.thrivein.data.network.response.banner.BannerResponse
 import com.example.thrivein.data.network.response.service.ServiceCategoriesResponse
 import com.example.thrivein.ui.component.button.SeeAllButton
 import com.example.thrivein.ui.component.grid.HomeGridServiceCategoryView
@@ -49,7 +52,9 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
     var serviceCategories: ServiceCategoriesResponse? = null
-    var articles: List<Article> = arrayListOf<Article>()
+//    var articles: List<Article> = arrayListOf<Article>()
+    var listArticles: ArticlesResponse? = null
+    var banners: BannerResponse? = null
 
     val user by authViewModel.getUser().observeAsState()
 
@@ -76,11 +81,11 @@ fun HomeScreen(
     homeViewModel.uiListArticleState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {
-                homeViewModel.getAllArticle()
+                homeViewModel.getAllArticles()
             }
 
             is UiState.Success -> {
-                articles = uiState.data
+                listArticles = uiState.data
 
             }
 
@@ -89,6 +94,22 @@ fun HomeScreen(
             }
 
             else -> {}
+        }
+    }
+
+    homeViewModel.uiThriveInBannerState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
+            is UiState.Loading -> {
+                homeViewModel.getAllBannerSlider()
+            }
+
+            is UiState.Success -> {
+                banners = uiState.data
+            }
+
+            is  UiState.Error -> {
+                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -109,7 +130,7 @@ fun HomeScreen(
                 )
             }
             item {
-                BannerSlider(modifier = Modifier.padding(horizontal = 24.dp))
+                BannerSlider(listBanner = banners, modifier = Modifier.padding(horizontal = 24.dp))
             }
 
             item {
@@ -132,20 +153,20 @@ fun HomeScreen(
                 )
                 Spacer(modifier = Modifier.height(6.dp))
             }
-            items(items = articles, key = { it.id }) { article ->
+            items(items = listArticles?.articles.orEmpty(), key = { it?.articleId.orEmpty() }) { article ->
                 ArticleHomeItem(
-                    title = article.title,
-                    content = article.content,
-                    bannerUrl = article.bannerUrl,
+//                    title = article.title,
+//                    content = article.content,
+//                    bannerUrl = article.bannerUrl,
+                    article = article,
                     modifier = Modifier
                         .padding(vertical = 10.dp, horizontal = 24.dp)
                         .clickable {
-                            navigateToDetailArticle(article.id)
+                            navigateToDetailArticle(article?.articleId ?: "")
                         }
                 )
             }
         }
-
     }
 }
 
