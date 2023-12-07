@@ -41,7 +41,7 @@ fun CameraButton(
         Icon(
             modifier = Modifier
                 .fillMaxSize()
-                .scale(0.8f),
+                .scale(0.85f),
             painter = painterResource(id = R.drawable.ic_camera),
             contentDescription = stringResource(
                 id = R.string.camera

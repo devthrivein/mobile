@@ -243,7 +243,7 @@ fun ThriveInApp(
 
             composable(route = Screen.Setting.route) {
                 SettingScreen(
-                    navigateToProfile = {},
+                    navigateToProfile = { navHostController.navigate(Screen.UserProfile.route) },
                     navigateToStoreProfile = { navHostController.navigate(Screen.StoreProfile.route) },
                     navHostController = navHostController,
                 )

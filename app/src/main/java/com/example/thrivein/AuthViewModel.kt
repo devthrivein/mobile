@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.thrivein.data.local.model.StoreModel
 import com.example.thrivein.data.local.model.UserModel
 import com.example.thrivein.data.repository.auth.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,6 +32,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun getUser(): LiveData<UserModel> = authRepository.getUser().asLiveData()
+    fun getStore(): LiveData<StoreModel> = authRepository.getStore().asLiveData()
 
     fun logout() {
         viewModelScope.launch {

@@ -2,7 +2,7 @@ package com.example.thrivein.data.network.retrofit
 
 import android.content.Context
 import com.example.thrivein.data.local.preferences.UserPreference
-import com.example.thrivein.data.local.preferences.dataStore
+import com.example.thrivein.data.local.preferences.dataUserStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -48,7 +48,7 @@ class ApiConfig @Inject constructor() {
     }
 
     private fun getTokenFromContext(context: Context): String {
-        val pref = UserPreference(context.dataStore)
+        val pref = UserPreference(context.dataUserStore)
         val user = runBlocking {
             pref.getUser().first()
         }

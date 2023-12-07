@@ -17,9 +17,9 @@ class ServiceRepository @Inject constructor(
     private val apiService: ApiService,
 ) {
 
-    suspend fun getAllServices(id: String): Flow<ListServicesResponse> {
+    suspend fun getAllServices(category: String): Flow<ListServicesResponse> {
         try {
-            val response = apiService.getAllServices(id)
+            val response = apiService.getAllServices(category)
             return flow { emit(response) }
         } catch (e: HttpException) {
             e.printStackTrace()

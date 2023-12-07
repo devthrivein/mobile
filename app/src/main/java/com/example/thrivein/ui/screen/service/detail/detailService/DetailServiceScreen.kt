@@ -35,6 +35,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.thrivein.R
 import com.example.thrivein.data.network.response.service.ServiceResponse
+import com.example.thrivein.ui.component.ShimmerBrush
 import com.example.thrivein.ui.component.button.SeeAllButton
 import com.example.thrivein.ui.component.button.ThriveInButton
 import com.example.thrivein.ui.component.header.DetailTopBar
@@ -117,7 +118,7 @@ fun DetailServiceScreen(
                         modifier = Modifier
                             .height(166.dp)
                             .fillMaxWidth()
-                            .background(Primary),
+                            .background(ShimmerBrush(targetValue = 1300f, showShimmer = isLoading)),
                         contentScale = ContentScale.Crop,
                     )
                 }
@@ -125,7 +126,9 @@ fun DetailServiceScreen(
                 item {
                     Text(
                         text = servicesResponse?.description ?: "",
-                        modifier = Modifier.padding(24.dp)
+                        modifier = Modifier
+                            .padding(24.dp)
+                            .background(ShimmerBrush(targetValue = 1300f, showShimmer = isLoading))
                     )
                 }
 

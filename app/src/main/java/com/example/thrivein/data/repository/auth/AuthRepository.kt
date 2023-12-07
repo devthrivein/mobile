@@ -1,7 +1,9 @@
 package com.example.thrivein.data.repository.auth
 
 import android.util.Log
+import com.example.thrivein.data.local.model.StoreModel
 import com.example.thrivein.data.local.model.UserModel
+import com.example.thrivein.data.local.preferences.StorePreference
 import com.example.thrivein.data.local.preferences.UserPreference
 import com.example.thrivein.data.network.request.LoginRequest
 import com.example.thrivein.data.network.request.RegisterRequest
@@ -18,6 +20,7 @@ import javax.inject.Singleton
 @Singleton
 class AuthRepository @Inject constructor(
     private val pref: UserPreference,
+    private val storePref: StorePreference,
     private val apiService: ApiService,
 ) {
 
@@ -25,13 +28,22 @@ class AuthRepository @Inject constructor(
         return pref.getUser()
     }
 
+    fun getStore(): Flow<StoreModel> {
+        return storePref.getStore()
+    }
+
     suspend fun saveUser(user: UserModel) {
         pref.saveUser(user)
+    }
+
+    suspend fun saveStore(store: StoreModel) {
+        storePref.saveStore(store)
     }
 
     suspend fun logout() {
         apiService.logout()
         pref.logout()
+        storePref.clearStore()
     }
 
     suspend fun register(request: RegisterRequest): Flow<UserResponse> {
@@ -48,7 +60,16 @@ class AuthRepository @Inject constructor(
                 avatarUrl = response.user?.avatarUrl,
             )
 
+            val store = StoreModel(
+                storeName = response.store?.storeName ?: "",
+                storeEmail = response.store?.storeEmail ?: "",
+                storePhone = response.store?.storePhone ?: "",
+                type = response.store?.type ?: "",
+                address = response.store?.address ?: "",
+            )
+
             saveUser(user)
+            saveStore(store)
 
             return flow { emit(response) }
         } catch (e: HttpException) {
@@ -76,7 +97,16 @@ class AuthRepository @Inject constructor(
                 avatarUrl = response.user?.avatarUrl,
             )
 
+            val store = StoreModel(
+                storeName = response.store?.storeName ?: "",
+                storeEmail = response.store?.storeEmail ?: "",
+                storePhone = response.store?.storePhone ?: "",
+                type = response.store?.type ?: "",
+                address = response.store?.address ?: "",
+            )
+
             saveUser(user)
+            saveStore(store)
 
             return flow { emit(response) }
         } catch (e: HttpException) {

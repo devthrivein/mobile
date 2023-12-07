@@ -55,12 +55,12 @@ fun HomeGridServiceCategoryView(
             horizontalArrangement = Arrangement.SpaceBetween,
             userScrollEnabled = false,
         ) {
-            items(listCategory?.services ?: arrayListOf(), key = { it?.id ?: "" }) {
+            items(listCategory?.services ?: arrayListOf(), key = { it?.category ?: "" }) {
                 GridItem(
                     navigateToListService = { id, title ->
                         navigateToListService(id, title)
                     },
-                    id = it?.id ?: "",
+                    id = it?.category ?: "",
                     title = it?.title ?: "",
                     iconUrl = it?.iconUrl ?: "",
                     color = it?.color ?: "",

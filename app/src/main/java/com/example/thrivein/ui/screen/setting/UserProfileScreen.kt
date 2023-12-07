@@ -16,6 +16,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -28,6 +29,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.thrivein.AuthViewModel
 import com.example.thrivein.R
 import com.example.thrivein.ui.component.header.ProfileHeader
 import com.example.thrivein.ui.component.input.ThriveInInputText
@@ -37,13 +40,12 @@ import com.example.thrivein.ui.component.input.ThriveInInputText
 @Composable
 fun UserProfileScreen(
     modifier: Modifier = Modifier,
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    authViewModel: AuthViewModel = hiltViewModel(),
 ) {
 
-    var name by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var phone by remember { mutableStateOf("") }
+    val user by authViewModel.getUser().observeAsState()
+
 
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
@@ -62,6 +64,13 @@ fun UserProfileScreen(
             SnackbarHost(hostState = snackbarHostState)
         },
     ) {
+
+        var name by remember { mutableStateOf(user?.name ?: "") }
+        var email by remember { mutableStateOf(user?.email ?: "") }
+        var password by remember { mutableStateOf("") }
+        var phone by remember { mutableStateOf(user?.phone ?: "") }
+
+
         Column(
             modifier = Modifier
                 .height(screenHeight)
@@ -71,7 +80,7 @@ fun UserProfileScreen(
         ) {
             ProfileHeader(
                 title = stringResource(id = R.string.profile),
-                iconUrl = "https://th.bing.com/th/id/OIP.SdB_qPhbKS73WKzeP25VOgHaK9?rs=1&pid=ImgDetMain",
+                iconUrl = user?.avatarUrl ?: "",
                 navigateBack = navigateBack
             )
             Column(
