@@ -10,6 +10,7 @@ import com.example.thrivein.data.network.retrofit.ApiConfig
 import com.example.thrivein.data.repository.article.ArticleRepository
 import com.example.thrivein.data.repository.auth.AuthRepository
 import com.example.thrivein.data.repository.banner.BannerRepository
+import com.example.thrivein.data.repository.history.HistoryRepository
 import com.example.thrivein.data.repository.service.ServiceCategoryRepository
 import com.example.thrivein.data.repository.service.ServiceRepository
 import dagger.Module
@@ -113,6 +114,17 @@ object AppModule {
             return BannerRepository(apiService)
         } catch (e: Exception) {
             Log.e("AppModule", "Error providing BannerRepository: ${e.message}", e)
+            throw e
+        }
+    }
+
+    @Provides
+    fun providerHistoryRepository(@ApplicationContext context: Context): HistoryRepository {
+        val apiService = provideApiConfig().getApiService(context)
+        try {
+            return HistoryRepository(apiService)
+        } catch (e: Exception) {
+            Log.e("AppModule", "Error providing HistoryRepository: ${e.message}", e)
             throw e
         }
     }

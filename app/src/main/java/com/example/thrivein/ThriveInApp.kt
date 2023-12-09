@@ -228,7 +228,7 @@ fun ThriveInApp(
                     },
                     navigateToDetailHistoryService = { historyId ->
                         navHostController.navigate(Screen.DetailHistoryService.createRoute(historyId))
-                    }
+                    },
                 )
             }
 

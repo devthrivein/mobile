@@ -3,6 +3,7 @@ package com.example.thrivein.ui.screen.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.thrivein.data.local.model.Article
+import com.example.thrivein.data.network.request.ArticleRequest
 import com.example.thrivein.data.network.response.article.ArticlesResponse
 import com.example.thrivein.data.network.response.banner.BannerResponse
 import com.example.thrivein.data.network.response.service.ServiceCategoriesResponse
@@ -64,9 +65,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getAllArticles() {
-        viewModelScope.launch {
-            articleRepository.getAllArticles()
+//    fun getAllArticlesHome(articleRequest: ArticleRequest) {
+        fun getAllArticlesHome(size: Int, page: Int) {
+    viewModelScope.launch {
+            articleRepository.getAllArticlesHome(size, page)
                 .catch {
                     _uiListArticleState.value = UiState.Error(it.message.toString())
                 }

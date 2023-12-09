@@ -45,7 +45,7 @@ fun HomeScreen(
     navigateToListService: (id: String, title: String) -> Unit,
     navigateToScanStore: () -> Unit,
     navigateToListArticle: () -> Unit,
-    navigateToDetailArticle: (String) -> Unit,
+    navigateToDetailArticle: (id: String) -> Unit,
     navigateToWaitingList: () -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
     authViewModel: AuthViewModel = hiltViewModel(),
@@ -81,7 +81,7 @@ fun HomeScreen(
     homeViewModel.uiListArticleState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {
-                homeViewModel.getAllArticles()
+                homeViewModel.getAllArticlesHome(size = 1, page = 1)
             }
 
             is UiState.Success -> {
@@ -153,16 +153,16 @@ fun HomeScreen(
                 )
                 Spacer(modifier = Modifier.height(6.dp))
             }
-            items(items = listArticles?.articles.orEmpty(), key = { it?.articleId.orEmpty() }) { article ->
+            items(items = listArticles?.articles.orEmpty(), key = { it?.articleId.orEmpty() }) {
                 ArticleHomeItem(
-//                    title = article.title,
-//                    content = article.content,
-//                    bannerUrl = article.bannerUrl,
-                    article = article,
+                    id = it?.articleId ?: "",
+                    title = it?.title ?: "",
+                    content = it?.content ?: "",
+                    bannerUrl = it?.bannerUrl ?: "",
                     modifier = Modifier
                         .padding(vertical = 10.dp, horizontal = 24.dp)
                         .clickable {
-                            navigateToDetailArticle(article?.articleId ?: "")
+                            navigateToDetailArticle(it?.articleId ?: "")
                         }
                 )
             }

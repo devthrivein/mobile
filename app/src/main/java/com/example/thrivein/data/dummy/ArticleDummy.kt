@@ -15,7 +15,7 @@ object ArticleDummy {
                     title = "Analysts project 32% upside for $i",
                     content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt........",
                     bannerUrl = "https://www.littlethings.info/wp-content/uploads/2014/04/dummy-image-green-e1398449160839.jpg",
-                    uploadedDate = Date(),
+                    uploadedDate = "Date()",
                 )
             )
         }
