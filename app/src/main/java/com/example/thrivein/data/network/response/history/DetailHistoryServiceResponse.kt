@@ -2,7 +2,7 @@ package com.example.thrivein.data.network.response.history
 
 import com.google.gson.annotations.SerializedName
 
-data class DetailHistoryResponse(
+data class DetailHistoryServiceResponse(
 
 	@field:SerializedName("transaction_date")
 	val transactionDate: String? = null,

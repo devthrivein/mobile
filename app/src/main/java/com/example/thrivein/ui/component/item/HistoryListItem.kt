@@ -42,7 +42,7 @@ fun HistoryListItem(
     id: String,
     title: String,
     iconUrl: String,
-    date: Date
+    date: String
 ) {
     Box(
         modifier = modifier
@@ -58,8 +58,8 @@ fun HistoryListItem(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-
-
+//            val history = listHistory?.historyServices.get()
+//            history?.title?.let { imageUrl ->
             AsyncImage(
                 model = iconUrl,
                 contentDescription = title,
@@ -70,43 +70,44 @@ fun HistoryListItem(
                     .background(Primary),
                 contentScale = ContentScale.Crop,
             )
+        }
 
-            Spacer(modifier = Modifier.width(8.dp))
-            Column {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Text(
-                        text = title,
-                        style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-                        maxLines = 3,
-                    )
-                    Spacer(modifier = Modifier.width(16.dp))
-                    Icon(
-                        imageVector = Icons.Default.ArrowForward,
-                        tint = Pink,
-                        contentDescription = stringResource(R.string.to_detail, title),
-                        modifier = Modifier.padding(end = 16.dp)
-                    )
-                }
+        Spacer(modifier = Modifier.width(8.dp))
+        Column {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
+                    maxLines = 3,
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Icon(
+                    imageVector = Icons.Default.ArrowForward,
+                    tint = Pink,
+                    contentDescription = stringResource(R.string.to_detail, title),
+                    modifier = Modifier.padding(end = 16.dp)
+                )
+            }
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Text(
-                        text = date.toString(),
-                        style = MaterialTheme.typography.bodySmall.copy(
-                            fontWeight = FontWeight.Normal
-                        ),
-                        color = Gray
-                    )
-                }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    text = date.toString(),
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        fontWeight = FontWeight.Normal
+                    ),
+                    color = Gray
+                )
             }
         }
     }
 }
+
 
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
@@ -114,5 +115,5 @@ fun HistoryListItemPreview() {
     val date =
         SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse("2023-01-01 12:30:00")
             ?: Date()
-    HistoryListItem(id = "1", title = "Application", iconUrl = "", date = date)
+    HistoryListItem(id = "1", title = "Application", iconUrl = "", date = "date")
 }

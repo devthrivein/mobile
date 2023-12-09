@@ -3,6 +3,7 @@ package com.example.thrivein.ui.screen.history_service
 //package com.example.thrivein.ui.screen.service.detail
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,11 +25,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -37,26 +44,56 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.thrivein.R
+import com.example.thrivein.data.network.response.history.DetailHistoryServiceResponse
 import com.example.thrivein.ui.component.button.ThriveInButton
 import com.example.thrivein.ui.component.header.DetailTopBar
 import com.example.thrivein.ui.component.item.HistoryMetaDataItem
 import com.example.thrivein.ui.component.item.PackageItem
+import com.example.thrivein.ui.component.loading.ThriveInLoading
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.ui.theme.Primary
+import com.example.thrivein.utils.UiState
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun DetailHistoryServiceScreen(
-    id: String = "2",
+    id: String,
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
     navigateToConsultation: () -> Unit,
+    historyViewModel: HistoryViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
+    var detailHistoryService: DetailHistoryServiceResponse? = null
+    var isLoading by remember { mutableStateOf(false) }
+    var refreshState by remember { mutableStateOf(false) }
 
-    val items = listOf<String>("Transfer Bank", "COD", "Check")
+    historyViewModel.uiThriveInDetailHistoryServiceState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
+            is UiState.Loading -> {
+                isLoading = true
+                refreshState = true
+                historyViewModel.getDetailHistoryById(id)
+            }
 
+            is UiState.Success -> {
+                isLoading = false
+                refreshState = false
+                detailHistoryService = uiState.data
+            }
+
+            is UiState.Error -> {
+                isLoading = false
+                refreshState = false
+                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
     Scaffold(
         topBar = {
             DetailTopBar(title = id, navigateBack = navigateBack, actions = {
@@ -101,7 +138,6 @@ fun DetailHistoryServiceScreen(
                         Spacer(modifier = Modifier.height(16.dp))
                         PaymentDetailItem(
                             label = stringResource(R.string.payment_method),
-//                            items = items,
                             valueString = "COD",
                         )
                         Spacer(modifier = Modifier.height(6.dp))
@@ -158,37 +194,51 @@ fun DetailHistoryServiceScreen(
         Column(
             modifier = modifier.padding(innerPadding)
         ) {
-            HistoryMetaDataItem()
+            if (isLoading) {
+                ThriveInLoading()
+            } else {
+                SwipeRefresh(
+                    state = rememberSwipeRefreshState(isRefreshing = refreshState),
+                    onRefresh = {
+                        refreshState = true
+                        isLoading = true
+                        historyViewModel.getDetailHistoryById(id)
+                        refreshState = false
+                        isLoading = false
+                    }) {
+                    HistoryMetaDataItem()
 
-            LazyColumn(
-                modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
-            ) {
-                stickyHeader {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp)
-                            .background(
-                                Background
-                            )
+                    LazyColumn(
+                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
                     ) {
-                        Text(
-                            text = stringResource(R.string.order_detail),
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
-                }
+                        stickyHeader {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 16.dp)
+                                    .background(
+                                        Background
+                                    )
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.order_detail),
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                            }
+                        }
 
-                items(count = 10) {
-                    PackageItem(
-                        title = "Lorem Ipsum 1x${it + 1}",
-                        qty = it,
-                        price = (it + 1) * 100000,
-                        bannerUrl = stringResource(
-                            id = R.string.dummy_image
-                        ),
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
+                        items(count = 10) {
+                            PackageItem(
+                                title = "Lorem Ipsum 1x${it + 1}",
+                                qty = it,
+                                price = (it + 1) * 100000,
+                                bannerUrl = stringResource(
+                                    id = R.string.dummy_image
+                                ),
+                                modifier = Modifier.padding(bottom = 16.dp)
+                            )
+                        }
+                    }
                 }
             }
         }
