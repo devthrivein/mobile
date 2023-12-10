@@ -55,11 +55,14 @@ fun SettingScreen(
     modifier: Modifier = Modifier,
     navigateToProfile: () -> Unit,
     navigateToStoreProfile: () -> Unit,
+    navigateToAboutThriveIn: (String) -> Unit,
     navHostController: NavHostController,
     authViewModel: AuthViewModel = hiltViewModel(),
 ) {
 
     val user by authViewModel.getUser().observeAsState()
+
+    val urlAbout = stringResource(R.string.web_about_thrive_in)
 
     Scaffold(
     ) { innerpadding ->
@@ -125,6 +128,14 @@ fun SettingScreen(
                         icon = painterResource(id = R.drawable.ic_terms_and_conditions),
                         onClick = {}
                     )
+                    SettingItem(
+                        id = "4",
+                        title = stringResource(R.string.about_us),
+                        icon = painterResource(id = R.drawable.ic_info),
+                        onClick = {
+                            navigateToAboutThriveIn(urlAbout)
+                        }
+                    )
                     Spacer(modifier = Modifier.height(10.dp))
 
                     //Authentication
@@ -137,13 +148,13 @@ fun SettingScreen(
                         color = Gray
                     )
                     SettingItem(
-                        id = "4",
+                        id = "5",
                         title = stringResource(id = R.string.delete_account),
                         icon = painterResource(id = R.drawable.ic_delete_account),
                         onClick = {}
                     )
                     SettingItem(
-                        id = "5",
+                        id = "6",
                         title = stringResource(id = R.string.logout),
                         icon = painterResource(id = R.drawable.ic_logout),
                         onClick = {
@@ -172,6 +183,7 @@ fun SettingScreenPreview() {
     SettingScreen(
         navigateToProfile = {},
         navigateToStoreProfile = {},
+        navigateToAboutThriveIn = {},
         navHostController = rememberNavController(),
     )
 }

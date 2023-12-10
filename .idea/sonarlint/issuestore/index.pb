@@ -193,3 +193,5 @@ Rapp/src/main/java/com/example/thrivein/ui/screen/article/list/ListArticleScreen
 Uapp/src/main/java/com/example/thrivein/ui/screen/article/list/ListArticleViewModel.kt,3\3\33995a328fccca25de015ff698760121d10c7d7d
 “
 capp/src/main/java/com/example/thrivein/data/network/response/service/portfolio/PortfolioResponse.kt,c\6\c6aca2557c17a23ce1bea38f21dd5360f9a59c53
+y
+Iapp/src/main/java/com/example/thrivein/ui/screen/webView/WebViewScreen.kt,d\7\d76b616138ef815cc6281b9da333064cd778f6e2

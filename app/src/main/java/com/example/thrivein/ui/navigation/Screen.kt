@@ -1,5 +1,7 @@
 package com.example.thrivein.ui.navigation
 
+import android.net.Uri
+
 sealed class Screen(val route: String) {
     //    Auth
     object Landing : Screen("landing")
@@ -66,6 +68,11 @@ sealed class Screen(val route: String) {
     object DetailWaitingList : Screen("home/waiting-list-service/{detailWaitingListId}") {
         fun createRoute(detailWaitingListId: String) =
             "home/waiting-list-service/$detailWaitingListId"
+    }
+
+    object WebViewScreen : Screen("{url}") {
+        fun createRoute(url: String) =
+            "${Uri.encode(url)}"
     }
 
 }

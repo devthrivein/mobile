@@ -41,6 +41,7 @@ import com.example.thrivein.ui.screen.setting.SettingScreen
 import com.example.thrivein.ui.screen.setting.StoreProfileScreen
 import com.example.thrivein.ui.screen.setting.UserProfileScreen
 import com.example.thrivein.ui.screen.storeScanner.StoreScannerScreen
+import com.example.thrivein.ui.screen.webView.WebViewScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -250,6 +251,9 @@ fun ThriveInApp(
                 SettingScreen(
                     navigateToProfile = { navHostController.navigate(Screen.UserProfile.route) },
                     navigateToStoreProfile = { navHostController.navigate(Screen.StoreProfile.route) },
+                    navigateToAboutThriveIn = { url ->
+                        navHostController.navigate(Screen.WebViewScreen.createRoute(url))
+                    },
                     navHostController = navHostController,
                 )
             }
@@ -446,6 +450,16 @@ fun ThriveInApp(
                     navigateToConsultation = { navHostController.navigate(Screen.Consultation.route) },
                     navigateToHome = { navHostController.navigate(Screen.Home.route) }
                 )
+            }
+
+            composable(
+                route = Screen.WebViewScreen.route,
+                arguments = listOf(navArgument("url") { type = NavType.StringType })
+            ) {
+
+                val url = it.arguments?.getString("url") ?: ""
+
+                WebViewScreen(url = url)
             }
         }
     }
