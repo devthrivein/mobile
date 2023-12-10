@@ -19,8 +19,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.thrivein.ui.component.navigation.BottomBarNavigation
 import com.example.thrivein.ui.navigation.Screen
-import com.example.thrivein.ui.screen.article.DetailArticleScreen
-import com.example.thrivein.ui.screen.article.ListArticleScreen
+import com.example.thrivein.ui.screen.article.detail.DetailArticleScreen
+import com.example.thrivein.ui.screen.article.list.ListArticleScreen
 import com.example.thrivein.ui.screen.auth.landing.LandingScreen
 import com.example.thrivein.ui.screen.auth.login.LoginScreen
 import com.example.thrivein.ui.screen.auth.register.RegisterStoreScreen
@@ -208,8 +208,13 @@ fun ThriveInApp(
                     navigateToListArticle = {
                         navHostController.navigate(Screen.ListArticle.route)
                     },
-                    navigateToDetailArticle = { articleId ->
-                        navHostController.navigate(Screen.DetailArticle.createRoute(articleId))
+                    navigateToDetailArticle = { articleId, articleTitle ->
+                        navHostController.navigate(
+                            Screen.DetailArticle.createRoute(
+                                articleId,
+                                articleTitle
+                            )
+                        )
                     },
                     navigateToScanStore = {
                         navHostController.navigate(Screen.ScanStore.route)
@@ -269,8 +274,13 @@ fun ThriveInApp(
             composable(route = Screen.ListArticle.route) {
                 ListArticleScreen(navigateBack = {
                     navHostController.navigateUp()
-                }, navigateToDetailArticle = { articleId ->
-                    navHostController.navigate(Screen.DetailArticle.createRoute(articleId))
+                }, navigateToDetailArticle = { articleId, articleTitle ->
+                    navHostController.navigate(
+                        Screen.DetailArticle.createRoute(
+                            articleId,
+                            articleTitle
+                        )
+                    )
                 })
             }
 
@@ -322,11 +332,15 @@ fun ThriveInApp(
 //        Detail
             composable(
                 route = Screen.DetailArticle.route,
-                arguments = listOf(navArgument("articleId") { type = NavType.StringType })
+                arguments = listOf(
+                    navArgument("articleId") { type = NavType.StringType },
+                    navArgument("articleTitle") { type = NavType.StringType },
+                )
             ) {
                 val id = it.arguments?.getString("articleId") ?: ""
+                val title = it.arguments?.getString("articleTitle") ?: ""
 
-                DetailArticleScreen(id = id, navigateBack = {
+                DetailArticleScreen(id = id, title = title, navigateBack = {
                     navHostController.navigateUp()
                 })
             }

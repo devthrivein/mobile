@@ -1,13 +1,13 @@
 package com.example.thrivein.data.repository.banner
 
 import android.util.Log
-import retrofit2.HttpException
 import com.example.thrivein.data.network.response.ErrorResponse
 import com.example.thrivein.data.network.response.banner.BannerResponse
 import com.example.thrivein.data.network.retrofit.ApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import retrofit2.HttpException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,9 +15,9 @@ import javax.inject.Singleton
 class BannerRepository @Inject constructor(
     private val apiService: ApiService,
 ) {
-    suspend fun getAllBannerSlider(): Flow<BannerResponse>{
+    suspend fun getAllBanner(): Flow<BannerResponse>{
         try {
-            val response = apiService.getAllBannerSlider()
+            val response = apiService.getAllBanner()
             return flow { emit(response) }
         } catch (e: HttpException) {
             e.printStackTrace()

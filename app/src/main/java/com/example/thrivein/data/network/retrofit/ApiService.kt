@@ -1,21 +1,17 @@
 package com.example.thrivein.data.network.retrofit
 
 
-import com.example.thrivein.data.network.request.ArticleRequest
 import com.example.thrivein.data.network.request.LoginRequest
 import com.example.thrivein.data.network.request.RegisterRequest
 import com.example.thrivein.data.network.response.MessageResponse
 import com.example.thrivein.data.network.response.article.ArticlesResponse
 import com.example.thrivein.data.network.response.auth.UserResponse
 import com.example.thrivein.data.network.response.banner.BannerResponse
-import com.example.thrivein.data.network.response.history.DetailHistoryServiceResponse
-import com.example.thrivein.data.network.response.history.HistoryResponse
 import com.example.thrivein.data.network.response.service.ListServicesResponse
 import com.example.thrivein.data.network.response.service.ServiceCategoriesResponse
 import com.example.thrivein.data.network.response.service.ServiceResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -40,17 +36,13 @@ interface ApiService {
     suspend fun getAllServiceCategories(): ServiceCategoriesResponse
 
     @GET("banners")
-    suspend fun getAllBannerSlider(): BannerResponse
+    suspend fun getAllBanner(): BannerResponse
 
-//    @GET("articles")
-//    suspend fun getAllArticlesHome(
-////        @Header("Autho")
-//        @Query("size") size: Int,
-//        @Query("page") page: Int
-//    ): ArticlesResponse
-//    suspend fun getAllArticlesHome(
-//        @Body request: ArticleRequest
-//    ): ArticlesResponse
+    @GET("articles")
+    suspend fun getAllArticles(
+        @Query("size") size: Int,
+        @Query("page") page: Int,
+    ): ArticlesResponse
 
     //    Service
     @GET("list-services/{category}")

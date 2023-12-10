@@ -1,4 +1,4 @@
-package com.example.thrivein.ui.screen.article
+package com.example.thrivein.ui.screen.article.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -47,12 +47,13 @@ import com.example.thrivein.ui.theme.Background
 fun DetailArticleScreen(
     modifier: Modifier = Modifier,
     id: String,
-    title: String = "",
+    title: String,
     navigateBack: () -> Unit,
+
 ) {
     Scaffold(
         topBar = {
-            DetailTopBar(title = id, navigateBack = navigateBack)
+            DetailTopBar(title = title, navigateBack = navigateBack)
         },
     ) { innerpadding ->
         val scrollState = rememberScrollState()

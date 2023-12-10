@@ -2,7 +2,6 @@ package com.example.thrivein.ui.screen.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.thrivein.data.local.model.Article
 import com.example.thrivein.data.network.request.ArticleRequest
 import com.example.thrivein.data.network.response.article.ArticlesResponse
 import com.example.thrivein.data.network.response.banner.BannerResponse
@@ -15,7 +14,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,7 +21,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val serviceCategoryRepository: ServiceCategoryRepository,
     private val articleRepository: ArticleRepository,
-    private val bannerRepository: BannerRepository
+    private val bannerRepository: BannerRepository,
 ) : ViewModel() {
 
     //Service
@@ -32,13 +30,6 @@ class HomeViewModel @Inject constructor(
 
     val uiListThriveInServiceCategoryState: StateFlow<UiState<ServiceCategoriesResponse>>
         get() = _uiListThriveInServiceCategoryState
-
-    //Article
-//    private val _uiListArticleState: MutableStateFlow<UiState<List<Article>>> =
-//        MutableStateFlow(UiState.Loading)
-//
-//    val uiListArticleState: StateFlow<UiState<List<Article>>>
-//        get() = _uiListArticleState
 
     //Article
     private val _uiListArticleState: MutableStateFlow<UiState<ArticlesResponse>> =
@@ -65,22 +56,21 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-//    fun getAllArticlesHome(articleRequest: ArticleRequest) {
-////        fun getAllArticlesHome(size: Int, page: Int) {
-//    viewModelScope.launch {
-//            articleRepository.getAllArticlesHome(articleRequest)
-//                .catch {
-//                    _uiListArticleState.value = UiState.Error(it.message.toString())
-//                }
-//                .collect { article ->
-//                    _uiListArticleState.value = UiState.Success(article)
-//                }
-//        }
-//    }
+    fun getAllArticles(articleRequest: ArticleRequest) {
+        viewModelScope.launch {
+            articleRepository.getAllArticles(articleRequest)
+                .catch {
+                    _uiListArticleState.value = UiState.Error(it.message.toString())
+                }
+                .collect { article ->
+                    _uiListArticleState.value = UiState.Success(article)
+                }
+        }
+    }
 
     fun getAllBannerSlider() {
         viewModelScope.launch {
-            bannerRepository.getAllBannerSlider()
+            bannerRepository.getAllBanner()
                 .catch {
                     _uiThriveInBannerState.value = UiState.Error(it.message.toString())
                 }

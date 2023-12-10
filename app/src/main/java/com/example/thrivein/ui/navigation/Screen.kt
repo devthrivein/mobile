@@ -38,8 +38,9 @@ sealed class Screen(val route: String) {
     object WaitingListService : Screen("home/waiting-list-service")
 
     //    Detail
-    object DetailArticle : Screen("home/article/{articleId}") {
-        fun createRoute(articleId: String) = "home/article/$articleId"
+    object DetailArticle : Screen("home/article/{articleId}/{articleTitle}") {
+        fun createRoute(articleId: String, articleTitle: String) =
+            "home/article/$articleId/$articleTitle"
     }
 
     object DetailService : Screen("home/service/{serviceId}/{title}") {

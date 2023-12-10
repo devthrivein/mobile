@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.thrivein.AuthViewModel
 import com.example.thrivein.R
-import com.example.thrivein.data.local.model.Article
 import com.example.thrivein.data.network.request.ArticleRequest
 import com.example.thrivein.data.network.response.article.ArticlesResponse
 import com.example.thrivein.data.network.response.banner.BannerResponse
@@ -38,7 +36,6 @@ import com.example.thrivein.ui.component.button.SeeAllButton
 import com.example.thrivein.ui.component.grid.HomeGridServiceCategoryView
 import com.example.thrivein.ui.component.header.HomeHeader
 import com.example.thrivein.ui.component.item.ArticleHomeItem
-import com.example.thrivein.ui.component.loading.ThriveInLoading
 import com.example.thrivein.ui.component.slider.BannerSlider
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.utils.UiState
@@ -52,15 +49,14 @@ fun HomeScreen(
     navigateToListService: (id: String, title: String) -> Unit,
     navigateToScanStore: () -> Unit,
     navigateToListArticle: () -> Unit,
-    navigateToDetailArticle: (id: String) -> Unit,
+    navigateToDetailArticle: (id: String, title: String) -> Unit,
     navigateToWaitingList: () -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
     authViewModel: AuthViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
     var serviceCategories: ServiceCategoriesResponse? = null
-//    var articles: List<Article> = arrayListOf<Article>()
-    var listArticles: ArticlesResponse? = null
+    var articles: ArticlesResponse? = null
     var banners: BannerResponse? = null
 
     val user by authViewModel.getUser().observeAsState()
@@ -89,23 +85,22 @@ fun HomeScreen(
         }
     }
 
-//    homeViewModel.uiListArticleState.collectAsState(initial = UiState.Loading).value.let { uiState ->
-//        when (uiState) {
-//            is UiState.Loading -> {
-//                homeViewModel.getAllArticlesHome(articleRequest = ArticleRequest(3, 1))
-////                isLoading= true
-//            }
-//
-//            is UiState.Success -> {
-//                listArticles = uiState.data
-//
-//            }
-//
-//            is UiState.Error -> {
-//                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
+    homeViewModel.uiListArticleState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
+            is UiState.Loading -> {
+                homeViewModel.getAllArticles(articleRequest = ArticleRequest(5, 1))
+            }
+
+            is UiState.Success -> {
+                articles = uiState.data
+
+            }
+
+            is UiState.Error -> {
+                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     homeViewModel.uiThriveInBannerState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
@@ -119,7 +114,7 @@ fun HomeScreen(
                 banners = uiState.data
             }
 
-            is  UiState.Error -> {
+            is UiState.Error -> {
                 isLoadingBanner = false
                 Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
             }
@@ -146,7 +141,10 @@ fun HomeScreen(
                 if (isLoadingBanner) {
                     CircularProgressIndicator(color = Color.Yellow, modifier = modifier)
                 } else {
-                BannerSlider(listBanner = banners, modifier = Modifier.padding(horizontal = 24.dp))
+                    BannerSlider(
+                        listBanner = banners,
+                        modifier = Modifier.padding(horizontal = 24.dp)
+                    )
                 }
             }
 
@@ -170,7 +168,7 @@ fun HomeScreen(
                 )
                 Spacer(modifier = Modifier.height(6.dp))
             }
-            items(items = listArticles?.articles.orEmpty(), key = { it?.articleId.orEmpty() }) {
+            items(items = articles?.articles.orEmpty(), key = { it?.articleId.orEmpty() }) {
                 ArticleHomeItem(
                     id = it?.articleId ?: "",
                     title = it?.title ?: "",
@@ -179,7 +177,7 @@ fun HomeScreen(
                     modifier = Modifier
                         .padding(vertical = 10.dp, horizontal = 24.dp)
                         .clickable {
-                            navigateToDetailArticle(it?.articleId ?: "")
+                            navigateToDetailArticle(it?.articleId ?: "", it?.title ?: "")
                         }
                 )
             }
@@ -193,7 +191,7 @@ fun HomeScreenPreview() {
     HomeScreen(
         navigateToListService = { id, title ->
         },
-        navigateToDetailArticle = {},
+        navigateToDetailArticle = { id, title -> },
         navigateToListArticle = {},
         navigateToScanStore = {},
         navigateToWaitingList = {},

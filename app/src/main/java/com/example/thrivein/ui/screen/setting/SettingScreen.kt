@@ -85,7 +85,7 @@ fun SettingScreen(
                     ) {
                         navigateToProfile()
                     }
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(24.dp))
                     //your store
                     Text(
                         text = stringResource(id = R.string.your_store),
