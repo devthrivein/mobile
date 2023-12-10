@@ -73,27 +73,27 @@ fun DetailHistoryServiceScreen(
     var isLoading by remember { mutableStateOf(false) }
     var refreshState by remember { mutableStateOf(false) }
 
-    historyViewModel.uiThriveInDetailHistoryServiceState.collectAsState(initial = UiState.Loading).value.let { uiState ->
-        when (uiState) {
-            is UiState.Loading -> {
-                isLoading = true
-                refreshState = true
-                historyViewModel.getDetailHistoryById(id)
-            }
-
-            is UiState.Success -> {
-                isLoading = false
-                refreshState = false
-                detailHistoryService = uiState.data
-            }
-
-            is UiState.Error -> {
-                isLoading = false
-                refreshState = false
-                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
+//    historyViewModel.uiThriveInDetailHistoryServiceState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+//        when (uiState) {
+//            is UiState.Loading -> {
+//                isLoading = true
+//                refreshState = true
+//                historyViewModel.getDetailHistoryById(id)
+//            }
+//
+//            is UiState.Success -> {
+//                isLoading = false
+//                refreshState = false
+//                detailHistoryService = uiState.data
+//            }
+//
+//            is UiState.Error -> {
+//                isLoading = false
+//                refreshState = false
+//                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
     Scaffold(
         topBar = {
             DetailTopBar(title = id, navigateBack = navigateBack, actions = {
@@ -194,18 +194,18 @@ fun DetailHistoryServiceScreen(
         Column(
             modifier = modifier.padding(innerPadding)
         ) {
-            if (isLoading) {
-                ThriveInLoading()
-            } else {
-                SwipeRefresh(
-                    state = rememberSwipeRefreshState(isRefreshing = refreshState),
-                    onRefresh = {
-                        refreshState = true
-                        isLoading = true
-                        historyViewModel.getDetailHistoryById(id)
-                        refreshState = false
-                        isLoading = false
-                    }) {
+//            if (isLoading) {
+//                ThriveInLoading()
+//            } else {
+//                SwipeRefresh(
+//                    state = rememberSwipeRefreshState(isRefreshing = refreshState),
+//                    onRefresh = {
+//                        refreshState = true
+//                        isLoading = true
+//                        historyViewModel.getDetailHistoryById(id)
+//                        refreshState = false
+//                        isLoading = false
+//                    }) {
                     HistoryMetaDataItem()
 
                     LazyColumn(
@@ -242,9 +242,9 @@ fun DetailHistoryServiceScreen(
                 }
             }
         }
-    }
-
-}
+//    }
+//
+//}
 
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable

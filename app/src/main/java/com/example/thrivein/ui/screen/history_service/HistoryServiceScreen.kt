@@ -39,20 +39,20 @@ fun HistoryServiceScreen(
     val context = LocalContext.current
     var listHistoryService: HistoryResponse? = null
 
-    historyViewModel.uiThriveInHistoryServiceState.collectAsState(initial = UiState.Loading).value.let { uiState ->
-        when(uiState) {
-            is UiState.Loading -> {
-                historyViewModel.getAllHistoryService()
-            }
-
-            is UiState.Success -> {
-                listHistoryService = uiState.data
-            }
-
-            is UiState.Error -> {
-                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
-            }
-    }
+//    historyViewModel.uiThriveInHistoryServiceState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+//        when(uiState) {
+//            is UiState.Loading -> {
+//                historyViewModel.getAllHistoryService()
+//            }
+//
+//            is UiState.Success -> {
+//                listHistoryService = uiState.data
+//            }
+//
+//            is UiState.Error -> {
+//                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+//            }
+//    }
 
     Scaffold(
         topBar = {
@@ -80,7 +80,7 @@ fun HistoryServiceScreen(
         }
     }
 }
-}
+
 
 @Preview(showBackground = true)
 @Composable

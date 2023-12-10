@@ -66,17 +66,17 @@ class HomeViewModel @Inject constructor(
     }
 
 //    fun getAllArticlesHome(articleRequest: ArticleRequest) {
-        fun getAllArticlesHome(size: Int, page: Int) {
-    viewModelScope.launch {
-            articleRepository.getAllArticlesHome(size, page)
-                .catch {
-                    _uiListArticleState.value = UiState.Error(it.message.toString())
-                }
-                .collect { article ->
-                    _uiListArticleState.value = UiState.Success(article)
-                }
-        }
-    }
+////        fun getAllArticlesHome(size: Int, page: Int) {
+//    viewModelScope.launch {
+//            articleRepository.getAllArticlesHome(articleRequest)
+//                .catch {
+//                    _uiListArticleState.value = UiState.Error(it.message.toString())
+//                }
+//                .collect { article ->
+//                    _uiListArticleState.value = UiState.Success(article)
+//                }
+//        }
+//    }
 
     fun getAllBannerSlider() {
         viewModelScope.launch {

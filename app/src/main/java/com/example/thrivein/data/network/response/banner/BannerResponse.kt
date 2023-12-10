@@ -1,13 +1,16 @@
 package com.example.thrivein.data.network.response.banner
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class BannerResponse(
 
 	@field:SerializedName("banners")
 	val banners: List<BannersItem?>? = null
-)
-
+) : Parcelable
+@Parcelize
 data class BannersItem(
 
 	@field:SerializedName("banner_url")
@@ -21,4 +24,4 @@ data class BannersItem(
 
 	@field:SerializedName("title")
 	val title: String? = null
-)
+): Parcelable

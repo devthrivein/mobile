@@ -1,6 +1,7 @@
 package com.example.thrivein.data.repository.banner
 
 import android.util.Log
+import retrofit2.HttpException
 import com.example.thrivein.data.network.response.ErrorResponse
 import com.example.thrivein.data.network.response.banner.BannerResponse
 import com.example.thrivein.data.network.retrofit.ApiService
@@ -18,12 +19,12 @@ class BannerRepository @Inject constructor(
         try {
             val response = apiService.getAllBannerSlider()
             return flow { emit(response) }
-        } catch (e: retrofit2.HttpException) {
+        } catch (e: HttpException) {
             e.printStackTrace()
             val jsonInString = e.response()?.errorBody()?.string()
             val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
             val errorMessage = errorBody?.message ?: "Unknown Error"
-            Log.d("BannerRepository", "getAllBannerSlider: $errorMessage")
+            Log.d("BannerRepository", "getAllBannerSlider: $e")
             throw Throwable(errorMessage)
         }
     }

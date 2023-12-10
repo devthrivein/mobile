@@ -13,9 +13,9 @@ import com.example.thrivein.data.network.response.history.HistoryResponse
 import com.example.thrivein.data.network.response.service.ListServicesResponse
 import com.example.thrivein.data.network.response.service.ServiceCategoriesResponse
 import com.example.thrivein.data.network.response.service.ServiceResponse
-import com.example.thrivein.ui.navigation.Screen
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -38,16 +38,18 @@ interface ApiService {
     //    HOME
     @GET("services")
     suspend fun getAllServiceCategories(): ServiceCategoriesResponse
+
     @GET("banners")
     suspend fun getAllBannerSlider(): BannerResponse
-    @GET("articles")
-    suspend fun getAllArticlesHome(
-        @Query("size") size: Int,
-        @Query("page") page: Int
-    ): ArticlesResponse
-    //    suspend fun getAllArticlesHome( @Body request: ArticleRequest
-////        @Query("size") size: Int,
-////        @Query("page") page: Int
+
+//    @GET("articles")
+//    suspend fun getAllArticlesHome(
+////        @Header("Autho")
+//        @Query("size") size: Int,
+//        @Query("page") page: Int
+//    ): ArticlesResponse
+//    suspend fun getAllArticlesHome(
+//        @Body request: ArticleRequest
 //    ): ArticlesResponse
 
     //    Service
@@ -62,12 +64,12 @@ interface ApiService {
     ): ServiceResponse
 
     //HISTORY
-    @GET("history-order")
-    suspend fun getAllHistory(): HistoryResponse
+//    @GET("history-order")
+//    suspend fun getAllHistory(): HistoryResponse
 
-    @GET("history-order/{order_id}")
-    suspend fun getDetailHistoryById(
-        @Path("order_id") orderId: String,
-    ): DetailHistoryServiceResponse
+//    @GET("history-order/{order_id}")
+//    suspend fun getDetailHistoryById(
+//        @Path("order_id") orderId: String,
+//    ): DetailHistoryServiceResponse
 
 }

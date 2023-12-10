@@ -57,10 +57,7 @@ class ApiConfig @Inject constructor() {
 
     companion object {
 
-        var BASE_URL = "https://thrivein-api-v1-ihovaneucq-et.a.run.app/"
-
-
+//        var BASE_URL = "https://thrivein-api-v1-ihovaneucq-et.a.run.app/"
+    var BASE_URL = "https://thrivein-api-v1-0-0-sxbz2gldiq-et.a.run.app/"
     }
-
-
 }

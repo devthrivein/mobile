@@ -15,6 +15,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,12 +25,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -49,9 +54,11 @@ import com.example.thrivein.ui.component.button.AddPhotoButton
 import com.example.thrivein.ui.component.button.CameraButton
 import com.example.thrivein.ui.component.button.SwitchButton
 import com.example.thrivein.ui.component.button.ThriveInButton
+import com.example.thrivein.ui.theme.Primary
 import com.example.thrivein.utils.CameraUIAction
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 @SuppressLint("PermissionLaunchedDuringComposition")
 @OptIn(ExperimentalPermissionsApi::class)
@@ -94,7 +101,17 @@ fun StoreScannerScreenPreview() {
         navigateToScoreAndAdvice = {},
     )
 }
-
+@Preview(showBackground = true)
+@Composable
+fun CameraPreviewViewTest() {
+    val imageCapture = ImageCapture.Builder().build()
+    CameraPreviewView(
+        navigateToHome = {},
+        cameraUIAction = {},
+        lensFacing = 1,
+        imageCapture = imageCapture
+    )
+}
 @Composable
 fun CameraView(
     modifier: Modifier = Modifier,
@@ -193,6 +210,9 @@ private fun CameraPreviewView(
         label = "",
     )
 
+    var showInfo by remember { mutableStateOf(false) }
+
+
     Box(modifier = modifier.fillMaxSize()) {
         AndroidView({ previewView }, modifier = Modifier.fillMaxSize()) {
 
@@ -208,17 +228,47 @@ private fun CameraPreviewView(
             modifier = Modifier.align(Alignment.BottomCenter),
             verticalArrangement = Arrangement.Bottom
         ) {
-            ThriveInButton(
-                modifier = Modifier
-                    .offset(y = (-550).dp)
-                    .padding(50.dp)
-                    .scale(0.8f),
-                onClick = {
-                    navigateToHome()
-                },
-                label = stringResource(id = R.string.go_to_home),
-                isOutline = true
-            )
+            Row {
+                ThriveInButton(
+                    modifier = Modifier
+                        .offset(y = (-550).dp)
+                        .padding(50.dp)
+                        .scale(0.8f),
+                    onClick = {
+                        navigateToHome()
+                    },
+                    label = stringResource(id = R.string.go_to_home),
+                    isOutline = true
+                )
+
+                Icon(
+                    imageVector = Icons.Default.Info,
+                    contentDescription = stringResource(id = R.string.info),
+                    tint = Primary,
+                    modifier = Modifier
+                        .scale(1f)
+                        .clickable {
+                            showInfo = true
+                        }
+                )
+
+                //Dialog
+//                if (showInfo) {
+//                    LaunchedEffect(showInfo) {
+//                        val context = this
+//                        MaterialAlertDialogBuilder(
+//                            context = this,
+////                            onDismissRequest = {
+////                                showInfo = false
+////                            }
+//                        ) {
+//                            setTitle(text = "Dialog Title")
+//                            message(text = "Dialog Content")
+//                            positiveButton(text = "OK")
+//                        }.show()
+//                    }
+//                }
+            }
             CameraControls(cameraUIAction)
         }
 

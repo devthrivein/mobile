@@ -31,29 +31,29 @@ class HistoryViewModel @Inject constructor(
     val uiThriveInDetailHistoryServiceState: StateFlow<UiState<DetailHistoryServiceResponse>>
         get() = _uiThriveInDetailHistoryServiceState
 
-    fun getAllHistoryService() {
-        viewModelScope.launch {
-            historyRepository.getAllHistoryService()
-                .catch {
-                    _uiThriveInHistoryServiceState.value = UiState.Error(it.message.toString())
-                }
-                .collect { history ->
-                    _uiThriveInHistoryServiceState.value = UiState.Success(history)
-                }
-        }
-    }
-
-    fun getDetailHistoryById(orderId: String) {
-        viewModelScope.launch {
-            historyRepository.getDetailHistoryById(orderId)
-                .catch {
-                    _uiThriveInDetailHistoryServiceState.value =
-                        UiState.Error(it.message.toString())
-                }
-                .collect { detailHistoryService ->
-                    _uiThriveInDetailHistoryServiceState.value =
-                        UiState.Success(detailHistoryService)
-                }
-        }
-    }
+//    fun getAllHistoryService() {
+//        viewModelScope.launch {
+//            historyRepository.getAllHistoryService()
+//                .catch {
+//                    _uiThriveInHistoryServiceState.value = UiState.Error(it.message.toString())
+//                }
+//                .collect { history ->
+//                    _uiThriveInHistoryServiceState.value = UiState.Success(history)
+//                }
+//        }
+//    }
+//
+//    fun getDetailHistoryById(orderId: String) {
+//        viewModelScope.launch {
+//            historyRepository.getDetailHistoryById(orderId)
+//                .catch {
+//                    _uiThriveInDetailHistoryServiceState.value =
+//                        UiState.Error(it.message.toString())
+//                }
+//                .collect { detailHistoryService ->
+//                    _uiThriveInDetailHistoryServiceState.value =
+//                        UiState.Success(detailHistoryService)
+//                }
+//        }
+//    }
 }
