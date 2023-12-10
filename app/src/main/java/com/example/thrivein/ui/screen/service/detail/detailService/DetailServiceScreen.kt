@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -35,12 +36,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.thrivein.R
 import com.example.thrivein.data.network.response.service.ServiceResponse
+import com.example.thrivein.data.network.response.service.portfolio.PortfolioResponse
 import com.example.thrivein.ui.component.ShimmerBrush
 import com.example.thrivein.ui.component.button.SeeAllButton
 import com.example.thrivein.ui.component.button.ThriveInButton
 import com.example.thrivein.ui.component.header.DetailTopBar
 import com.example.thrivein.ui.theme.Background
-import com.example.thrivein.ui.theme.Primary
 import com.example.thrivein.utils.UiState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -59,6 +60,7 @@ fun DetailServiceScreen(
 
     val context = LocalContext.current
     var servicesResponse: ServiceResponse? = null
+    var portfolioResponse: PortfolioResponse? = null
     var isLoading by remember { mutableStateOf(false) }
     var refreshState by remember { mutableStateOf(false) }
 
@@ -72,6 +74,28 @@ fun DetailServiceScreen(
             is UiState.Success -> {
                 isLoading = false
                 servicesResponse = uiState.data
+
+            }
+
+            is UiState.Error -> {
+                isLoading = false
+                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+            }
+
+            else -> {}
+        }
+    }
+
+    detailServiceViewModel.uiPortfolioResponseState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
+            is UiState.Loading -> {
+                isLoading = true
+                detailServiceViewModel.getPortfolioByServiceId(id, size = 10, page = 1)
+            }
+
+            is UiState.Success -> {
+                isLoading = false
+                portfolioResponse = uiState.data
 
             }
 
@@ -104,6 +128,7 @@ fun DetailServiceScreen(
                 refreshState = true
                 isLoading = true
                 detailServiceViewModel.getServiceById(id)
+                detailServiceViewModel.getPortfolioByServiceId(id, 10, 1)
                 refreshState = false
                 isLoading = false
             }) {
@@ -151,14 +176,21 @@ fun DetailServiceScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         userScrollEnabled = false,
                     ) {
-                        items(count = 4) {
+                        items(
+                            items = portfolioResponse?.portfolio ?: arrayListOf(),
+                            key = { it?.uploadedDate ?: "" }) {
                             AsyncImage(
-                                model = stringResource(id = R.string.dummy_image),
+                                model = it?.imageUrl ?: "",
                                 contentDescription = title,
                                 modifier = Modifier
                                     .width(160.dp)
                                     .clip(RoundedCornerShape(20.dp))
-                                    .background(Primary),
+                                    .background(
+                                        ShimmerBrush(
+                                            targetValue = 1300f,
+                                            showShimmer = isLoading
+                                        )
+                                    ),
                                 contentScale = ContentScale.Crop,
                             )
                         }

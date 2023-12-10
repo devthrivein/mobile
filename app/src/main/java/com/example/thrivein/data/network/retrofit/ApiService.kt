@@ -10,6 +10,7 @@ import com.example.thrivein.data.network.response.banner.BannerResponse
 import com.example.thrivein.data.network.response.service.ListServicesResponse
 import com.example.thrivein.data.network.response.service.ServiceCategoriesResponse
 import com.example.thrivein.data.network.response.service.ServiceResponse
+import com.example.thrivein.data.network.response.service.portfolio.PortfolioResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -54,6 +55,13 @@ interface ApiService {
     suspend fun getServiceById(
         @Path("service_id") serviceId: String,
     ): ServiceResponse
+
+    @GET("detail-services/{service_id}/portfolio")
+    suspend fun getPortfolioByServiceId(
+        @Path("service_id") serviceId: String,
+        @Query("size") size: Int = 10,
+        @Query("page") page: Int = 1,
+    ): PortfolioResponse
 
     //HISTORY
 //    @GET("history-order")

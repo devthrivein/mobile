@@ -191,3 +191,5 @@ Yapp/src/main/java/com/example/thrivein/ui/screen/article/detail/DetailArticleVi
 Rapp/src/main/java/com/example/thrivein/ui/screen/article/list/ListArticleScreen.kt,4\3\43f5bd190c1233cf5ea12c4e3aa87fa7d58be7ae
 …
 Uapp/src/main/java/com/example/thrivein/ui/screen/article/list/ListArticleViewModel.kt,3\3\33995a328fccca25de015ff698760121d10c7d7d
+“
+capp/src/main/java/com/example/thrivein/data/network/response/service/portfolio/PortfolioResponse.kt,c\6\c6aca2557c17a23ce1bea38f21dd5360f9a59c53
