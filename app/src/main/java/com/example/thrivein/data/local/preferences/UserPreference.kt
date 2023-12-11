@@ -21,7 +21,7 @@ class UserPreference @Inject constructor(private val dataUserStore: DataStore<Pr
         return dataUserStore.data.map { preferences ->
             UserModel(
                 userId = preferences[ID_KEY] ?: "",
-                token = preferences[TOKEN_KEY] ?: "",
+                token = preferences[TOKEN_KEY] ?: "null",
                 email = preferences[EMAIL_KEY] ?: "",
                 name = preferences[NAME_KEY] ?: "",
                 phone = preferences[PHONE_KEY] ?: "",
@@ -34,7 +34,7 @@ class UserPreference @Inject constructor(private val dataUserStore: DataStore<Pr
         dataUserStore.edit { preferences ->
             preferences[ID_KEY] = user.userId ?: ""
             preferences[NAME_KEY] = user.name
-            preferences[TOKEN_KEY] = user.token ?: ""
+            preferences[TOKEN_KEY] = user.token ?: "null"
             preferences[EMAIL_KEY] = user.email
             preferences[PHONE_KEY] = user.phone
             preferences[AVATAR_KEY] = user.email

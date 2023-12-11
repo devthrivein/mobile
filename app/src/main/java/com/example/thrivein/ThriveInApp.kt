@@ -71,7 +71,7 @@ fun ThriveInApp(
     ) { innerPadding ->
         NavHost(
             navController = navHostController,
-            startDestination = if (user?.token.toString() != "") Screen.Home.route else Screen.Landing.route,
+            startDestination = if (user?.token.toString() != "null") Screen.Home.route else Screen.Landing.route,
             modifier = Modifier.padding(innerPadding)
         ) {
 //        AUTH

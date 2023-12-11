@@ -62,13 +62,16 @@ fun HomeScreen(
     }
 
     homeViewModel.uiListThriveInServiceCategoryState.collectAsState(
-        initial = if (authViewModel.getUser().value?.token.toString() == "null") UiState.Error(
-            ""
-        ) else UiState.Loading
+        initial = UiState.Loading
     ).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {
-                homeViewModel.getAllServiceCategory()
+
+                if (user?.token.toString() != "null") {
+                    homeViewModel.getAllServiceCategory()
+
+                }
+
             }
 
             is UiState.Success -> {
@@ -77,7 +80,7 @@ fun HomeScreen(
             }
 
             is UiState.Error -> {
-                if (uiState.errorMessage != "") Toast.makeText(
+                Toast.makeText(
                     context,
                     uiState.errorMessage,
                     Toast.LENGTH_SHORT
@@ -89,18 +92,19 @@ fun HomeScreen(
     }
 
     homeViewModel.uiListArticleState.collectAsState(
-        initial = if (authViewModel.getUser().value?.token.toString() == "null") UiState.Error(
-            ""
-        ) else UiState.Loading
+        initial = UiState.Loading
     ).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {
-                homeViewModel.getAllArticles(
-                    articleRequest = ArticleRequest(
-                        5,
-                        1
+                if (user?.token.toString() != "null") {
+                    homeViewModel.getAllArticles(
+                        articleRequest = ArticleRequest(
+                            5,
+                            1
+                        )
                     )
-                )
+                }
+
             }
 
             is UiState.Success -> {
@@ -109,7 +113,7 @@ fun HomeScreen(
             }
 
             is UiState.Error -> {
-                if (uiState.errorMessage != "") Toast.makeText(
+                Toast.makeText(
                     context,
                     uiState.errorMessage,
                     Toast.LENGTH_SHORT
@@ -119,14 +123,14 @@ fun HomeScreen(
     }
 
     homeViewModel.uiThriveInBannerState.collectAsState(
-        initial = if (authViewModel.getUser().value?.token.toString() == "null") UiState.Error(
-            ""
-        ) else UiState.Loading
+        initial = UiState.Loading
     ).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {
                 isLoading = true
-                homeViewModel.getAllBannerSlider()
+                if (user?.token.toString() != "null") {
+                    homeViewModel.getAllBannerSlider()
+                }
             }
 
             is UiState.Success -> {
@@ -136,7 +140,7 @@ fun HomeScreen(
 
             is UiState.Error -> {
                 isLoading = false
-                if (uiState.errorMessage != "") Toast.makeText(
+                Toast.makeText(
                     context,
                     uiState.errorMessage,
                     Toast.LENGTH_SHORT
@@ -144,6 +148,7 @@ fun HomeScreen(
             }
         }
     }
+
 
 
     Scaffold(
