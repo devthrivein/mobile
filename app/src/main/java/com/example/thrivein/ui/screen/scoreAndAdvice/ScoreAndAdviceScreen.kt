@@ -6,11 +6,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
@@ -104,9 +107,12 @@ fun ScoreAndAdviceScreen(
                     .align(Alignment.BottomCenter),
                 contentAlignment = Alignment.TopCenter
             ) {
+                val scrollStateArticle = rememberScrollState()
                 Column(
                     modifier = Modifier
-                        .padding(30.dp),
+                        .padding(30.dp)
+                    .fillMaxSize()
+                    .verticalScroll(scrollStateArticle),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
@@ -116,6 +122,38 @@ fun ScoreAndAdviceScreen(
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = "Lorem ipsum dolor sit ametjjj jjjjjjjjjjj jjjjjjjjjjjj jjjjjj jjjjjjjjjjjjjjjjjjjj\n" +
+                                "Lorem ipsum dolor sit amet\n" +
+                                "Lorem ipsum dolor sit amet\n" +
+                                "Lorem ipsum dolor sit amet"+
+                                "Lorem ipsum dolor sit ametjjj jjjjjjjjjjj jjjjjjjjjjjj jjjjjj jjjjjjjjjjjjjjjjjjjj\n" +
+                                "Lorem ipsum dolor sit amet\n" +
+                                "Lorem ipsum dolor sit amet\n" +
+                                "Lorem ipsum dolor sit amet"+
+                                "Lorem ipsum dolor sit ametjjj jjjjjjjjjjj jjjjjjjjjjjj jjjjjj jjjjjjjjjjjjjjjjjjjj\n" +
+                                "Lorem ipsum dolor sit amet\n" +
+                                "Lorem ipsum dolor sit amet\n" +
+                                "Lorem ipsum dolor sit amet"+
+                                "Lorem ipsum dolor sit ametjjj jjjjjjjjjjj jjjjjjjjjjjj jjjjjj jjjjjjjjjjjjjjjjjjjj\n" +
+                                "Lorem ipsum dolor sit amet\n" +
+                                "Lorem ipsum dolor sit amet\n" +
+                                "Lorem ipsum dolor sit amet"+
+                                "Lorem ipsum dolor sit ametjjj jjjjjjjjjjj jjjjjjjjjjjj jjjjjj jjjjjjjjjjjjjjjjjjjj\n" +
+                                "Lorem ipsum dolor sit amet\n" +
+                                "Lorem ipsum dolor sit amet\n" +
+                                "Lorem ipsum dolor sit amet"+
+                                "Lorem ipsum dolor sit ametjjj jjjjjjjjjjj jjjjjjjjjjjj jjjjjj jjjjjjjjjjjjjjjjjjjj\n" +
+                                "Lorem ipsum dolor sit amet\n" +
+                                "Lorem ipsum dolor sit amet\n" +
+                                "Lorem ipsum dolor sit amet"+
+                                "Lorem ipsum dolor sit ametjjj jjjjjjjjjjj jjjjjjjjjjjj jjjjjj jjjjjjjjjjjjjjjjjjjj\n" +
+                                "Lorem ipsum dolor sit amet\n" +
+                                "Lorem ipsum dolor sit amet\n" +
+                                "Lorem ipsum dolor sit amet"+
+                                "Lorem ipsum dolor sit ametjjj jjjjjjjjjjj jjjjjjjjjjjj jjjjjj jjjjjjjjjjjjjjjjjjjj\n" +
+                                "Lorem ipsum dolor sit amet\n" +
+                                "Lorem ipsum dolor sit amet\n" +
+                                "Lorem ipsum dolor sit amet"+
+                                "Lorem ipsum dolor sit ametjjj jjjjjjjjjjj jjjjjjjjjjjj jjjjjj jjjjjjjjjjjjjjjjjjjj\n" +
                                 "Lorem ipsum dolor sit amet\n" +
                                 "Lorem ipsum dolor sit amet\n" +
                                 "Lorem ipsum dolor sit amet",
