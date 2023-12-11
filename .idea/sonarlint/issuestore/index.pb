@@ -99,10 +99,6 @@ Gapp/src/main/java/com/example/thrivein/ui/component/item/PackageItem.kt,0\2\02
 Xapp/src/main/java/com/example/thrivein/ui/screen/history_service/HistoryServiceScreen.kt,f\6\f680093cc750cf4b1ef2b7da3980f05f0803e353
 É
 Sapp/src/main/java/com/example/thrivein/ui/screen/consultation/ConsultationScreen.kt,3\6\365e24f96a6b2d3ef9f36fbbd713215012b40663
-
-Oapp/src/main/java/com/example/thrivein/ui/screen/article/DetailArticleScreen.kt,6\2\62afdbf97e0e4ec46a34f9e2ab89ec24abdc1655
-}
-Mapp/src/main/java/com/example/thrivein/ui/screen/article/ListArticleScreen.kt,1\5\15969725484842ff82f51fb39eccb878049eb6fc
 {
 Kapp/src/main/java/com/example/thrivein/ui/screen/storeScanner/CameraView.kt,7\d\7d352ef97838ab00e51877c24793547015c3ece3
 l
@@ -181,8 +177,6 @@ Uapp/src/main/java/com/example/thrivein/data/network/response/banner/BannerRespo
 Mapp/src/main/java/com/example/thrivein/data/network/request/ArticleRequest.kt,4\2\42b2ecb60ad10e99ad907709c771c8aa651e9f66
 Å
 Qapp/src/main/java/com/example/thrivein/data/repository/banner/BannerRepository.kt,1\a\1aa5e913987b71161c0a97a13ae6e7ead48ca020
-Ç
-Rapp/src/main/java/com/example/thrivein/ui/screen/article/DetailArticleViewModel.kt,4\3\4303b7f85abcb6c94f2d1d5e4e90e3369d205f48
 Ü
 Vapp/src/main/java/com/example/thrivein/ui/screen/article/detail/DetailArticleScreen.kt,0\a\0af62469c5d4dd13027d69809edd58eeeb5d86b5
 â

@@ -177,8 +177,8 @@ fun DetailServiceScreen(
                         userScrollEnabled = false,
                     ) {
                         items(
-                            items = portfolioResponse?.portfolio ?: arrayListOf(),
-                            key = { it?.uploadedDate ?: "" }) {
+                            items = portfolioResponse?.portfolio ?: arrayListOf()
+                        ) {
                             AsyncImage(
                                 model = it?.imageUrl ?: "",
                                 contentDescription = title,

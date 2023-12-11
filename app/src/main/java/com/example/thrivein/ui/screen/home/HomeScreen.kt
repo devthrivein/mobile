@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -19,7 +18,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
@@ -39,9 +37,8 @@ import com.example.thrivein.ui.component.item.ArticleHomeItem
 import com.example.thrivein.ui.component.slider.BannerSlider
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.utils.UiState
-import com.google.accompanist.pager.ExperimentalPagerApi
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
@@ -58,15 +55,17 @@ fun HomeScreen(
     var serviceCategories: ServiceCategoriesResponse? = null
     var articles: ArticlesResponse? = null
     var banners: BannerResponse? = null
-
     val user by authViewModel.getUser().observeAsState()
 
-    var isLoadingBanner by remember {
+    var isLoading by remember {
         mutableStateOf(false)
     }
 
-
-    homeViewModel.uiListThriveInServiceCategoryState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+    homeViewModel.uiListThriveInServiceCategoryState.collectAsState(
+        initial = if (authViewModel.getUser().value?.token.toString() == "null") UiState.Error(
+            ""
+        ) else UiState.Loading
+    ).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {
                 homeViewModel.getAllServiceCategory()
@@ -78,17 +77,30 @@ fun HomeScreen(
             }
 
             is UiState.Error -> {
-                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+                if (uiState.errorMessage != "") Toast.makeText(
+                    context,
+                    uiState.errorMessage,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
             else -> {}
         }
     }
 
-    homeViewModel.uiListArticleState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+    homeViewModel.uiListArticleState.collectAsState(
+        initial = if (authViewModel.getUser().value?.token.toString() == "null") UiState.Error(
+            ""
+        ) else UiState.Loading
+    ).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {
-                homeViewModel.getAllArticles(articleRequest = ArticleRequest(5, 1))
+                homeViewModel.getAllArticles(
+                    articleRequest = ArticleRequest(
+                        5,
+                        1
+                    )
+                )
             }
 
             is UiState.Success -> {
@@ -97,26 +109,38 @@ fun HomeScreen(
             }
 
             is UiState.Error -> {
-                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+                if (uiState.errorMessage != "") Toast.makeText(
+                    context,
+                    uiState.errorMessage,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
 
-    homeViewModel.uiThriveInBannerState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+    homeViewModel.uiThriveInBannerState.collectAsState(
+        initial = if (authViewModel.getUser().value?.token.toString() == "null") UiState.Error(
+            ""
+        ) else UiState.Loading
+    ).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {
-                isLoadingBanner = true
+                isLoading = true
                 homeViewModel.getAllBannerSlider()
             }
 
             is UiState.Success -> {
-                isLoadingBanner = false
+                isLoading = false
                 banners = uiState.data
             }
 
             is UiState.Error -> {
-                isLoadingBanner = false
-                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+                isLoading = false
+                if (uiState.errorMessage != "") Toast.makeText(
+                    context,
+                    uiState.errorMessage,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -138,14 +162,13 @@ fun HomeScreen(
                 )
             }
             item {
-                if (isLoadingBanner) {
-                    CircularProgressIndicator(color = Color.Yellow, modifier = modifier)
-                } else {
-                    BannerSlider(
-                        listBanner = banners,
-                        modifier = Modifier.padding(horizontal = 24.dp)
-                    )
-                }
+                BannerSlider(
+                    listBanner = banners,
+                    isLoading = isLoading,
+                    modifier = Modifier
+                        .padding(horizontal = 24.dp)
+
+                )
             }
 
             item {

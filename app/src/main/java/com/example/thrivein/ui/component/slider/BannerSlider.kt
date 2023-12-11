@@ -1,6 +1,5 @@
 package com.example.thrivein.ui.component.slider
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,12 +14,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.thrivein.R
 import com.example.thrivein.data.network.response.banner.BannerResponse
+import com.example.thrivein.ui.component.ShimmerBrush
 import com.example.thrivein.ui.theme.Primary
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -33,7 +32,8 @@ import kotlinx.coroutines.yield
 @Composable
 fun BannerSlider(
     modifier: Modifier = Modifier,
-    listBanner: BannerResponse?
+    isLoading: Boolean,
+    listBanner: BannerResponse?,
 ) {
 
     val pagerState = rememberPagerState(initialPage = 0)
@@ -47,6 +47,8 @@ fun BannerSlider(
             )
         }
     }
+
+    val context = LocalContext.current
 
     Column {
         HorizontalPager(
@@ -66,11 +68,12 @@ fun BannerSlider(
             ) {
                 banner?.bannerUrl?.let { imageUrl ->
                     AsyncImage(
-                        model = banner.bannerUrl,
+                        model = imageUrl,
                         contentDescription = banner.title ?: "",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .fillMaxSize()
+                            .background(ShimmerBrush(targetValue = 1300f, showShimmer = isLoading))
                     )
                 }
 
@@ -89,5 +92,5 @@ fun BannerSlider(
 @Preview
 @Composable
 fun BannerSliderPreview() {
-    BannerSlider(listBanner = BannerResponse())
+    BannerSlider(listBanner = BannerResponse(), isLoading = false)
 }

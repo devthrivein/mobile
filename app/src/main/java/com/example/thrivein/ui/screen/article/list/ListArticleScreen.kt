@@ -33,9 +33,9 @@ fun ListArticleScreen(
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
     navigateToDetailArticle: (id: String, title: String) -> Unit,
-    listArticleViewModel: ListArticleViewModel = hiltViewModel(),
 ) {
 
+    val listArticleViewModel = hiltViewModel<ListArticleViewModel>()
     val context = LocalContext.current
     var articles: ArticlesResponse? = null
 

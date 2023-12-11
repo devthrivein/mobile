@@ -13,10 +13,10 @@ import javax.inject.Singleton
 
 @Singleton
 class ArticleRepository @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
 ) {
 
-    suspend fun getAllArticles(request: ArticleRequest): Flow<ArticlesResponse>{
+    suspend fun getAllArticles(request: ArticleRequest): Flow<ArticlesResponse> {
         try {
             val response = apiService.getAllArticles(request.size, request.page)
 
@@ -27,7 +27,7 @@ class ArticleRepository @Inject constructor(
             val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
             val errorMessage = errorBody?.message ?: "Unknown Error"
             Log.d("ArticleRepository", "getAllArticlesHome: $errorMessage")
-            throw Throwable(errorMessage)
+            throw e
         }
     }
 

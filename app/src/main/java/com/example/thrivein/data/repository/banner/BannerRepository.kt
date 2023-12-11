@@ -15,7 +15,7 @@ import javax.inject.Singleton
 class BannerRepository @Inject constructor(
     private val apiService: ApiService,
 ) {
-    suspend fun getAllBanner(): Flow<BannerResponse>{
+    suspend fun getAllBanner(): Flow<BannerResponse> {
         try {
             val response = apiService.getAllBanner()
             return flow { emit(response) }
@@ -24,8 +24,8 @@ class BannerRepository @Inject constructor(
             val jsonInString = e.response()?.errorBody()?.string()
             val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
             val errorMessage = errorBody?.message ?: "Unknown Error"
-            Log.d("BannerRepository", "getAllBannerSlider: $e")
-            throw Throwable(errorMessage)
+            Log.d("BannerRepository", "getAllBannerSlider: $errorMessage")
+            throw e
         }
     }
 }

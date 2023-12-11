@@ -7,6 +7,7 @@ import com.example.thrivein.data.network.response.auth.UserResponse
 import com.example.thrivein.data.repository.auth.AuthRepository
 import com.example.thrivein.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -29,6 +30,7 @@ class LoginViewModel @Inject constructor(
             authRepository.login(loginRequest).catch {
                 _uiLoginState.value = UiState.Error(it.message ?: "")
             }.collect {
+                delay(1000)
                 _uiLoginState.value = UiState.Success(it)
             }
         }
