@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -23,10 +24,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,7 +41,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.thrivein.R
@@ -57,25 +60,32 @@ fun DetailTransactionServiceScreen(
     navigateBack: () -> Unit,
     navigateToHistoryService: () -> Unit
 ) {
-
-
     val items = listOf<String>("Transfer Bank", "COD", "Check")
 
     Scaffold(
         topBar = {
             DetailTopBar(title = id, navigateBack = navigateBack)
         },
-        bottomBar = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
-                    .background(Color.White)
-            ) {
+    ) {}
+//        bottomBar = {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+            .background(Color.White)
+    ) {
+        val scaffoldState = rememberBottomSheetScaffoldState(
+
+        )
+        BottomSheetScaffold(
+            scaffoldState = scaffoldState,
+            sheetContainerColor = Background,
+            sheetContent = {
+
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 24.dp, bottom = 32.dp)
+                        .padding(top = 5.dp, bottom = 32.dp)
                 ) {
                     Column(
                         modifier = Modifier
@@ -129,52 +139,55 @@ fun DetailTransactionServiceScreen(
                         )
                     }
                 }
-            }
-        },
-        containerColor = Background,
-    ) { innerPadding ->
-        Column(
-            modifier = modifier.padding(innerPadding)
+            },
         ) {
-            TransactionMetaDataItem()
+//                    ) { innerPadding ->
 
-            LazyColumn(
-                modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
+            Column(
+                modifier = modifier.padding()
             ) {
-                stickyHeader {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp)
-                            .background(
-                                Background
+                TransactionMetaDataItem()
+
+                LazyColumn(
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
+                ) {
+                    stickyHeader {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 16.dp)
+                                .background(
+                                    Background
+                                )
+                        ) {
+                            Text(
+                                text = stringResource(R.string.detail_package),
+                                style = MaterialTheme.typography.titleMedium
                             )
-                    ) {
-                        Text(
-                            text = stringResource(R.string.detail_package),
-                            style = MaterialTheme.typography.titleMedium
+                        }
+                    }
+
+                    items(count = 10) {
+                        PackageItem(
+                            title = "Lorem Ipsum 1x${it + 1}",
+                            qty = it,
+                            price = (it + 1) * 100000,
+                            bannerUrl = stringResource(
+                                id = R.string.dummy_image
+                            ),
+                            modifier = Modifier.padding(bottom = 16.dp)
                         )
                     }
                 }
-
-                items(count = 10) {
-                    PackageItem(
-                        title = "Lorem Ipsum 1x${it + 1}",
-                        qty = it,
-                        price = (it + 1) * 100000,
-                        bannerUrl = stringResource(
-                            id = R.string.dummy_image
-                        ),
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-                }
             }
         }
-    }
 
+    }
+//        },
 }
 
-@Preview(showBackground = true, device = Devices.PIXEL_4)
+
+@Preview(showBackground = true)
 @Composable
 fun DetailTransactionServiceScreenPreview() {
     DetailTransactionServiceScreen(id = "1", navigateToHistoryService = {}, navigateBack = {})
