@@ -54,7 +54,7 @@ fun DetailServiceScreen(
     id: String,
     title: String,
     navigateBack: () -> Unit,
-    navigateToConsultService: (String) -> Unit,
+    navigateToConsultService: (id: String, title: String) -> Unit,
     detailServiceViewModel: DetailServiceViewModel = hiltViewModel(),
 ) {
 
@@ -114,7 +114,7 @@ fun DetailServiceScreen(
         },
         floatingActionButton = {
             ThriveInButton(
-                onClick = { navigateToConsultService(id) },
+                onClick = { navigateToConsultService(id, title) },
                 label = stringResource(R.string.consult),
                 modifier = Modifier.padding(horizontal = 48.dp, vertical = 24.dp),
             )
@@ -208,6 +208,6 @@ fun DetailServiceScreenPreview() {
         id = "1",
         title = "Social Media Management",
         navigateBack = {},
-        navigateToConsultService = {},
+        navigateToConsultService = { id, title -> },
     )
 }

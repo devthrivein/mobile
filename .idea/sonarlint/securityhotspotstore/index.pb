@@ -63,10 +63,6 @@ j
 Wapp/src/main/java/com/example/thrivein/ui/component/grid/HomeGridServiceCategoryView.kt,a\1\a1e36d5b95a99c633504b2245b544a747f8f1ec3
 {
 Kapp/src/main/java/com/example/thrivein/ui/component/item/ArticleHomeItem.kt,e\0\e08f04539433345260a16253c467818ddb29a942
-y
-Iapp/src/main/java/com/example/thrivein/data/dummy/ServiceCategoryDummy.kt,8\1\81aa55142e8b0083eaab6ce5a7a793b277eae1c6
-q
-Aapp/src/main/java/com/example/thrivein/data/dummy/ArticleDummy.kt,e\0\e044e92f386a3d1009747d02a4f4ccbcbc1741b9
 ƒ
 Sapp/src/main/java/com/example/thrivein/data/repository/article/ArticleRepository.kt,9\f\9fc33d40c275917efcd54febe31cf7fbc640d9a8
 ‚
@@ -117,10 +113,6 @@ y
 Iapp/src/main/java/com/example/thrivein/data/network/retrofit/ApiConfig.kt,5\0\5036f89b39f6b9806ca3a254a6bfeb14d057f594
 z
 Japp/src/main/java/com/example/thrivein/data/network/retrofit/ApiService.kt,0\a\0af6e6b66f5864f96f1307733e7ecf31129a906a
-t
-Dapp/src/main/java/com/example/thrivein/data/local/model/UserModel.kt,7\f\7fb7ee3f553b3b0419363fe58ca33f2f2b2b9ad9
-u
-Eapp/src/main/java/com/example/thrivein/data/local/model/StoreModel.kt,f\b\fb8a205a50ab4f9b69963d0154ffd958d646fd34
 
 Oapp/src/main/java/com/example/thrivein/data/local/preferences/UserPreference.kt,5\3\53d4101b03406562721d91466572cdb4d2f96e37
 }
@@ -167,8 +159,6 @@ n
 >app/src/main/java/com/example/thrivein/ui/component/Shimmer.kt,6\2\62371c252c280613078fd269f4f5fe5ac63ea0b4
 ‘
 aapp/src/main/java/com/example/thrivein/data/network/response/service/ServiceCategoriesResponse.kt,d\2\d2e70c8d7e8c038a1fdc2d7e808b06c4ee0d5d5c
-“
-capp/src/main/java/com/example/thrivein/data/repository/service/ConsultationServiceChatRepository.kt,9\a\9af3351b6b3634d0342f1304f112d8ff908f0952
 ˆ
 Xapp/src/main/java/com/example/thrivein/data/network/response/article/ArticlesResponse.kt,1\b\1b094367c3312572144c6182c3e60f6618412ea9
 …
@@ -189,3 +179,11 @@ Uapp/src/main/java/com/example/thrivein/ui/screen/article/list/ListArticleViewMo
 capp/src/main/java/com/example/thrivein/data/network/response/service/portfolio/PortfolioResponse.kt,c\6\c6aca2557c17a23ce1bea38f21dd5360f9a59c53
 y
 Iapp/src/main/java/com/example/thrivein/ui/screen/webView/WebViewScreen.kt,d\7\d76b616138ef815cc6281b9da333064cd778f6e2
+€
+Papp/src/main/java/com/example/thrivein/data/repository/service/ChatRepository.kt,6\b\6bf0ad7de0a8bef63705451d848adef285edc9ea
+n
+>app/src/main/java/com/example/thrivein/data/model/ChatModel.kt,5\e\5eb424c811d77addca14dbae6ed91c9128d28501
+¢
+rapp/src/main/java/com/example/thrivein/ui/screen/service/detail/detailConsultService/DetailConsultServiceScreen.kt,5\e\5ef16d60b175733862c9f37b89b3d5671fd5c21e
+¥
+uapp/src/main/java/com/example/thrivein/ui/screen/service/detail/detailConsultService/DetailConsultServiceViewModel.kt,7\6\76b26b9e70da5c1ff439707fad8fe786b6ab0c4b

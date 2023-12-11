@@ -1,8 +1,8 @@
 package com.example.thrivein.data.repository.auth
 
 import android.util.Log
-import com.example.thrivein.data.local.model.StoreModel
-import com.example.thrivein.data.local.model.UserModel
+import com.example.thrivein.data.model.StoreModel
+import com.example.thrivein.data.model.UserModel
 import com.example.thrivein.data.local.preferences.StorePreference
 import com.example.thrivein.data.local.preferences.UserPreference
 import com.example.thrivein.data.network.request.LoginRequest

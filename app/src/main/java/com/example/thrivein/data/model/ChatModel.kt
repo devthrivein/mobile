@@ -1,0 +1,15 @@
+package com.example.thrivein.data.model
+
+import java.util.Date
+
+
+data class ChatModel(
+    val isAdmin: Boolean? = false,
+    val isTransactionChat: Boolean? = false,
+    val message: String?,
+    val userId: String?,
+    val serviceId: String? = "",
+    val createdAt: com.google.firebase.Timestamp? = com.google.firebase.Timestamp(
+        Date()
+    ),
+)

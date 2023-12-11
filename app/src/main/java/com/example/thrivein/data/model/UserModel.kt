@@ -1,4 +1,4 @@
-package com.example.thrivein.data.local.model
+package com.example.thrivein.data.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

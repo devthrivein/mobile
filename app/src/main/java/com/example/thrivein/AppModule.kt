@@ -11,13 +11,16 @@ import com.example.thrivein.data.repository.article.ArticleRepository
 import com.example.thrivein.data.repository.auth.AuthRepository
 import com.example.thrivein.data.repository.banner.BannerRepository
 import com.example.thrivein.data.repository.history.HistoryRepository
+import com.example.thrivein.data.repository.service.ChatRepository
 import com.example.thrivein.data.repository.service.ServiceCategoryRepository
 import com.example.thrivein.data.repository.service.ServiceRepository
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -127,6 +130,23 @@ object AppModule {
             Log.e("AppModule", "Error providing HistoryRepository: ${e.message}", e)
             throw e
         }
+    }
+
+    @Provides
+    fun providerChatRepository(): ChatRepository {
+
+        try {
+            return ChatRepository(FirebaseFirestore.getInstance())
+        } catch (e: Exception) {
+            Log.e("AppModule", "Error providing ChatRepository: ${e.message}", e)
+            throw e
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseFirestore(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
     }
 
 }

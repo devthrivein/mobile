@@ -365,19 +365,29 @@ fun ThriveInApp(
                     navigateBack = {
                         navHostController.navigateUp()
                     },
-                    navigateToConsultService = { serviceId ->
-                        navHostController.navigate(Screen.DetailConsultService.createRoute(serviceId))
+                    navigateToConsultService = { serviceId, serviceTitle ->
+                        navHostController.navigate(
+                            Screen.DetailConsultService.createRoute(
+                                serviceId,
+                                serviceTitle
+                            )
+                        )
                     }
                 )
             }
 
             composable(
                 route = Screen.DetailConsultService.route,
-                arguments = listOf(navArgument("serviceId") { type = NavType.StringType })
+                arguments = listOf(
+                    navArgument("serviceId") { type = NavType.StringType },
+                    navArgument("serviceTitle") { type = NavType.StringType }
+                )
             ) {
                 val id = it.arguments?.getString("serviceId") ?: ""
+                val title = it.arguments?.getString("serviceTitle") ?: ""
 
                 DetailConsultServiceScreen(
+                    title = title,
                     id = id,
                     navigateBack = {
                         navHostController.navigateUp()
