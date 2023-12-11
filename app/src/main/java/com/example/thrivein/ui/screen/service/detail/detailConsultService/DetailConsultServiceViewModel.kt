@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.thrivein.data.repository.service.ChatRepository
+import com.example.thrivein.utils.CONSULTATION_SERVICE
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -66,8 +67,6 @@ class DetailConsultServiceViewModel @Inject constructor(
             }
     }
 
-    companion object {
-        private val CONSULTATION_SERVICE = "consultation_service"
-    }
+
 
 }

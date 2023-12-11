@@ -199,3 +199,7 @@ Vapp/src/main/java/com/example/thrivein/ui/screen/storeScanner/StoreScannerViewM
 Qapp/src/main/java/com/example/thrivein/data/network/response/scan/ScanResponse.kt,7\1\71aa62fcfd54b17707f42437ca63ac2630e3a7a5
 †
 Vapp/src/main/java/com/example/thrivein/data/network/response/scan/ScanStoreResponse.kt,d\e\defa9ee09a4e6b0959ecd51b86ad6368100840d4
+†
+Vapp/src/main/java/com/example/thrivein/ui/screen/consultation/ConsultationViewModel.kt,d\f\dfc496547c4576ebdc790e4958b71fddde50a5e7
+A
+gradle.properties,2\a\2afbb999f001938c88fa43fc2ef52abf0f8213e4

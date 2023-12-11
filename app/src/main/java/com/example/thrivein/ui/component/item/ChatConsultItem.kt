@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -45,14 +44,15 @@ fun ChatConsultItem(
         Spacer(modifier = Modifier.height(12.dp))
         Box(
             modifier = Modifier
-                .width((screenWidth.value * 0.6).dp)
                 .clip(RoundedCornerShape(18.dp))
                 .background(if (isAdmin) Color.White else Primary)
                 .padding(16.dp)
         ) {
-            Text(text = content, style = MaterialTheme.typography.bodyMedium.copy(
-                fontWeight = FontWeight.Normal
-            ))
+            Text(
+                text = content, style = MaterialTheme.typography.bodyMedium.copy(
+                    fontWeight = FontWeight.Normal
+                )
+            )
         }
         Spacer(modifier = Modifier.height(12.dp))
     }

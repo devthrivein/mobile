@@ -3,6 +3,9 @@ package com.example.thrivein.data.repository.service
 
 import android.util.Log
 import com.example.thrivein.data.model.ChatModel
+import com.example.thrivein.utils.CHATS
+import com.example.thrivein.utils.CONSULTATION
+import com.example.thrivein.utils.CONSULTATION_SERVICE
 import com.google.firebase.firestore.FirebaseFirestore
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -40,8 +43,34 @@ class ChatRepository @Inject constructor(
 
     }
 
-    companion object {
-        private val CONSULTATION_SERVICE = "consultation_service"
+
+    fun sendConsultationChat(
+        isAdmin: Boolean = false,
+        message: String,
+        userId: String,
+    ) {
+        val chat = ChatModel(
+            isAdmin = isAdmin,
+            message = message,
+            userId = userId,
+        )
+
+        database
+            .collection(CONSULTATION)
+            .document(CHATS)
+            .collection("messages-from-$userId")
+            .add(chat)
+            .addOnSuccessListener { documentReference ->
+                Log.d(
+                    CONSULTATION,
+                    "DocumentSnapshot added with ID: ${documentReference.id}"
+                )
+            }
+            .addOnFailureListener { e ->
+                Log.w(CONSULTATION, "Error adding document", e)
+            }
+
     }
+
 
 }
