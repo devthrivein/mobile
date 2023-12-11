@@ -1,8 +1,10 @@
- package com.example.thrivein.ui.screen.storeScanner
+package com.example.thrivein.ui.screen.storeScanner
 
+import android.content.ContentResolver
 import android.content.Context
 import android.media.MediaScannerConnection
 import android.net.Uri
+import android.os.Environment
 import android.webkit.MimeTypeMap
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -12,6 +14,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
 import com.example.thrivein.R
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.Executors
@@ -29,11 +34,16 @@ suspend fun Context.getCameraProvider(): ProcessCameraProvider = suspendCoroutin
 private const val FILENAME = "yyyy-MM-dd-HH-mm-ss-SSS"
 private const val PHOTO_EXTENSION = ".jpg"
 
+val timeStamp: String = SimpleDateFormat(
+    FILENAME,
+    Locale.US
+).format(System.currentTimeMillis())
 
 fun ImageCapture.takePicture(
     context: Context,
     lensFacing: Int,
     onImageCaptured: (Uri, Boolean) -> Unit,
+    onGetImageFile: (File, Boolean) -> Unit,
     onError: (ImageCaptureException) -> Unit,
 ) {
     val outputDirectory = context.getOutputDirectory()
@@ -47,25 +57,44 @@ fun ImageCapture.takePicture(
         object : ImageCapture.OnImageSavedCallback {
             override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                 val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
-                // If the folder selected is an external media directory, this is
-                // unnecessary but otherwise other apps will not be able to access our
-                // images unless we scan them using [MediaScannerConnection]
                 val mimeType = MimeTypeMap.getSingleton()
                     .getMimeTypeFromExtension(savedUri.toFile().extension)
                 MediaScannerConnection.scanFile(
                     context,
                     arrayOf(savedUri.toFile().absolutePath),
                     arrayOf(mimeType)
-                ) { _, uri ->
+                ) { _, _ ->
 
                 }
                 onImageCaptured(savedUri, false)
+                onGetImageFile(uriToFile(savedUri, context), false)
+
             }
 
             override fun onError(exception: ImageCaptureException) {
                 onError(exception)
             }
         })
+}
+
+fun createTempFile(context: Context): File {
+    val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+    return File.createTempFile(timeStamp, ".jpg", storageDir)
+}
+
+fun uriToFile(selectedImg: Uri, context: Context): File {
+    val contentResolver: ContentResolver = context.contentResolver
+    val myFile = createTempFile(context)
+
+    val inputStream = contentResolver.openInputStream(selectedImg) as InputStream
+    val outputStream: OutputStream = FileOutputStream(myFile)
+    val buf = ByteArray(1024)
+    var len: Int
+    while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
+    outputStream.close()
+    inputStream.close()
+
+    return myFile
 }
 
 

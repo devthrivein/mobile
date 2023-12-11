@@ -7,10 +7,12 @@ import com.example.thrivein.data.local.preferences.UserPreference
 import com.example.thrivein.data.local.preferences.dataUserStore
 import com.example.thrivein.data.local.preferences.dataUserStoreStore
 import com.example.thrivein.data.network.retrofit.ApiConfig
+import com.example.thrivein.data.network.retrofit.ml.ApiConfigML
 import com.example.thrivein.data.repository.article.ArticleRepository
 import com.example.thrivein.data.repository.auth.AuthRepository
 import com.example.thrivein.data.repository.banner.BannerRepository
 import com.example.thrivein.data.repository.history.HistoryRepository
+import com.example.thrivein.data.repository.scan.ScanRepository
 import com.example.thrivein.data.repository.service.ChatRepository
 import com.example.thrivein.data.repository.service.ServiceCategoryRepository
 import com.example.thrivein.data.repository.service.ServiceRepository
@@ -55,6 +57,29 @@ object AppModule {
             return ApiConfig()
         } catch (e: Exception) {
             Log.e("AppModule", "Error providing ApiConfig: ${e.message}", e)
+            throw e
+        }
+    }
+
+    @Provides
+    fun provideScanRepository(): ScanRepository {
+        val apiServiceML = provideApiConfigML().getApiServiceML()
+
+        try {
+            return ScanRepository(apiServiceML)
+        } catch (e: Exception) {
+            Log.e("AppModule", "Error providing ScanRepository: ${e.message}", e)
+            throw e
+        }
+    }
+
+    @Provides
+    fun provideApiConfigML(): ApiConfigML {
+
+        try {
+            return ApiConfigML()
+        } catch (e: Exception) {
+            Log.e("AppModule", "Error providing ApiConfigML: ${e.message}", e)
             throw e
         }
     }

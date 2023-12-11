@@ -1,5 +1,9 @@
 
-Okotlin:S1172f"0Remove this unused function parameter "onError".(Âìú¶8îÈ»ı¿1
-Qkotlin:S1172K"2Use "_" instead of these unused lambda parameters.(Â†¬8éöı¿1
-lkotlin:S1172N"HUse "_" instead of this unused lambda parameter "imageCaptureException".(˜èğÊüÿÿÿÿ8éöı¿1
-Pkotlin:S1481k",Remove this unused "context" local variable.(˜®¾‚øÿÿÿÿ8òÈ»ı¿1
+Gkotlin:S108]")Either remove or fill this block of code.(¯Í¥€8•ÆÅ1
+Lkotlin:S108r")Either remove or fill this block of code.(€¸¦’üÿÿÿÿ8•ÆÅ1
+akotlin:S1172±"ARemove this unused function parameter "navigateToScoreAndAdvice".(éæáğ8•ÆÅ1
+Qkotlin:S1172{"2Use "_" instead of these unused lambda parameters.(Â†¬8Ÿ•ÆÅ1
+bkotlin:S1172~">Use "_" instead of this unused lambda parameter "fromGallery".(ÂÔ¼«şÿÿÿÿ8 •ÆÅ1
+mkotlin:S1172‹"HUse "_" instead of this unused lambda parameter "imageCaptureException".(˜èğÊüÿÿÿÿ8 •ÆÅ1
+?kotlin:S6615R" Remove this useless initializer.(”Šˆ8¦•ÆÅ1
+>kotlin:S125Ğ"Remove this commented out code.(ß£øĞ8«•ÆÅ1

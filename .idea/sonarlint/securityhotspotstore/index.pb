@@ -187,3 +187,15 @@ n
 rapp/src/main/java/com/example/thrivein/ui/screen/service/detail/detailConsultService/DetailConsultServiceScreen.kt,5\e\5ef16d60b175733862c9f37b89b3d5671fd5c21e
 •
 uapp/src/main/java/com/example/thrivein/ui/screen/service/detail/detailConsultService/DetailConsultServiceViewModel.kt,7\6\76b26b9e70da5c1ff439707fad8fe786b6ab0c4b
+~
+Napp/src/main/java/com/example/thrivein/data/network/retrofit/ml/ApiConfigML.kt,e\e\ee755a854b800c0d132f1a25217d5d5e37d36913
+
+Oapp/src/main/java/com/example/thrivein/data/network/retrofit/ml/ApiServiceML.kt,3\f\3ff999225017be732bc5da8ae75fd34cfc3276ce
+}
+Mapp/src/main/java/com/example/thrivein/data/repository/scan/ScanRepository.kt,e\2\e2b95990725f83259e92a228ac25320ddf416473
+Ü
+Vapp/src/main/java/com/example/thrivein/ui/screen/storeScanner/StoreScannerViewModel.kt,5\3\536d0af1f85c58e9df47ef5f04d30a0fb2234eef
+Å
+Qapp/src/main/java/com/example/thrivein/data/network/response/scan/ScanResponse.kt,7\1\71aa62fcfd54b17707f42437ca63ac2630e3a7a5
+Ü
+Vapp/src/main/java/com/example/thrivein/data/network/response/scan/ScanStoreResponse.kt,d\e\defa9ee09a4e6b0959ecd51b86ad6368100840d4

@@ -2,6 +2,7 @@ package com.example.thrivein.ui.screen.storeScanner
 
 import android.annotation.SuppressLint
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
@@ -32,6 +33,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -49,16 +51,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.thrivein.R
+import com.example.thrivein.data.network.response.scan.ScanStoreResponse
 import com.example.thrivein.ui.component.button.AddPhotoButton
 import com.example.thrivein.ui.component.button.CameraButton
 import com.example.thrivein.ui.component.button.SwitchButton
 import com.example.thrivein.ui.component.button.ThriveInButton
 import com.example.thrivein.ui.theme.Primary
 import com.example.thrivein.utils.CameraUIAction
+import com.example.thrivein.utils.UiState
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 @SuppressLint("PermissionLaunchedDuringComposition")
 @OptIn(ExperimentalPermissionsApi::class)
@@ -67,8 +75,11 @@ fun StoreScannerScreen(
     modifier: Modifier = Modifier,
     navigateToScoreAndAdvice: (String) -> Unit,
     navigateToHome: () -> Unit,
+    storeScannerViewModel: StoreScannerViewModel = hiltViewModel(),
 ) {
     val cameraPermissionState = rememberPermissionState(android.Manifest.permission.CAMERA)
+    val context = LocalContext.current
+    var scanStoreResponse: ScanStoreResponse? = null
 
     SideEffect {
         if (!cameraPermissionState.hasPermission) {
@@ -76,10 +87,53 @@ fun StoreScannerScreen(
         }
     }
 
+    storeScannerViewModel.uiScanStoreState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+
+        when (uiState) {
+            is UiState.Loading -> {
+
+            }
+
+            is UiState.Success -> {
+                scanStoreResponse = uiState.data
+                Toast.makeText(
+                    context,
+                    scanStoreResponse?.result ?: "--",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            is UiState.Error -> {
+                Toast.makeText(
+                    context,
+                    uiState.errorMessage,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            else -> {}
+
+        }
+
+    }
+
     if (cameraPermissionState.hasPermission) {
         CameraView(
             modifier = modifier,
             onImageCaptured = { uri, fromGallery ->
+
+            },
+            onGetImageFile = { file, fromGallery ->
+
+                val requestIMG = file.asRequestBody("image/jpeg".toMediaType())
+                val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                    "photo",
+                    file.name,
+                    requestIMG
+                )
+
+                storeScannerViewModel.predictStore(imageMultipart)
+
 
             },
             onError = { imageCaptureException ->
@@ -101,6 +155,7 @@ fun StoreScannerScreenPreview() {
         navigateToScoreAndAdvice = {},
     )
 }
+
 @Preview(showBackground = true)
 @Composable
 fun CameraPreviewViewTest() {
@@ -112,10 +167,12 @@ fun CameraPreviewViewTest() {
         imageCapture = imageCapture
     )
 }
+
 @Composable
 fun CameraView(
     modifier: Modifier = Modifier,
     onImageCaptured: (Uri, Boolean) -> Unit,
+    onGetImageFile: (File, Boolean) -> Unit,
     onError: (ImageCaptureException) -> Unit,
     navigateToScoreAndAdvice: (String) -> Unit,
     navigateToHome: () -> Unit,
@@ -130,6 +187,7 @@ fun CameraView(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         if (uri != null) onImageCaptured(uri, true)
+        if (uri != null) onGetImageFile(uriToFile(uri, context = context), true)
     }
 
     CameraPreviewView(
@@ -140,9 +198,14 @@ fun CameraView(
         cameraUIAction = { cameraUIAction ->
             when (cameraUIAction) {
                 is CameraUIAction.OnCameraClick -> {
-//                uncomment this code to use the camera
-//                imageCapture.takePicture(context, lensFacing, onImageCaptured, onError)
-                    navigateToScoreAndAdvice("1")
+                    imageCapture.takePicture(
+                        context,
+                        lensFacing,
+                        onImageCaptured,
+                        onGetImageFile,
+                        onError
+                    )
+//                    navigateToScoreAndAdvice("1")
 
                 }
 
@@ -252,22 +315,6 @@ private fun CameraPreviewView(
                         }
                 )
 
-                //Dialog
-//                if (showInfo) {
-//                    LaunchedEffect(showInfo) {
-//                        val context = this
-//                        MaterialAlertDialogBuilder(
-//                            context = this,
-////                            onDismissRequest = {
-////                                showInfo = false
-////                            }
-//                        ) {
-//                            setTitle(text = "Dialog Title")
-//                            message(text = "Dialog Content")
-//                            positiveButton(text = "OK")
-//                        }.show()
-//                    }
-//                }
             }
             CameraControls(cameraUIAction)
         }
