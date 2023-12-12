@@ -19,7 +19,7 @@ class ApiConfigML {
             val req = chain.request()
 
             val requestHeaders = req.newBuilder()
-                .addHeader("Content-Type", "application/json")
+//                .addHeader("Content-Type", "multipart/form-data")
                 .build()
             chain.proceed(requestHeaders)
         }

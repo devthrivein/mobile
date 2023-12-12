@@ -55,14 +55,14 @@ fun SettingScreen(
     modifier: Modifier = Modifier,
     navigateToProfile: () -> Unit,
     navigateToStoreProfile: () -> Unit,
-    navigateToAboutThriveIn: (String) -> Unit,
+    navigateToThriveInWeb: (String) -> Unit,
     navHostController: NavHostController,
     authViewModel: AuthViewModel = hiltViewModel(),
 ) {
 
     val user by authViewModel.getUser().observeAsState()
 
-    val urlAbout = stringResource(R.string.web_about_thrive_in)
+    val urlWeb = stringResource(R.string.web_thrive_in)
 
     Scaffold(
     ) { innerpadding ->
@@ -130,10 +130,10 @@ fun SettingScreen(
                     )
                     SettingItem(
                         id = "4",
-                        title = stringResource(R.string.about_us),
+                        title = stringResource(R.string.go_to_our_site),
                         icon = painterResource(id = R.drawable.ic_info),
                         onClick = {
-                            navigateToAboutThriveIn(urlAbout)
+                            navigateToThriveInWeb(urlWeb)
                         }
                     )
                     Spacer(modifier = Modifier.height(10.dp))
@@ -183,7 +183,7 @@ fun SettingScreenPreview() {
     SettingScreen(
         navigateToProfile = {},
         navigateToStoreProfile = {},
-        navigateToAboutThriveIn = {},
+        navigateToThriveInWeb = {},
         navHostController = rememberNavController(),
     )
 }

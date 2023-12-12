@@ -69,7 +69,7 @@
     <string name="published">Published</string>
     <string name="go_to_home">Go to Home</string>
     <string name="info">Info</string>
-    
+
     <string name="rate">Rate</string>
     <string name="re_order">Re-Order</string>
     <string name="delete">Delete</string>
@@ -85,6 +85,6 @@
     <string name="profile">Profile</string>
     <string name="go_to_profile">Go to Profile</string>
     <string name="data_is_invalid">Data is invalid!</string>
-    <string name="about_us">About Us</string>
-    <string name="web_about_thrive_in">https://devthrivein.github.io/about.html</string>
+    <string name="go_to_our_site">Go To Our Site</string>
+    <string name="web_thrive_in">https://devthrivein.github.io/</string>
 </resources>

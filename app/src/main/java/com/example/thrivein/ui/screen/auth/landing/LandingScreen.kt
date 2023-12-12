@@ -68,7 +68,7 @@ fun LandingScreen(
                     R.string.welcome
                 ),
                 modifier = Modifier
-                    .height(screenHeight.div(2))
+                    .height((screenHeight.value * 0.47).dp)
                     .width(screenWidth)
             )
             Box(

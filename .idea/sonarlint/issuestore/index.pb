@@ -195,8 +195,6 @@ Oapp/src/main/java/com/example/thrivein/data/network/retrofit/ml/ApiServiceML.kt
 Mapp/src/main/java/com/example/thrivein/data/repository/scan/ScanRepository.kt,e\2\e2b95990725f83259e92a228ac25320ddf416473
 Ü
 Vapp/src/main/java/com/example/thrivein/ui/screen/storeScanner/StoreScannerViewModel.kt,5\3\536d0af1f85c58e9df47ef5f04d30a0fb2234eef
-Å
-Qapp/src/main/java/com/example/thrivein/data/network/response/scan/ScanResponse.kt,7\1\71aa62fcfd54b17707f42437ca63ac2630e3a7a5
 Ü
 Vapp/src/main/java/com/example/thrivein/data/network/response/scan/ScanStoreResponse.kt,d\e\defa9ee09a4e6b0959ecd51b86ad6368100840d4
 Ü

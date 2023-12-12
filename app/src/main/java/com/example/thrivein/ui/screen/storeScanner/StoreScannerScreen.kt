@@ -51,6 +51,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.thrivein.R
 import com.example.thrivein.data.network.response.scan.ScanStoreResponse
@@ -58,6 +59,7 @@ import com.example.thrivein.ui.component.button.AddPhotoButton
 import com.example.thrivein.ui.component.button.CameraButton
 import com.example.thrivein.ui.component.button.SwitchButton
 import com.example.thrivein.ui.component.button.ThriveInButton
+import com.example.thrivein.ui.component.loading.ThriveInLoading
 import com.example.thrivein.ui.theme.Primary
 import com.example.thrivein.utils.CameraUIAction
 import com.example.thrivein.utils.UiState
@@ -73,13 +75,17 @@ import java.io.File
 @Composable
 fun StoreScannerScreen(
     modifier: Modifier = Modifier,
-    navigateToScoreAndAdvice: (String) -> Unit,
+    navigateToScoreAndAdvice: (scanStoreResponse: ScanStoreResponse, imageUriFromScan: Uri) -> Unit,
     navigateToHome: () -> Unit,
     storeScannerViewModel: StoreScannerViewModel = hiltViewModel(),
 ) {
     val cameraPermissionState = rememberPermissionState(android.Manifest.permission.CAMERA)
     val context = LocalContext.current
     var scanStoreResponse: ScanStoreResponse? = null
+    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+    var isLoading by remember {
+        mutableStateOf(false)
+    }
 
     SideEffect {
         if (!cameraPermissionState.hasPermission) {
@@ -87,7 +93,7 @@ fun StoreScannerScreen(
         }
     }
 
-    storeScannerViewModel.uiScanStoreState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+    storeScannerViewModel.uiScanStoreState.collectAsState().value.let { uiState ->
 
         when (uiState) {
             is UiState.Loading -> {
@@ -95,15 +101,21 @@ fun StoreScannerScreen(
             }
 
             is UiState.Success -> {
+                isLoading = false
                 scanStoreResponse = uiState.data
-                Toast.makeText(
-                    context,
-                    scanStoreResponse?.result ?: "--",
-                    Toast.LENGTH_SHORT
-                ).show()
+                scanStoreResponse.let {
+                    LaunchedEffect(it) {
+                        if (it != null && selectedImageUri != null) {
+                            navigateToScoreAndAdvice(it, selectedImageUri!!)
+
+                        }
+                    }
+
+                }
             }
 
             is UiState.Error -> {
+                isLoading = false
                 Toast.makeText(
                     context,
                     uiState.errorMessage,
@@ -118,30 +130,46 @@ fun StoreScannerScreen(
     }
 
     if (cameraPermissionState.hasPermission) {
-        CameraView(
-            modifier = modifier,
-            onImageCaptured = { uri, fromGallery ->
+        Box(
+            contentAlignment = Alignment.Center
+        ) {
+            CameraView(
+                modifier = modifier,
+                onImageCaptured = { uri, fromGallery ->
 
-            },
-            onGetImageFile = { file, fromGallery ->
+                },
+                onGetImageFile = { file, fromGallery ->
+                    val requestIMG = file.asRequestBody("image/*".toMediaType())
+                    val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                        "image",
+                        file.name,
+                        requestIMG
+                    )
 
-                val requestIMG = file.asRequestBody("image/jpeg".toMediaType())
-                val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                    "photo",
-                    file.name,
-                    requestIMG
-                )
+                    selectedImageUri = file.toUri()
+                    isLoading = true
+                    storeScannerViewModel.predictStore(imageMultipart)
+                    isLoading = false
 
-                storeScannerViewModel.predictStore(imageMultipart)
+                },
+                onError = { imageCaptureException ->
 
+                },
+                navigateToHome = navigateToHome,
+            )
 
-            },
-            onError = { imageCaptureException ->
+            if (isLoading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Gray.copy(alpha = 0.7f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    ThriveInLoading()
 
-            },
-            navigateToScoreAndAdvice = navigateToScoreAndAdvice,
-            navigateToHome = navigateToHome,
-        )
+                }
+            }
+        }
     }
 
 
@@ -152,7 +180,7 @@ fun StoreScannerScreen(
 fun StoreScannerScreenPreview() {
     StoreScannerScreen(
         navigateToHome = {},
-        navigateToScoreAndAdvice = {},
+        navigateToScoreAndAdvice = { scanStoreResponse, imageUriFromScan -> },
     )
 }
 
@@ -174,7 +202,6 @@ fun CameraView(
     onImageCaptured: (Uri, Boolean) -> Unit,
     onGetImageFile: (File, Boolean) -> Unit,
     onError: (ImageCaptureException) -> Unit,
-    navigateToScoreAndAdvice: (String) -> Unit,
     navigateToHome: () -> Unit,
 ) {
 
@@ -205,7 +232,6 @@ fun CameraView(
                         onGetImageFile,
                         onError
                     )
-//                    navigateToScoreAndAdvice("1")
 
                 }
 

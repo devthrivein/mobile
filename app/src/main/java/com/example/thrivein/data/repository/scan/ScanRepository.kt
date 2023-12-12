@@ -18,10 +18,10 @@ class ScanRepository @Inject constructor(
 ) {
 
     suspend fun predictStore(
-        file: MultipartBody.Part,
+        image: MultipartBody.Part,
     ): Flow<ScanStoreResponse> {
         try {
-            val response = apiServiceML.predictStore(file)
+            val response = apiServiceML.predictStore(image)
             return flow { emit(response) }
         } catch (e: HttpException) {
             e.printStackTrace()

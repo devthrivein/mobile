@@ -26,10 +26,10 @@ class StoreScannerViewModel @Inject constructor(
 
 
     fun predictStore(
-        file: MultipartBody.Part,
+        image: MultipartBody.Part,
     ) {
         viewModelScope.launch {
-            scanRepository.predictStore(file)
+            scanRepository.predictStore(image)
                 .catch {
                     _uiScanStoreState.value = UiState.Error(it.message.toString())
                 }

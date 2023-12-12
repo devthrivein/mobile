@@ -1,6 +1,7 @@
 package com.example.thrivein
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -17,6 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.thrivein.data.network.response.scan.ScanStoreResponse
 import com.example.thrivein.ui.component.navigation.BottomBarNavigation
 import com.example.thrivein.ui.navigation.Screen
 import com.example.thrivein.ui.screen.article.detail.DetailArticleScreen
@@ -58,6 +60,7 @@ fun ThriveInApp(
     val user by authViewModel.getUser().observeAsState()
 
     Scaffold(
+        modifier = modifier,
         bottomBar = {
             if (
                 currentRoute == Screen.Home.route
@@ -173,23 +176,48 @@ fun ThriveInApp(
                             restoreState = true
                         }
                     },
-                    navigateToScoreAndAdvice = { storeId ->
-                        navHostController.navigate(Screen.ScoreStore.createRoute(storeId))
+                    navigateToScoreAndAdvice = { scanResponse, imageUriFromScan ->
+                        navHostController.currentBackStackEntry?.savedStateHandle?.set(
+                            key = "scanResponse",
+                            value = scanResponse,
+                        )
+                        navHostController.currentBackStackEntry?.savedStateHandle?.set(
+                            key = "imageUriFromScan",
+                            value = imageUriFromScan,
+                        )
+                        navHostController.navigate(Screen.ScoreAndAdviceStore.route)
                     }
                 )
 
             }
 
             composable(
-                route = Screen.ScoreStore.route,
-                arguments = listOf(navArgument("storeId") { type = NavType.StringType })
+                route = Screen.ScoreAndAdviceStore.route,
             ) {
-                val id = it.arguments?.getString("storeId") ?: "1"
+                val scanResponse =
+                    navHostController.previousBackStackEntry?.savedStateHandle?.get<ScanStoreResponse>(
+                        "scanResponse"
+                    )
+                        ?: ScanStoreResponse(result = "")
+
+                val imageUriFromScan =
+                    navHostController.previousBackStackEntry?.savedStateHandle?.get<Uri>(
+                        "imageUriFromScan"
+                    )
+                        ?: Uri.parse("")
 
                 ScoreAndAdviceScreen(
-                    id = id,
+                    scanStoreResponse = scanResponse,
+                    imageUriFromScan = imageUriFromScan,
                     navigateToHome = {
-                        navHostController.navigate(Screen.Home.route)
+                        navHostController.navigate(Screen.Home.route) {
+                            popUpTo(navHostController.graph.startDestinationId) {
+
+                            }
+
+                            restoreState = true
+                            launchSingleTop = true
+                        }
                     },
                 )
 
@@ -251,7 +279,7 @@ fun ThriveInApp(
                 SettingScreen(
                     navigateToProfile = { navHostController.navigate(Screen.UserProfile.route) },
                     navigateToStoreProfile = { navHostController.navigate(Screen.StoreProfile.route) },
-                    navigateToAboutThriveIn = { url ->
+                    navigateToThriveInWeb = { url ->
                         navHostController.navigate(Screen.WebViewScreen.createRoute(url))
                     },
                     navHostController = navHostController,

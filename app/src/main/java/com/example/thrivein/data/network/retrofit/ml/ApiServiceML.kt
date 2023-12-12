@@ -13,7 +13,7 @@ interface ApiServiceML {
     @Multipart
     @POST("predict")
     suspend fun predictStore(
-        @Part file: MultipartBody.Part,
+        @Part image: MultipartBody.Part,
     ): ScanStoreResponse
 
 }
