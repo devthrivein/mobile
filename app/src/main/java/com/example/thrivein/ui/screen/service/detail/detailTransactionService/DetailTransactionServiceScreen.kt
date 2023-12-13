@@ -1,6 +1,7 @@
 package com.example.thrivein.ui.screen.service.detail.detailTransactionService
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Divider
@@ -22,20 +24,20 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -43,31 +45,58 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.thrivein.AuthViewModel
 import com.example.thrivein.R
+import com.example.thrivein.data.network.response.service.orderPackage.OrderPackageResponse
 import com.example.thrivein.ui.component.button.ThriveInButton
 import com.example.thrivein.ui.component.header.DetailTopBar
 import com.example.thrivein.ui.component.item.PackageItem
 import com.example.thrivein.ui.component.item.TransactionMetaDataItem
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.ui.theme.Primary
+import com.example.thrivein.utils.UiState
+import com.example.thrivein.utils.toRpString
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun DetailTransactionServiceScreen(
     id: String,
+    title: String,
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
-    navigateToHistoryService: () -> Unit
+    navigateToHistoryService: () -> Unit,
+    detailTransactionServiceViewModel: DetailTransactionServiceViewModel = hiltViewModel(),
+    authViewModel: AuthViewModel = hiltViewModel(),
 ) {
     val items = listOf<String>("Transfer Bank", "COD", "Check")
+    val user by authViewModel.getUser().observeAsState()
+    val store by authViewModel.getStore().observeAsState()
+    val context = LocalContext.current
+    var orderPackageResponse: OrderPackageResponse? = null
+    var totalOrder: Int = 0
 
-    Scaffold(
-        topBar = {
-            DetailTopBar(title = id, navigateBack = navigateBack)
-        },
-    ) {}
-//        bottomBar = {
+    detailTransactionServiceViewModel.uiOrderPackageState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
+            is UiState.Loading -> {
+
+                detailTransactionServiceViewModel.getOrderPackageByServiceId(id)
+            }
+
+            is UiState.Success -> {
+                orderPackageResponse = uiState.data
+
+
+            }
+
+            is UiState.Error -> {
+                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -78,6 +107,10 @@ fun DetailTransactionServiceScreen(
 
         )
         BottomSheetScaffold(
+            topBar = {
+                DetailTopBar(title = title, navigateBack = navigateBack)
+            },
+
             scaffoldState = scaffoldState,
             sheetContainerColor = Background,
             sheetContent = {
@@ -104,12 +137,12 @@ fun DetailTransactionServiceScreen(
                         Spacer(modifier = Modifier.height(6.dp))
                         PaymentDetailItem(
                             label = stringResource(id = R.string.address),
-                            valueString = "Jalan Tangkuban Perahu"
+                            valueString = store?.address ?: "-"
                         )
                         Spacer(modifier = Modifier.height(6.dp))
                         PaymentDetailItem(
                             label = stringResource(R.string.total_order),
-                            valueString = "Rp 300000"
+                            valueString = totalOrder.toRpString(),
                         )
                     }
                     Spacer(modifier = Modifier.height(18.dp))
@@ -118,7 +151,7 @@ fun DetailTransactionServiceScreen(
                     PaymentDetailItem(
                         isImportant = true,
                         label = stringResource(R.string.total),
-                        valueString = "Rp 300000",
+                        valueString = totalOrder.toRpString(),
                         modifier = Modifier.padding(horizontal = 48.dp)
                     )
                     Spacer(modifier = Modifier.height(24.dp))
@@ -133,7 +166,7 @@ fun DetailTransactionServiceScreen(
                             isNotWide = true
                         )
                         ThriveInButton(
-                            onClick = { navigateToHistoryService },
+                            onClick = { navigateToHistoryService() },
                             label = stringResource(R.string.order_now),
                             isNotWide = true,
                         )
@@ -141,7 +174,6 @@ fun DetailTransactionServiceScreen(
                 }
             },
         ) {
-//                    ) { innerPadding ->
 
             Column(
                 modifier = modifier.padding()
@@ -167,11 +199,14 @@ fun DetailTransactionServiceScreen(
                         }
                     }
 
-                    items(count = 10) {
+                    items(items = orderPackageResponse?.item ?: arrayListOf()) {
+
+                        totalOrder += (it?.price ?: 0)
+
                         PackageItem(
-                            title = "Lorem Ipsum 1x${it + 1}",
-                            qty = it,
-                            price = (it + 1) * 100000,
+                            title = it?.title ?: "",
+                            qty = it?.qty ?: 0,
+                            price = it?.price ?: 0,
                             bannerUrl = stringResource(
                                 id = R.string.dummy_image
                             ),
@@ -183,14 +218,17 @@ fun DetailTransactionServiceScreen(
         }
 
     }
-//        },
 }
 
 
 @Preview(showBackground = true)
 @Composable
 fun DetailTransactionServiceScreenPreview() {
-    DetailTransactionServiceScreen(id = "1", navigateToHistoryService = {}, navigateBack = {})
+    DetailTransactionServiceScreen(
+        id = "1",
+        title = "test",
+        navigateToHistoryService = {},
+        navigateBack = {})
 }
 
 

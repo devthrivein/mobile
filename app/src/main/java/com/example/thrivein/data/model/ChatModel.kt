@@ -9,6 +9,7 @@ data class ChatModel(
     val message: String?,
     val userId: String?,
     val serviceId: String? = "",
+    val fileUrl: String? = "",
     val createdAt: com.google.firebase.Timestamp? = com.google.firebase.Timestamp(
         Date()
     ),

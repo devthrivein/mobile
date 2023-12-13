@@ -48,7 +48,6 @@ import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.ui.theme.Gray
 import com.example.thrivein.ui.theme.Primary
 
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SettingScreen(
@@ -56,13 +55,17 @@ fun SettingScreen(
     navigateToProfile: () -> Unit,
     navigateToStoreProfile: () -> Unit,
     navigateToThriveInWeb: (String) -> Unit,
+    navigateToFaQ: (String) -> Unit,
+    navigateToTnC: (String) -> Unit,
     navHostController: NavHostController,
     authViewModel: AuthViewModel = hiltViewModel(),
 ) {
 
     val user by authViewModel.getUser().observeAsState()
 
-    val urlWeb = stringResource(R.string.web_thrive_in)
+    val urlWeb = stringResource(R.string.web_thrive_in, "")
+    val urlFaQ = stringResource(R.string.web_thrive_in, "faq.html")
+    val urlTnC = stringResource(R.string.web_thrive_in, "tac.html")
 
     Scaffold(
     ) { innerpadding ->
@@ -120,13 +123,17 @@ fun SettingScreen(
                         id = "2",
                         title = stringResource(id = R.string.FAQ),
                         icon = painterResource(id = R.drawable.ic_faq),
-                        onClick = {}
+                        onClick = {
+                            navigateToFaQ(urlFaQ)
+                        }
                     )
                     SettingItem(
                         id = "3",
                         title = stringResource(id = R.string.terms_and_conditions),
                         icon = painterResource(id = R.drawable.ic_terms_and_conditions),
-                        onClick = {}
+                        onClick = {
+                            navigateToTnC(urlTnC)
+                        }
                     )
                     SettingItem(
                         id = "4",
@@ -184,6 +191,8 @@ fun SettingScreenPreview() {
         navigateToProfile = {},
         navigateToStoreProfile = {},
         navigateToThriveInWeb = {},
+        navigateToFaQ = {},
+        navigateToTnC = {},
         navHostController = rememberNavController(),
     )
 }

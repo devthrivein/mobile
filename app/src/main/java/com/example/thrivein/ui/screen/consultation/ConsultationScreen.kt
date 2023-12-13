@@ -1,6 +1,9 @@
 package com.example.thrivein.ui.screen.consultation
 
 import android.annotation.SuppressLint
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,6 +37,7 @@ import com.example.thrivein.ui.component.input.ThriveInChatInput
 import com.example.thrivein.ui.component.item.ChatConsultItem
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.ui.theme.Primary
+import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -45,6 +50,25 @@ fun ConsultationScreen(
 ) {
     var chatValue by remember { mutableStateOf("") }
     val user by authViewModel.getUser().observeAsState()
+    val context = LocalContext.current
+    var selectedFile by remember {
+        mutableStateOf<File?>(File(""))
+    }
+    val fileLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            selectedFile = File(uri.path ?: "")
+            if (selectedFile != null) {
+                consultationViewModel.sendChatConsultation(
+                    isAdmin = false,
+                    message = chatValue,
+                    userId = user?.userId ?: "",
+                    file = selectedFile,
+                )
+            }
+        }
+    }
 
     val messages: List<ChatModel> by consultationViewModel.messages.observeAsState(initial = emptyList())
 
@@ -77,6 +101,7 @@ fun ConsultationScreen(
                                     isAdmin = false,
                                     message = chatValue,
                                     userId = user?.userId ?: "",
+                                    file = null,
                                 )
                                 chatValue = ""
                             }
@@ -84,7 +109,9 @@ fun ConsultationScreen(
                         onChange = {
                             chatValue = it
                         },
-                        onOpenFileExplorer = {},
+                        onOpenFileExplorer = {
+                            fileLauncher.launch("*/*")
+                        },
                     )
                 }
             }

@@ -133,30 +133,7 @@ fun StoreScannerScreen(
         Box(
             contentAlignment = Alignment.Center
         ) {
-            CameraView(
-                modifier = modifier,
-                onImageCaptured = { uri, fromGallery ->
 
-                },
-                onGetImageFile = { file, fromGallery ->
-                    val requestIMG = file.asRequestBody("image/*".toMediaType())
-                    val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                        "image",
-                        file.name,
-                        requestIMG
-                    )
-
-                    selectedImageUri = file.toUri()
-                    isLoading = true
-                    storeScannerViewModel.predictStore(imageMultipart)
-                    isLoading = false
-
-                },
-                onError = { imageCaptureException ->
-
-                },
-                navigateToHome = navigateToHome,
-            )
 
             if (isLoading) {
                 Box(
@@ -168,6 +145,36 @@ fun StoreScannerScreen(
                     ThriveInLoading()
 
                 }
+            } else {
+                CameraView(
+                    modifier = modifier,
+                    onImageCaptured = { uri, fromGallery ->
+
+                    },
+                    onGetImageFile = { file, fromGallery ->
+
+                        if (!isLoading) {
+                            val requestIMG = file.asRequestBody("image/*".toMediaType())
+                            val imageMultipart: MultipartBody.Part =
+                                MultipartBody.Part.createFormData(
+                                    "image",
+                                    file.name,
+                                    requestIMG
+                                )
+
+                            selectedImageUri = file.toUri()
+                            isLoading = true
+                            storeScannerViewModel.predictStore(imageMultipart)
+                            isLoading = false
+                        }
+
+
+                    },
+                    onError = { imageCaptureException ->
+
+                    },
+                    navigateToHome = navigateToHome,
+                )
             }
         }
     }
@@ -245,6 +252,8 @@ fun CameraView(
                 is CameraUIAction.OnGalleryViewClick -> {
                     galleryLauncher.launch("image/*")
                 }
+
+                else -> {}
             }
         }
     )

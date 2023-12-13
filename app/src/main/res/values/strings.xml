@@ -86,5 +86,8 @@
     <string name="go_to_profile">Go to Profile</string>
     <string name="data_is_invalid">Data is invalid!</string>
     <string name="go_to_our_site">Go To Our Site</string>
-    <string name="web_thrive_in">https://devthrivein.github.io/</string>
+    <string name="web_thrive_in">https://devthrivein.github.io/%1$s</string>
+    <string name="description">Description</string>
+    <string name="create_transaction_now">Create Transaction Now?</string>
+    <string name="message_before_order">Once you select it, this will not automatically make a payment, you can check it in this Consultation or you can order it now or later!</string>
 </resources>

@@ -279,6 +279,12 @@ fun ThriveInApp(
                 SettingScreen(
                     navigateToProfile = { navHostController.navigate(Screen.UserProfile.route) },
                     navigateToStoreProfile = { navHostController.navigate(Screen.StoreProfile.route) },
+                    navigateToFaQ = { url ->
+                        navHostController.navigate(Screen.WebViewScreen.createRoute(url))
+                    },
+                    navigateToTnC = { url ->
+                        navHostController.navigate(Screen.WebViewScreen.createRoute(url))
+                    },
                     navigateToThriveInWeb = { url ->
                         navHostController.navigate(Screen.WebViewScreen.createRoute(url))
                     },
@@ -420,10 +426,10 @@ fun ThriveInApp(
                     navigateBack = {
                         navHostController.navigateUp()
                     },
-                    navigateToTransaction = { transactionId ->
+                    navigateToTransaction = { transactionId, serviceTitle ->
                         navHostController.navigate(
                             Screen.DetailTransactionService.createRoute(
-                                transactionId
+                                transactionId, serviceTitle
                             )
                         )
                     }
@@ -432,12 +438,17 @@ fun ThriveInApp(
 
             composable(
                 route = Screen.DetailTransactionService.route,
-                arguments = listOf(navArgument("transactionId") { type = NavType.StringType })
+                arguments = listOf(
+                    navArgument("transactionId") { type = NavType.StringType },
+                    navArgument("serviceTitle") { type = NavType.StringType },
+                )
             ) {
                 val id = it.arguments?.getString("transactionId") ?: ""
+                val serviceTitle = it.arguments?.getString("serviceTitle") ?: ""
 
                 DetailTransactionServiceScreen(
                     id = id,
+                    title = serviceTitle,
                     navigateBack = {
                         navHostController.navigateUp()
                     },

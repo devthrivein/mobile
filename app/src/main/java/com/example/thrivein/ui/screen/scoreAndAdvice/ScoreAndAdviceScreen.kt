@@ -93,11 +93,6 @@ fun ScoreAndAdviceScreen(
                     .fillMaxWidth(),// Adjust the offset value as needed,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_logo),
-                    contentDescription = stringResource(id = R.string.thrive_in),
-                )
-                Spacer(modifier = Modifier.height(30.dp))
 
                 if (selectedImageUri == Uri.parse("")) {
                     Image(
@@ -109,7 +104,9 @@ fun ScoreAndAdviceScreen(
                         Image(
                             painter = rememberImagePainter(uri),
                             contentDescription = stringResource(id = R.string.photo),
-                            modifier = Modifier.width((screenWidth.value * 0.6).dp)
+                            modifier = Modifier
+                                .width((screenWidth.value * 0.6).dp)
+                                .height((screenHeight.value * 0.25).dp)
                         )
                     }
                 }

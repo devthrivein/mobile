@@ -11,12 +11,14 @@ import com.example.thrivein.data.network.retrofit.ml.ApiConfigML
 import com.example.thrivein.data.repository.article.ArticleRepository
 import com.example.thrivein.data.repository.auth.AuthRepository
 import com.example.thrivein.data.repository.banner.BannerRepository
+import com.example.thrivein.data.repository.file.FileRepository
 import com.example.thrivein.data.repository.history.HistoryRepository
 import com.example.thrivein.data.repository.scan.ScanRepository
 import com.example.thrivein.data.repository.service.ChatRepository
 import com.example.thrivein.data.repository.service.ServiceCategoryRepository
 import com.example.thrivein.data.repository.service.ServiceRepository
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -158,12 +160,24 @@ object AppModule {
     }
 
     @Provides
-    fun providerChatRepository(): ChatRepository {
+    fun providerChatRepository(@ApplicationContext context: Context): ChatRepository {
+
+        val apiService = provideApiConfig().getApiService(context)
 
         try {
-            return ChatRepository(FirebaseFirestore.getInstance())
+            return ChatRepository(FirebaseFirestore.getInstance(), apiService)
         } catch (e: Exception) {
             Log.e("AppModule", "Error providing ChatRepository: ${e.message}", e)
+            throw e
+        }
+    }
+
+    @Provides
+    fun providerFileRepository(): FileRepository {
+        try {
+            return FileRepository(FirebaseStorage.getInstance())
+        } catch (e: Exception) {
+            Log.e("AppModule", "Error providing FileRepository: ${e.message}", e)
             throw e
         }
     }

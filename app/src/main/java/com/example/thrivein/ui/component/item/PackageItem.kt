@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.thrivein.ui.theme.Gray
+import com.example.thrivein.utils.toRpString
 
 @Composable
 fun PackageItem(
@@ -79,7 +80,7 @@ fun PackageItem(
                     )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "Rp $price",
+                    text = price.toRpString(),
                     style = MaterialTheme.typography.bodySmall.copy(color = Color.Gray),
                     maxLines = 4,
 

@@ -5,17 +5,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.thrivein.data.model.ChatModel
+import com.example.thrivein.data.repository.file.FileRepository
 import com.example.thrivein.data.repository.service.ChatRepository
 import com.example.thrivein.utils.CHATS
 import com.example.thrivein.utils.CONSULTATION
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class ConsultationViewModel @Inject constructor(
     private val chatRepository: ChatRepository,
+    private val fileRepository: FileRepository,
     private val database: FirebaseFirestore,
 ) : ViewModel() {
 
@@ -26,11 +29,24 @@ class ConsultationViewModel @Inject constructor(
     fun sendChatConsultation(
         isAdmin: Boolean = false,
         message: String,
+        file: File?,
         userId: String,
     ) {
+
+        var fileUrl: String? = null
+
+        if (file != null) {
+
+            fileRepository.sendFileToConsultation(file, userId) {
+                fileUrl = it?.path
+            }
+
+        }
+
         chatRepository.sendConsultationChat(
             isAdmin,
             message,
+            fileUrl ?: "",
             userId,
         )
     }
@@ -50,7 +66,6 @@ class ConsultationViewModel @Inject constructor(
                     return@addSnapshotListener
                 }
 
-//                val list = emptyList<Map<String, Any>>().toMutableList()
 
                 var chats = arrayListOf<ChatModel>()
 
@@ -63,14 +78,13 @@ class ConsultationViewModel @Inject constructor(
                             userId = data["userId"] as String?,
                             createdAt = data["createdAt"] as com.google.firebase.Timestamp?,
                             message = data["message"] as String?,
+                            fileUrl = data["fileUrl"] as String?,
                         )
 
-//                        list.add(data)
                         chats.add(chat)
                     }
                 }
 
-//                _messages.value = list
                 _messages.value = chats
             }
     }

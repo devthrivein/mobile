@@ -4,22 +4,52 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.thrivein.data.model.ChatModel
+import com.example.thrivein.data.network.response.service.message.WelcomeMessageResponse
+import com.example.thrivein.data.repository.file.FileRepository
 import com.example.thrivein.data.repository.service.ChatRepository
 import com.example.thrivein.utils.CONSULTATION_SERVICE
+import com.example.thrivein.utils.UiState
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 
 @HiltViewModel
 class DetailConsultServiceViewModel @Inject constructor(
     private val chatRepository: ChatRepository,
+    private val fileRepository: FileRepository,
     private val database: FirebaseFirestore,
 ) : ViewModel() {
 
-    private var _messages = MutableLiveData(emptyList<Map<String, Any>>().toMutableList())
-    val messages: LiveData<MutableList<Map<String, Any>>> = _messages
+    private var _messages = MutableLiveData<MutableList<ChatModel>>()
+    val messages: LiveData<MutableList<ChatModel>> = _messages
+
+    private val _uiWelcomeMessageState: MutableStateFlow<UiState<WelcomeMessageResponse>> =
+        MutableStateFlow(UiState.Loading)
+
+    val uiWelcomeMessageState: StateFlow<UiState<WelcomeMessageResponse>>
+        get() = _uiWelcomeMessageState
+
+    fun getWelcomeMessageByServiceId(serviceId: String) {
+        viewModelScope.launch {
+            chatRepository.getWelcomeMessageByServiceId(serviceId).catch {
+                _uiWelcomeMessageState.value = UiState.Error(it.message.toString())
+            }
+                .collect { welcomeMessage ->
+                    _uiWelcomeMessageState.value = UiState.Success(welcomeMessage)
+                }
+        }
+    }
+
 
     fun sendChatConsultService(
         isAdmin: Boolean = false,
@@ -27,13 +57,25 @@ class DetailConsultServiceViewModel @Inject constructor(
         message: String,
         userId: String,
         serviceId: String,
+        file: File?,
     ) {
+        var fileUrl: String? = null
+
+        if (file != null) {
+
+            fileRepository.sendFileToConsultationService(file, serviceId, userId) {
+                fileUrl = it?.path
+            }
+
+        }
+
         chatRepository.sendConsultationServiceChat(
             isAdmin,
             isTransactionChat,
             message,
+            fileUrl ?: "",
             userId,
-            serviceId
+            serviceId,
         )
     }
 
@@ -52,21 +94,27 @@ class DetailConsultServiceViewModel @Inject constructor(
                     return@addSnapshotListener
                 }
 
-                val list = emptyList<Map<String, Any>>().toMutableList()
+                var chats = arrayListOf<ChatModel>()
 
                 if (value != null) {
                     for (doc in value) {
                         val data = doc.data
 
+                        val chat = ChatModel(
+                            isAdmin = data["admin"] as Boolean?,
+                            userId = data["userId"] as String?,
+                            createdAt = data["createdAt"] as Timestamp?,
+                            message = data["message"] as String?,
+                            fileUrl = data["fileUrl"] as String?,
+                        )
 
-                        list.add(data)
+                        chats.add(chat)
                     }
                 }
 
-                _messages.value = list
+                _messages.value = chats
             }
     }
-
 
 
 }

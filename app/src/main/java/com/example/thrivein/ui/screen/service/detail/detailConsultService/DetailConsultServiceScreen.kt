@@ -1,6 +1,10 @@
 package com.example.thrivein.ui.screen.service.detail.detailConsultService
 
 import android.annotation.SuppressLint
+import android.net.Uri
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,17 +13,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
@@ -29,12 +37,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.thrivein.AuthViewModel
 import com.example.thrivein.R
 import com.example.thrivein.data.model.ChatModel
+import com.example.thrivein.data.network.response.service.message.WelcomeMessageResponse
 import com.example.thrivein.ui.component.dialog.ThriveInAlertDialogPackage
 import com.example.thrivein.ui.component.header.DetailTopBar
 import com.example.thrivein.ui.component.input.ThriveInChatInput
 import com.example.thrivein.ui.component.item.ChatConsultItem
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.ui.theme.Primary
+import com.example.thrivein.utils.UiState
+import kotlinx.coroutines.launch
+import java.io.File
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(
@@ -46,7 +58,7 @@ fun DetailConsultServiceScreen(
     id: String,
     title: String,
     navigateBack: () -> Unit,
-    navigateToTransaction: (String) -> Unit,
+    navigateToTransaction: (id: String, title: String) -> Unit,
     detailConsultServiceViewModel: DetailConsultServiceViewModel = hiltViewModel(),
     authViewModel: AuthViewModel = hiltViewModel(),
 ) {
@@ -54,12 +66,56 @@ fun DetailConsultServiceScreen(
     val user by authViewModel.getUser().observeAsState()
     var chatValue by remember { mutableStateOf("") }
     var openAlertDialog by remember { mutableStateOf(false) }
+    val lazyColumnListState = rememberLazyListState()
+    val corroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val messages by detailConsultServiceViewModel.messages.observeAsState(initial = emptyList<ChatModel>())
+    var welcomeMessages: WelcomeMessageResponse? = null
+    var selectedFile by remember {
+        mutableStateOf<File?>(File(""))
+    }
+    val fileLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            selectedFile = File(uri.path ?: "")
+            if (selectedFile != null) {
+                detailConsultServiceViewModel.sendChatConsultService(
+                    isAdmin = false,
+                    isTransactionChat = false,
+                    message = chatValue,
+                    file = selectedFile,
+                    userId = user?.userId ?: "",
+                    serviceId = id,
+                )
+            }
+        }
+    }
 
-    val messages: List<Map<String, Any>> by detailConsultServiceViewModel.messages.observeAsState(
-        initial = emptyList<Map<String, Any>>().toMutableList()
+    detailConsultServiceViewModel.getMessages(
+        userId = user?.userId ?: "",
+        serviceId = id
     )
 
-    detailConsultServiceViewModel.getMessages(userId = user?.userId ?: "", serviceId = id)
+    detailConsultServiceViewModel.uiWelcomeMessageState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
+            is UiState.Loading -> {
+
+                detailConsultServiceViewModel.getWelcomeMessageByServiceId(id)
+            }
+
+            is UiState.Success -> {
+                welcomeMessages = uiState.data
+
+            }
+
+            is UiState.Error -> {
+                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
 
     when {
         openAlertDialog -> {
@@ -67,13 +123,10 @@ fun DetailConsultServiceScreen(
                 onDismissRequest = { openAlertDialog = false },
                 onConfirmation = {
                     openAlertDialog = false
+                    navigateToTransaction(id, title)
                 },
-                title = title,
-                content = "-lorem\n" +
-                        "-Ipsum\n" +
-                        "-Dolor\n" +
-                        "-Sit\n" +
-                        "-Amet"
+                title = stringResource(R.string.create_transaction_now),
+                content = stringResource(R.string.message_before_order)
             )
         }
     }
@@ -84,8 +137,6 @@ fun DetailConsultServiceScreen(
 
                 IconButton(onClick = {
                     openAlertDialog = true
-
-//                    navigateToTransaction(id)
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_history),
@@ -115,6 +166,7 @@ fun DetailConsultServiceScreen(
                                     isAdmin = false,
                                     isTransactionChat = false,
                                     message = chatValue,
+                                    file = null,
                                     userId = user?.userId ?: "",
                                     serviceId = id,
                                 )
@@ -125,29 +177,32 @@ fun DetailConsultServiceScreen(
                         onChange = {
                             chatValue = it
                         },
-                        onOpenFileExplorer = {},
+                        onOpenFileExplorer = {
+                            fileLauncher.launch("*/*")
+                        },
                     )
                 }
             }
         },
         containerColor = Background,
     ) { innerPadding ->
+
+
         LazyColumn(
             modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding),
             reverseLayout = true,
+            state = lazyColumnListState,
         ) {
-            items(items = messages, key = { it["createdAt"].toString() }) {
+            corroutineScope.launch {
+                if (messages.isNotEmpty()) {
+                    lazyColumnListState.animateScrollToItem(0)
+                }
+            }
 
-                val chat = ChatModel(
-                    isAdmin = it["admin"] as Boolean?,
-                    serviceId = it["serviceId"] as String?,
-                    userId = it["userId"] as String?,
-                    isTransactionChat = it["transactionChat"] as Boolean?,
-                    createdAt = it["createdAt"] as com.google.firebase.Timestamp?,
-                    message = it["message"] as String?,
-                )
+            items(items = messages, key = { it.createdAt.toString() }) { chat ->
+
 
                 if (chat.message != "") {
                     ChatConsultItem(
@@ -168,6 +223,6 @@ fun DetailConsultServiceScreenPreview() {
     DetailConsultServiceScreen(
         title = "test",
         id = "1",
-        navigateToTransaction = {},
+        navigateToTransaction = { id, title -> },
         navigateBack = {})
 }

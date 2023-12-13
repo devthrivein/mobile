@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -43,6 +45,7 @@ import com.example.thrivein.ui.component.button.ThriveInButton
 import com.example.thrivein.ui.component.header.DetailTopBar
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.utils.UiState
+import com.example.thrivein.utils.toRpString
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -150,11 +153,27 @@ fun DetailServiceScreen(
 
                 item {
                     Text(
-                        text = servicesResponse?.description ?: "",
+                        text = servicesResponse?.price?.toRpString() ?: "-",
+                        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.ExtraBold),
                         modifier = Modifier
                             .padding(24.dp)
                             .background(ShimmerBrush(targetValue = 1300f, showShimmer = isLoading))
                     )
+                }
+
+                item {
+                    Text(
+                        text = servicesResponse?.description ?: "",
+                        style = MaterialTheme.typography.bodySmall, modifier = Modifier
+                            .padding(horizontal = 24.dp)
+                            .background(
+                                ShimmerBrush(
+                                    targetValue = 1300f,
+                                    showShimmer = isLoading
+                                )
+                            )
+                    )
+
                 }
 
                 item {
@@ -209,5 +228,6 @@ fun DetailServiceScreenPreview() {
         title = "Social Media Management",
         navigateBack = {},
         navigateToConsultService = { id, title -> },
+        detailServiceViewModel = hiltViewModel(),
     )
 }
