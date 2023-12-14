@@ -48,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.thrivein.AuthViewModel
 import com.example.thrivein.R
+import com.example.thrivein.data.network.request.OrderRequest
 import com.example.thrivein.data.network.response.service.orderPackage.OrderPackageResponse
 import com.example.thrivein.ui.component.button.ThriveInButton
 import com.example.thrivein.ui.component.header.DetailTopBar
@@ -66,6 +67,7 @@ fun DetailTransactionServiceScreen(
     title: String,
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
+    navigateToWaitingList: () -> Unit,
     navigateToHistoryService: () -> Unit,
     detailTransactionServiceViewModel: DetailTransactionServiceViewModel = hiltViewModel(),
     authViewModel: AuthViewModel = hiltViewModel(),
@@ -75,7 +77,9 @@ fun DetailTransactionServiceScreen(
     val store by authViewModel.getStore().observeAsState()
     val context = LocalContext.current
     var orderPackageResponse: OrderPackageResponse? = null
-    var totalOrder: Int = 0
+    var selectedPayment by remember {
+        mutableStateOf("")
+    }
 
     detailTransactionServiceViewModel.uiOrderPackageState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
@@ -87,6 +91,38 @@ fun DetailTransactionServiceScreen(
             is UiState.Success -> {
                 orderPackageResponse = uiState.data
 
+
+            }
+
+            is UiState.Error -> {
+                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    detailTransactionServiceViewModel.uiOrderNowState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
+            is UiState.Loading -> {
+            }
+
+            is UiState.Success -> {
+                navigateToHistoryService()
+
+            }
+
+            is UiState.Error -> {
+                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    detailTransactionServiceViewModel.uiOrderLaterState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
+            is UiState.Loading -> {
+            }
+
+            is UiState.Success -> {
+                navigateToWaitingList()
 
             }
 
@@ -133,7 +169,10 @@ fun DetailTransactionServiceScreen(
                         PaymentDetailItem(
                             label = stringResource(R.string.payment_method),
                             items = items,
-                            onSelected = {})
+                            onSelected = {
+                                selectedPayment = it
+                            },
+                        )
                         Spacer(modifier = Modifier.height(6.dp))
                         PaymentDetailItem(
                             label = stringResource(id = R.string.address),
@@ -142,7 +181,7 @@ fun DetailTransactionServiceScreen(
                         Spacer(modifier = Modifier.height(6.dp))
                         PaymentDetailItem(
                             label = stringResource(R.string.total_order),
-                            valueString = totalOrder.toRpString(),
+                            valueString = orderPackageResponse?.totalOrder?.toRpString() ?: "",
                         )
                     }
                     Spacer(modifier = Modifier.height(18.dp))
@@ -151,7 +190,7 @@ fun DetailTransactionServiceScreen(
                     PaymentDetailItem(
                         isImportant = true,
                         label = stringResource(R.string.total),
-                        valueString = totalOrder.toRpString(),
+                        valueString = orderPackageResponse?.totalOrder?.toRpString() ?: "",
                         modifier = Modifier.padding(horizontal = 48.dp)
                     )
                     Spacer(modifier = Modifier.height(24.dp))
@@ -160,13 +199,46 @@ fun DetailTransactionServiceScreen(
                         horizontalArrangement = Arrangement.SpaceEvenly,
                     ) {
                         ThriveInButton(
-                            onClick = { },
+                            onClick = {
+                                if (selectedPayment != "") {
+
+
+                                    val orderRequest = OrderRequest(
+                                        serviceId = id,
+                                        totalOrder = orderPackageResponse?.totalOrder ?: 0,
+                                        discount = 0,
+                                        paymentMethod = selectedPayment,
+                                        totalPay = orderPackageResponse?.totalOrder ?: 0,
+                                    )
+
+                                    detailTransactionServiceViewModel.orderLater(orderRequest)
+
+                                }
+                            },
                             label = stringResource(R.string.order_later),
                             isOutline = true,
                             isNotWide = true
                         )
                         ThriveInButton(
-                            onClick = { navigateToHistoryService() },
+                            onClick = {
+
+                                if (selectedPayment != "") {
+
+
+                                    val orderRequest = OrderRequest(
+                                        serviceId = id,
+                                        totalOrder = orderPackageResponse?.totalOrder ?: 0,
+                                        discount = 0,
+                                        paymentMethod = selectedPayment,
+                                        totalPay = orderPackageResponse?.totalOrder ?: 0,
+                                    )
+
+                                    detailTransactionServiceViewModel.orderNow(orderRequest)
+
+                                }
+
+
+                            },
                             label = stringResource(R.string.order_now),
                             isNotWide = true,
                         )
@@ -201,8 +273,6 @@ fun DetailTransactionServiceScreen(
 
                     items(items = orderPackageResponse?.item ?: arrayListOf()) {
 
-                        totalOrder += (it?.price ?: 0)
-
                         PackageItem(
                             title = it?.title ?: "",
                             qty = it?.qty ?: 0,
@@ -228,6 +298,7 @@ fun DetailTransactionServiceScreenPreview() {
         id = "1",
         title = "test",
         navigateToHistoryService = {},
+        navigateToWaitingList = {},
         navigateBack = {})
 }
 

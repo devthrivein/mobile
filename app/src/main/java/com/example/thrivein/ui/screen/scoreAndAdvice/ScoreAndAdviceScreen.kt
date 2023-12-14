@@ -144,15 +144,46 @@ fun ScoreAndAdviceScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Advice",
+                        text = scanStoreResponse.title ?: "",
                         style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
                     )
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
-                        text = scanStoreResponse.result ?: "",
+                        text = scanStoreResponse.paragraf1 ?: "",
                         textAlign = TextAlign.Start,
                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Normal)
                     )
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Text(
+                        text = scanStoreResponse.paragraf2 ?: "",
+                        textAlign = TextAlign.Start,
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Normal)
+                    )
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Text(
+                        text = scanStoreResponse.paragraf3 ?: "",
+                        textAlign = TextAlign.Start,
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Normal)
+                    )
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Text(
+                        text = scanStoreResponse.paragraf4 ?: "",
+                        textAlign = TextAlign.Start,
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Normal)
+                    )
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Text(
+                        text = scanStoreResponse.paragraf5 ?: "",
+                        textAlign = TextAlign.Start,
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Normal)
+                    )
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Text(
+                        text = scanStoreResponse.paragraf6 ?: "",
+                        textAlign = TextAlign.Start,
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Normal)
+                    )
+                    Spacer(modifier = Modifier.height((screenHeight.value * 0.2).dp))
                 }
 
             }
@@ -164,7 +195,7 @@ fun ScoreAndAdviceScreen(
 @Composable
 fun ScoreAndAdviceScreenPreview() {
     ScoreAndAdviceScreen(
-        scanStoreResponse = ScanStoreResponse(result = ""),
+        scanStoreResponse = ScanStoreResponse(),
         imageUriFromScan = Uri.parse(""),
         navigateToHome = {})
 }

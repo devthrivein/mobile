@@ -7,12 +7,12 @@ import com.example.thrivein.data.local.preferences.UserPreference
 import com.example.thrivein.data.local.preferences.dataUserStore
 import com.example.thrivein.data.local.preferences.dataUserStoreStore
 import com.example.thrivein.data.network.retrofit.ApiConfig
-import com.example.thrivein.data.network.retrofit.ml.ApiConfigML
 import com.example.thrivein.data.repository.article.ArticleRepository
 import com.example.thrivein.data.repository.auth.AuthRepository
 import com.example.thrivein.data.repository.banner.BannerRepository
 import com.example.thrivein.data.repository.file.FileRepository
 import com.example.thrivein.data.repository.history.HistoryRepository
+import com.example.thrivein.data.repository.order.OrderRepository
 import com.example.thrivein.data.repository.scan.ScanRepository
 import com.example.thrivein.data.repository.service.ChatRepository
 import com.example.thrivein.data.repository.service.ServiceCategoryRepository
@@ -63,28 +63,19 @@ object AppModule {
         }
     }
 
+
     @Provides
-    fun provideScanRepository(): ScanRepository {
-        val apiServiceML = provideApiConfigML().getApiServiceML()
+    fun provideScanRepository(@ApplicationContext context: Context): ScanRepository {
+        val apiService = provideApiConfig().getApiService(context)
 
         try {
-            return ScanRepository(apiServiceML)
+            return ScanRepository(apiService)
         } catch (e: Exception) {
             Log.e("AppModule", "Error providing ScanRepository: ${e.message}", e)
             throw e
         }
     }
 
-    @Provides
-    fun provideApiConfigML(): ApiConfigML {
-
-        try {
-            return ApiConfigML()
-        } catch (e: Exception) {
-            Log.e("AppModule", "Error providing ApiConfigML: ${e.message}", e)
-            throw e
-        }
-    }
 
     @Provides
     fun provideAuthRepository(@ApplicationContext context: Context): AuthRepository {
@@ -155,6 +146,17 @@ object AppModule {
             return HistoryRepository(apiService)
         } catch (e: Exception) {
             Log.e("AppModule", "Error providing HistoryRepository: ${e.message}", e)
+            throw e
+        }
+    }
+
+    @Provides
+    fun providerOrderRepository(@ApplicationContext context: Context): OrderRepository {
+        val apiService = provideApiConfig().getApiService(context)
+        try {
+            return OrderRepository(apiService)
+        } catch (e: Exception) {
+            Log.e("AppModule", "Error providing OrderRepository: ${e.message}", e)
             throw e
         }
     }

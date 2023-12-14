@@ -1,14 +1,17 @@
 package com.example.thrivein.data.network.response.service.orderPackage
 
-import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class OrderPackageResponse(
 
 	@field:SerializedName("item")
-	val item: List<ItemItem?>? = null
+	val item: List<ItemItem?>? = null,
+
+	@field:SerializedName("total_order")
+	val totalOrder: Int? = null
 ) : Parcelable
 
 @Parcelize

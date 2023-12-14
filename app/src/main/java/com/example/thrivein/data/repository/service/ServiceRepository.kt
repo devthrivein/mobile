@@ -4,7 +4,6 @@ import android.util.Log
 import com.example.thrivein.data.network.response.ErrorResponse
 import com.example.thrivein.data.network.response.service.ListServicesResponse
 import com.example.thrivein.data.network.response.service.ServiceResponse
-import com.example.thrivein.data.network.response.service.orderPackage.OrderPackageResponse
 import com.example.thrivein.data.network.response.service.portfolio.PortfolioResponse
 import com.example.thrivein.data.network.retrofit.ApiService
 import com.google.gson.Gson
@@ -61,22 +60,6 @@ class ServiceRepository @Inject constructor(
             val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
             val errorMessage = errorBody?.message ?: "Unknown error"
             Log.d("ServiceRepository", "getPortfolioByServiceId: $errorMessage ")
-            throw Throwable(errorMessage)
-        }
-    }
-
-    suspend fun getOrderPackageServiceId(
-        serviceId: String,
-    ): Flow<OrderPackageResponse> {
-        try {
-            val response = apiService.getOrderPackagesByServiceId(serviceId)
-            return flow { emit(response) }
-        } catch (e: HttpException) {
-            e.printStackTrace()
-            val jsonInString = e.response()?.errorBody()?.string()
-            val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
-            val errorMessage = errorBody?.message ?: "Unknown error"
-            Log.d("ServiceRepository", "getOrderPackagesByServiceId: $errorMessage ")
             throw Throwable(errorMessage)
         }
     }

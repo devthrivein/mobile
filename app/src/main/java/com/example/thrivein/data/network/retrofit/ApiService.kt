@@ -2,21 +2,26 @@ package com.example.thrivein.data.network.retrofit
 
 
 import com.example.thrivein.data.network.request.LoginRequest
+import com.example.thrivein.data.network.request.OrderRequest
 import com.example.thrivein.data.network.request.RegisterRequest
 import com.example.thrivein.data.network.response.MessageResponse
 import com.example.thrivein.data.network.response.article.ArticlesResponse
 import com.example.thrivein.data.network.response.auth.UserResponse
 import com.example.thrivein.data.network.response.banner.BannerResponse
 import com.example.thrivein.data.network.response.order.OrderResponse
+import com.example.thrivein.data.network.response.scan.ScanStoreResponse
 import com.example.thrivein.data.network.response.service.ListServicesResponse
 import com.example.thrivein.data.network.response.service.ServiceCategoriesResponse
 import com.example.thrivein.data.network.response.service.ServiceResponse
 import com.example.thrivein.data.network.response.service.message.WelcomeMessageResponse
 import com.example.thrivein.data.network.response.service.orderPackage.OrderPackageResponse
 import com.example.thrivein.data.network.response.service.portfolio.PortfolioResponse
+import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 import javax.inject.Singleton
@@ -77,10 +82,17 @@ interface ApiService {
     ): OrderPackageResponse
 
     @POST("order-now")
-    suspend fun createOrderNow(): OrderResponse
+    suspend fun createOrderNow(@Body request: OrderRequest): OrderResponse
 
     @POST("order-later")
-    suspend fun createOrderLater(): OrderResponse
+    suspend fun createOrderLater(@Body request: OrderRequest): OrderResponse
+
+    //    ML for predict
+    @Multipart
+    @POST("predict")
+    suspend fun predictStore(
+        @Part image: MultipartBody.Part,
+    ): ScanStoreResponse
 
 
 }

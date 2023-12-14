@@ -198,7 +198,7 @@ fun ThriveInApp(
                     navHostController.previousBackStackEntry?.savedStateHandle?.get<ScanStoreResponse>(
                         "scanResponse"
                     )
-                        ?: ScanStoreResponse(result = "")
+                        ?: ScanStoreResponse()
 
                 val imageUriFromScan =
                     navHostController.previousBackStackEntry?.savedStateHandle?.get<Uri>(
@@ -452,8 +452,25 @@ fun ThriveInApp(
                     navigateBack = {
                         navHostController.navigateUp()
                     },
+                    navigateToWaitingList = {
+                        navHostController.navigate(Screen.WaitingListService.route) {
+                            popUpTo(navHostController.graph.startDestinationId) {
+                                saveState = true
+                            }
+
+                            restoreState = true
+                            launchSingleTop = true
+                        }
+                    },
                     navigateToHistoryService = {
-                        navHostController.navigate(Screen.History.route)
+                        navHostController.navigate(Screen.History.route) {
+                            popUpTo(navHostController.graph.startDestinationId) {
+                                saveState = true
+                            }
+
+                            restoreState = true
+                            launchSingleTop = true
+                        }
                     }
                 )
             }

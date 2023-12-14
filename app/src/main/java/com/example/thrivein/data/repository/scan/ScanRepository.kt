@@ -3,7 +3,7 @@ package com.example.thrivein.data.repository.scan
 import android.util.Log
 import com.example.thrivein.data.network.response.ErrorResponse
 import com.example.thrivein.data.network.response.scan.ScanStoreResponse
-import com.example.thrivein.data.network.retrofit.ml.ApiServiceML
+import com.example.thrivein.data.network.retrofit.ApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,14 +14,14 @@ import javax.inject.Singleton
 
 @Singleton
 class ScanRepository @Inject constructor(
-    private val apiServiceML: ApiServiceML,
+    private val apiService: ApiService,
 ) {
 
     suspend fun predictStore(
         image: MultipartBody.Part,
     ): Flow<ScanStoreResponse> {
         try {
-            val response = apiServiceML.predictStore(image)
+            val response = apiService.predictStore(image)
             return flow { emit(response) }
         } catch (e: HttpException) {
             e.printStackTrace()
