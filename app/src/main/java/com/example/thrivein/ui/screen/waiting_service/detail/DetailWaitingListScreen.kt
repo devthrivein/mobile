@@ -1,6 +1,5 @@
 package com.example.thrivein.ui.screen.history_service
 
-//package com.example.thrivein.ui.screen.service.detail
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -17,7 +16,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -42,25 +40,27 @@ import com.example.thrivein.ui.component.button.ThriveInButton
 import com.example.thrivein.ui.component.header.DetailTopBar
 import com.example.thrivein.ui.component.item.HistoryMetaDataItem
 import com.example.thrivein.ui.component.item.PackageItem
+import com.example.thrivein.ui.screen.history_service.detail.PaymentDetailItem
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.ui.theme.Primary
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DetailWaitingListScreen(
     id: String,
+    title: String,
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
     navigateToHome: () -> Unit,
-    navigateToConsultation: () -> Unit
+    navigateToConsultService: (id: String, title: String) -> Unit,
 ) {
 
     Scaffold(
         topBar = {
             DetailTopBar(title = id, navigateBack = navigateBack, actions = {
                 IconButton(onClick = {
-                    navigateToConsultation()
+                    navigateToConsultService(id, title)
                 }) {
                     Row(
                         modifier = Modifier
@@ -198,7 +198,12 @@ fun DetailWaitingListScreen(
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
 fun DetailWaitingListScreenPreview() {
-    DetailWaitingListScreen(id = "1", navigateBack = {}, navigateToConsultation = {}, navigateToHome = {})
+    DetailWaitingListScreen(
+        id = "1",
+        title = "",
+        navigateBack = {},
+        navigateToConsultService = { id, title -> },
+        navigateToHome = {})
 }
 
 

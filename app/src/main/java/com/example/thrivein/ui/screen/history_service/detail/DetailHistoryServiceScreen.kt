@@ -1,6 +1,5 @@
-package com.example.thrivein.ui.screen.history_service
+package com.example.thrivein.ui.screen.history_service.detail
 
-//package com.example.thrivein.ui.screen.service.detail
 
 import android.annotation.SuppressLint
 import android.widget.Toast
@@ -18,7 +17,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -51,54 +49,53 @@ import com.example.thrivein.ui.component.button.ThriveInButton
 import com.example.thrivein.ui.component.header.DetailTopBar
 import com.example.thrivein.ui.component.item.HistoryMetaDataItem
 import com.example.thrivein.ui.component.item.PackageItem
-import com.example.thrivein.ui.component.loading.ThriveInLoading
+import com.example.thrivein.ui.screen.history_service.list.HistoryViewModel
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.ui.theme.Primary
 import com.example.thrivein.utils.UiState
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DetailHistoryServiceScreen(
     id: String,
+    title: String,
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
-    navigateToConsultation: () -> Unit,
-    historyViewModel: HistoryViewModel = hiltViewModel()
+    navigateToConsultService: (serviceId: String, serviceTitle: String) -> Unit,
+    historyViewModel: HistoryViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
     var detailHistoryService: DetailHistoryServiceResponse? = null
     var isLoading by remember { mutableStateOf(false) }
     var refreshState by remember { mutableStateOf(false) }
 
-//    historyViewModel.uiThriveInDetailHistoryServiceState.collectAsState(initial = UiState.Loading).value.let { uiState ->
-//        when (uiState) {
-//            is UiState.Loading -> {
-//                isLoading = true
-//                refreshState = true
-//                historyViewModel.getDetailHistoryById(id)
-//            }
-//
-//            is UiState.Success -> {
-//                isLoading = false
-//                refreshState = false
-//                detailHistoryService = uiState.data
-//            }
-//
-//            is UiState.Error -> {
-//                isLoading = false
-//                refreshState = false
-//                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
+    historyViewModel.uiThriveInDetailHistoryServiceState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
+            is UiState.Loading -> {
+                isLoading = true
+                refreshState = true
+                historyViewModel.getDetailHistoryById(id)
+            }
+
+            is UiState.Success -> {
+                isLoading = false
+                refreshState = false
+                detailHistoryService = uiState.data
+            }
+
+            is UiState.Error -> {
+                isLoading = false
+                refreshState = false
+                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
     Scaffold(
         topBar = {
-            DetailTopBar(title = id, navigateBack = navigateBack, actions = {
+            DetailTopBar(title = title, navigateBack = navigateBack, actions = {
                 IconButton(onClick = {
-                    navigateToConsultation()
+                    navigateToConsultService(id, title)
                 }) {
                     Row(
                         modifier = Modifier
@@ -206,42 +203,42 @@ fun DetailHistoryServiceScreen(
 //                        refreshState = false
 //                        isLoading = false
 //                    }) {
-                    HistoryMetaDataItem()
+            HistoryMetaDataItem()
 
-                    LazyColumn(
-                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
-                    ) {
-                        stickyHeader {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 16.dp)
-                                    .background(
-                                        Background
-                                    )
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.order_detail),
-                                    style = MaterialTheme.typography.titleMedium
-                                )
-                            }
-                        }
-
-                        items(count = 10) {
-                            PackageItem(
-                                title = "Lorem Ipsum 1x${it + 1}",
-                                qty = it,
-                                price = (it + 1) * 100000,
-                                bannerUrl = stringResource(
-                                    id = R.string.dummy_image
-                                ),
-                                modifier = Modifier.padding(bottom = 16.dp)
+            LazyColumn(
+                modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
+            ) {
+                stickyHeader {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp)
+                            .background(
+                                Background
                             )
-                        }
+                    ) {
+                        Text(
+                            text = stringResource(R.string.order_detail),
+                            style = MaterialTheme.typography.titleMedium
+                        )
                     }
+                }
+
+                items(count = 10) {
+                    PackageItem(
+                        title = "Lorem Ipsum 1x${it + 1}",
+                        qty = it,
+                        price = (it + 1) * 100000,
+                        bannerUrl = stringResource(
+                            id = R.string.dummy_image
+                        ),
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
                 }
             }
         }
+    }
+}
 //    }
 //
 //}
@@ -249,7 +246,11 @@ fun DetailHistoryServiceScreen(
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
 fun DetailHistoryServiceScreenPreview() {
-    DetailHistoryServiceScreen(id = "1", navigateBack = {}, navigateToConsultation = {})
+    DetailHistoryServiceScreen(
+        id = "1",
+        title = "",
+        navigateBack = {},
+        navigateToConsultService = { serviceId, serviceTitle -> })
 }
 
 

@@ -17,6 +17,7 @@ import com.example.thrivein.data.repository.scan.ScanRepository
 import com.example.thrivein.data.repository.service.ChatRepository
 import com.example.thrivein.data.repository.service.ServiceCategoryRepository
 import com.example.thrivein.data.repository.service.ServiceRepository
+import com.example.thrivein.data.repository.waiting.WaitingRepository
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
@@ -146,6 +147,17 @@ object AppModule {
             return HistoryRepository(apiService)
         } catch (e: Exception) {
             Log.e("AppModule", "Error providing HistoryRepository: ${e.message}", e)
+            throw e
+        }
+    }
+
+    @Provides
+    fun providerWaitingRepository(@ApplicationContext context: Context): WaitingRepository {
+        val apiService = provideApiConfig().getApiService(context)
+        try {
+            return WaitingRepository(apiService)
+        } catch (e: Exception) {
+            Log.e("AppModule", "Error providing WaitingRepository: ${e.message}", e)
             throw e
         }
     }

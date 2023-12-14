@@ -3,6 +3,7 @@ package com.example.thrivein.ui.component.item
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,6 +38,7 @@ fun ServiceListItem(
     modifier: Modifier = Modifier,
     id: String,
     title: String,
+    date: String? = null,
     iconUrl: String,
 ) {
     Box(
@@ -69,18 +72,40 @@ fun ServiceListItem(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-                    maxLines = 3,
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Icon(
-                    imageVector = Icons.Default.ArrowForward,
-                    tint = Pink,
-                    contentDescription = stringResource(R.string.to_detail, title),
-                    modifier = Modifier.padding(end = 16.dp)
-                )
+                Column {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
+                        maxLines = 3,
+                    )
+
+                    if (date != null) {
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Text(
+                            text = date,
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                color = Color.Gray.copy(
+                                    alpha = 0.4f
+                                )
+                            ),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+
+
+                }
+                if (date == null) {
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Icon(
+                        imageVector = Icons.Default.ArrowForward,
+                        tint = Pink,
+                        contentDescription = stringResource(R.string.to_detail, title),
+                        modifier = Modifier.padding(end = 16.dp)
+                    )
+                }
+
+
             }
         }
     }
@@ -89,5 +114,5 @@ fun ServiceListItem(
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
 fun ServiceListItemPreview() {
-    ServiceListItem(id = "1", title = "Social Media Management", iconUrl = "")
+    ServiceListItem(id = "1", title = "Social Media Management", iconUrl = "", date = "10 Mei 2021")
 }

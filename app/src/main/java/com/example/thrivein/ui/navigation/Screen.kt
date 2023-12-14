@@ -58,17 +58,19 @@ sealed class Screen(val route: String) {
             "home/transaction-service/$transactionId/$serviceTitle"
     }
 
-    object DetailHistoryService : Screen("home/history-service/{historyId}") {
-        fun createRoute(historyId: String) = "home/history-service/$historyId"
+    object DetailHistoryService : Screen("home/history-service/{historyId}/{historyTitle}") {
+        fun createRoute(historyId: String, historyTitle: String) =
+            "home/history-service/$historyId/$historyTitle"
     }
 
     object DetailConsultHistoryService : Screen("home/consult-history-service/{consultHistoryId}") {
         fun createRoute(consultHistoryId: String) = "home/consult-history-service/$consultHistoryId"
     }
 
-    object DetailWaitingList : Screen("home/waiting-list-service/{detailWaitingListId}") {
-        fun createRoute(detailWaitingListId: String) =
-            "home/waiting-list-service/$detailWaitingListId"
+    object DetailWaitingList :
+        Screen("home/waiting-list-service/{detailWaitingListId}/{detailWaitingListTitle}") {
+        fun createRoute(detailWaitingListId: String, detailWaitingListTitle: String) =
+            "home/waiting-list-service/$detailWaitingListId/$detailWaitingListTitle"
     }
 
     object WebViewScreen : Screen("{url}") {

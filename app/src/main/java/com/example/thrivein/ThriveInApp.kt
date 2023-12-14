@@ -3,7 +3,6 @@ package com.example.thrivein
 import android.annotation.SuppressLint
 import android.net.Uri
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,25 +27,24 @@ import com.example.thrivein.ui.screen.auth.login.LoginScreen
 import com.example.thrivein.ui.screen.auth.register.RegisterStoreScreen
 import com.example.thrivein.ui.screen.auth.register.RegisterUserScreen
 import com.example.thrivein.ui.screen.consultation.ConsultationScreen
-import com.example.thrivein.ui.screen.history_service.DetailConsultHistoryServiceScreen
-import com.example.thrivein.ui.screen.history_service.DetailHistoryServiceScreen
 import com.example.thrivein.ui.screen.history_service.DetailWaitingListScreen
-import com.example.thrivein.ui.screen.history_service.HistoryServiceScreen
+import com.example.thrivein.ui.screen.history_service.detail.DetailConsultHistoryServiceScreen
+import com.example.thrivein.ui.screen.history_service.detail.DetailHistoryServiceScreen
+import com.example.thrivein.ui.screen.history_service.list.HistoryServiceScreen
 import com.example.thrivein.ui.screen.home.HomeScreen
 import com.example.thrivein.ui.screen.scoreAndAdvice.ScoreAndAdviceScreen
 import com.example.thrivein.ui.screen.service.detail.detailConsultService.DetailConsultServiceScreen
 import com.example.thrivein.ui.screen.service.detail.detailService.DetailServiceScreen
 import com.example.thrivein.ui.screen.service.detail.detailTransactionService.DetailTransactionServiceScreen
 import com.example.thrivein.ui.screen.service.list.ListServiceScreen
-import com.example.thrivein.ui.screen.service.list.WaitingListServiceScreen
 import com.example.thrivein.ui.screen.setting.SettingScreen
 import com.example.thrivein.ui.screen.setting.StoreProfileScreen
 import com.example.thrivein.ui.screen.setting.UserProfileScreen
 import com.example.thrivein.ui.screen.storeScanner.StoreScannerScreen
+import com.example.thrivein.ui.screen.waiting_service.list.WaitingListServiceScreen
 import com.example.thrivein.ui.screen.webView.WebViewScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ThriveInApp(
     modifier: Modifier = Modifier,
@@ -260,8 +258,13 @@ fun ThriveInApp(
                         navHostController.navigateUp()
 
                     },
-                    navigateToDetailHistoryService = { historyId ->
-                        navHostController.navigate(Screen.DetailHistoryService.createRoute(historyId))
+                    navigateToDetailHistoryService = { historyId, historyTitle ->
+                        navHostController.navigate(
+                            Screen.DetailHistoryService.createRoute(
+                                historyId,
+                                historyTitle
+                            )
+                        )
                     },
                 )
             }
@@ -357,10 +360,11 @@ fun ThriveInApp(
                     navigateBack = {
                         navHostController.navigateUp()
                     },
-                    navigateToDetailWaitingList = { detailWaitingListId ->
+                    navigateToDetailWaitingList = { detailWaitingListId, detailWaitingListTitle ->
                         navHostController.navigate(
                             Screen.DetailWaitingList.createRoute(
-                                detailWaitingListId
+                                detailWaitingListId,
+                                detailWaitingListTitle
                             )
                         )
                     }
@@ -477,17 +481,27 @@ fun ThriveInApp(
 
             composable(
                 route = Screen.DetailHistoryService.route,
-                arguments = listOf(navArgument("historyId") { type = NavType.StringType })
+                arguments = listOf(
+                    navArgument("historyId") { type = NavType.StringType },
+                    navArgument("historyTitle") { type = NavType.StringType },
+                )
             ) {
                 val id = it.arguments?.getString("historyId") ?: ""
+                val title = it.arguments?.getString("historyTitle") ?: ""
 
                 DetailHistoryServiceScreen(
                     id = id,
+                    title = title,
                     navigateBack = {
                         navHostController.navigateUp()
                     },
-                    navigateToConsultation = {
-                        navHostController.navigate(Screen.Consultation.route)
+                    navigateToConsultService = { serviceId, serviceTitle ->
+                        navHostController.navigate(
+                            Screen.DetailConsultService.createRoute(
+                                serviceId,
+                                serviceTitle
+                            )
+                        )
                     },
                 )
             }
@@ -506,14 +520,26 @@ fun ThriveInApp(
 
             composable(
                 route = Screen.DetailWaitingList.route,
-                arguments = listOf(navArgument("detailWaitingListId") { type = NavType.StringType })
+                arguments = listOf(
+                    navArgument("detailWaitingListId") { type = NavType.StringType },
+                    navArgument("detailWaitingListTitle") { type = NavType.StringType },
+                )
             ) {
                 val id = it.arguments?.getString("detailWaitingListId") ?: ""
+                val title = it.arguments?.getString("detailWaitingListTitle") ?: ""
 
                 DetailWaitingListScreen(
                     id = id,
+                    title = title,
                     navigateBack = { navHostController.navigateUp() },
-                    navigateToConsultation = { navHostController.navigate(Screen.Consultation.route) },
+                    navigateToConsultService = { serviceId, serviceTitle ->
+                        navHostController.navigate(
+                            Screen.DetailConsultService.createRoute(
+                                serviceId,
+                                serviceTitle
+                            )
+                        )
+                    },
                     navigateToHome = { navHostController.navigate(Screen.Home.route) }
                 )
             }

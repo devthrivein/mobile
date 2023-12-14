@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.thrivein.data.network.request.ArticleRequest
 import com.example.thrivein.data.network.response.ErrorResponse
 import com.example.thrivein.data.network.response.article.ArticlesResponse
+import com.example.thrivein.data.network.response.article.DetailArticleResponse
 import com.example.thrivein.data.network.retrofit.ApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
@@ -27,6 +28,21 @@ class ArticleRepository @Inject constructor(
             val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
             val errorMessage = errorBody?.message ?: "Unknown Error"
             Log.d("ArticleRepository", "getAllArticlesHome: $errorMessage")
+            throw e
+        }
+    }
+
+    suspend fun getDetailArticle(articleId: String): Flow<DetailArticleResponse> {
+        try {
+            val response = apiService.getDetailArticle(articleId)
+
+            return flow { emit(response) }
+        } catch (e: retrofit2.HttpException) {
+            e.printStackTrace()
+            val jsonInString = e.response()?.errorBody()?.string()
+            val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
+            val errorMessage = errorBody?.message ?: "Unknown Error"
+            Log.d("ArticleRepository", "getDetailArticle: $errorMessage")
             throw e
         }
     }

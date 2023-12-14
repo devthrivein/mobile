@@ -1,5 +1,6 @@
 package com.example.thrivein.ui.screen.article.detail
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,19 +18,20 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -37,20 +39,47 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.thrivein.R
+import com.example.thrivein.data.network.response.article.DetailArticleResponse
 import com.example.thrivein.ui.component.header.DetailTopBar
 import com.example.thrivein.ui.theme.Background
+import com.example.thrivein.utils.UiState
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailArticleScreen(
     modifier: Modifier = Modifier,
     id: String,
     title: String,
     navigateBack: () -> Unit,
+    detailArticleViewModel: DetailArticleViewModel = hiltViewModel(),
 
-) {
+    ) {
+
+    val context = LocalContext.current
+    var detailArticleResponse: DetailArticleResponse? = null
+
+
+    detailArticleViewModel.uiDetailArticleResponseState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
+            is UiState.Loading -> {
+                detailArticleViewModel.getDetailArticle(id)
+            }
+
+            is UiState.Success -> {
+                detailArticleResponse = uiState.data
+
+            }
+
+            is UiState.Error -> {
+                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
+
     Scaffold(
         topBar = {
             DetailTopBar(title = title, navigateBack = navigateBack)
@@ -86,8 +115,7 @@ fun DetailArticleScreen(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .height(400.dp),
-//                                .align(Alignment.TopCenter),
-                            model = stringResource(id = R.string.dummy_image),
+                            model = detailArticleResponse?.bannerUrl ?: "",
                             contentDescription = title,
                             contentScale = ContentScale.Crop,
                             placeholder = painterResource(id = R.drawable.ic_not_found)
@@ -107,7 +135,7 @@ fun DetailArticleScreen(
                                 .padding(horizontal = 20.dp, vertical = 20.dp)
                         ) {
                             Text(
-                                text = "Judul Artikel",
+                                text = detailArticleResponse?.title ?: "",
                                 style = MaterialTheme.typography.headlineMedium.copy(
 
                                 )
@@ -149,7 +177,7 @@ fun DetailArticleScreen(
                                     )
                                     Spacer(modifier = Modifier.width(3.dp))
                                     Text(
-                                        text = "7 maret 2002",
+                                        text = detailArticleResponse?.uploadedDate ?: "",
                                         style = MaterialTheme.typography.labelMedium.copy(
                                             fontWeight = FontWeight.Normal
                                         )
@@ -159,7 +187,7 @@ fun DetailArticleScreen(
                             }
                             Text(
                                 modifier = Modifier.padding(top = 10.dp, bottom = 40.dp),
-                                text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                                text = detailArticleResponse?.content ?: "",
                                 style = MaterialTheme.typography.bodyMedium.copy(
                                     fontWeight = FontWeight.Normal
                                 ),

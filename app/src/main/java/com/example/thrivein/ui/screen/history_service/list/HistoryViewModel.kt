@@ -1,4 +1,4 @@
-package com.example.thrivein.ui.screen.history_service
+package com.example.thrivein.ui.screen.history_service.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    private val historyRepository: HistoryRepository
+    private val historyRepository: HistoryRepository,
 ) : ViewModel() {
     //HISTORY SERVICE
     private val _uiThriveInHistoryServiceState: MutableStateFlow<UiState<HistoryResponse>> =
@@ -31,29 +31,29 @@ class HistoryViewModel @Inject constructor(
     val uiThriveInDetailHistoryServiceState: StateFlow<UiState<DetailHistoryServiceResponse>>
         get() = _uiThriveInDetailHistoryServiceState
 
-//    fun getAllHistoryService() {
-//        viewModelScope.launch {
-//            historyRepository.getAllHistoryService()
-//                .catch {
-//                    _uiThriveInHistoryServiceState.value = UiState.Error(it.message.toString())
-//                }
-//                .collect { history ->
-//                    _uiThriveInHistoryServiceState.value = UiState.Success(history)
-//                }
-//        }
-//    }
-//
-//    fun getDetailHistoryById(orderId: String) {
-//        viewModelScope.launch {
-//            historyRepository.getDetailHistoryById(orderId)
-//                .catch {
-//                    _uiThriveInDetailHistoryServiceState.value =
-//                        UiState.Error(it.message.toString())
-//                }
-//                .collect { detailHistoryService ->
-//                    _uiThriveInDetailHistoryServiceState.value =
-//                        UiState.Success(detailHistoryService)
-//                }
-//        }
-//    }
+    fun getAllHistoryService() {
+        viewModelScope.launch {
+            historyRepository.getAllHistoryService()
+                .catch {
+                    _uiThriveInHistoryServiceState.value = UiState.Error(it.message.toString())
+                }
+                .collect { histories ->
+                    _uiThriveInHistoryServiceState.value = UiState.Success(histories)
+                }
+        }
+    }
+
+    fun getDetailHistoryById(orderId: String) {
+        viewModelScope.launch {
+            historyRepository.getDetailHistoryById(orderId)
+                .catch {
+                    _uiThriveInDetailHistoryServiceState.value =
+                        UiState.Error(it.message.toString())
+                }
+                .collect { detailHistoryService ->
+                    _uiThriveInDetailHistoryServiceState.value =
+                        UiState.Success(detailHistoryService)
+                }
+        }
+    }
 }

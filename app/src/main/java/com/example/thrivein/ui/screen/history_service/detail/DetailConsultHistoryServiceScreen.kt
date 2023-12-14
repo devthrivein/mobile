@@ -1,4 +1,4 @@
-package com.example.thrivein.ui.screen.history_service
+package com.example.thrivein.ui.screen.history_service.detail
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
