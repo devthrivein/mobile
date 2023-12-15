@@ -27,7 +27,7 @@ fun FavoriteButton(
 ) {
     Box(
         modifier = modifier
-            .size(55.dp)
+            .size(50.dp)
             .clip(RoundedCornerShape(14.dp))
             .clickable { onClick() }
             .background(color = Primary)
