@@ -37,6 +37,8 @@ import com.example.thrivein.ui.component.item.ArticleHomeItem
 import com.example.thrivein.ui.component.slider.BannerSlider
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.utils.UiState
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -52,14 +54,21 @@ fun HomeScreen(
     authViewModel: AuthViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
-    var serviceCategories: ServiceCategoriesResponse? = null
-    var articles: ArticlesResponse? = null
-    var banners: BannerResponse? = null
+    var serviceCategories: ServiceCategoriesResponse? by remember {
+        mutableStateOf(null)
+
+    }
+    var articles: ArticlesResponse? by remember {
+        mutableStateOf(null)
+
+    }
+    var banners: BannerResponse? by remember {
+        mutableStateOf(null)
+
+    }
     val user by authViewModel.getUser().observeAsState()
 
-    var isLoading by remember {
-        mutableStateOf(false)
-    }
+    var refreshState by remember { mutableStateOf(false) }
 
     homeViewModel.uiListThriveInServiceCategoryState.collectAsState(
         initial = UiState.Loading
@@ -127,19 +136,19 @@ fun HomeScreen(
     ).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {
-                isLoading = true
+                refreshState = true
                 if (user?.token.toString() != "null") {
                     homeViewModel.getAllBannerSlider()
                 }
             }
 
             is UiState.Success -> {
-                isLoading = false
+                refreshState = false
                 banners = uiState.data
             }
 
             is UiState.Error -> {
-                isLoading = false
+                refreshState = false
                 Toast.makeText(
                     context,
                     uiState.errorMessage,
@@ -155,59 +164,77 @@ fun HomeScreen(
         containerColor = Background,
     ) { innerPadding ->
 
-        LazyColumn(
-            modifier = Modifier
-                .padding(innerPadding)
-        ) {
-            item {
-                HomeHeader(
-                    username = user?.name ?: "-",
-                    navigateToWaitingList = navigateToWaitingList,
-                    modifier = Modifier.padding(24.dp)
-                )
-            }
-            item {
-                BannerSlider(
-                    listBanner = banners,
-                    isLoading = isLoading,
-                    modifier = Modifier
-                        .padding(horizontal = 24.dp)
+        SwipeRefresh(
+            state = rememberSwipeRefreshState(isRefreshing = refreshState),
+            onRefresh = {
+                refreshState = true
 
+                homeViewModel.getAllServiceCategory()
+                homeViewModel.getAllArticles(
+                    articleRequest = ArticleRequest(
+                        5,
+                        1
+                    )
                 )
-            }
+                homeViewModel.getAllBannerSlider()
 
-            item {
-                HomeGridServiceCategoryView(
-                    listCategory = serviceCategories,
-                    navigateToListService = { id, title ->
-                        navigateToListService(id, title)
-                    },
-                    navigateToScanStore = navigateToScanStore,
-                    modifier = Modifier.padding(horizontal = 24.dp)
-                )
-                Spacer(modifier = Modifier.height(24.dp))
+                refreshState = false
 
-            }
+            }) {
+            LazyColumn(
+                modifier = Modifier
+                    .padding(innerPadding)
+            ) {
+                item {
+                    HomeHeader(
+                        username = user?.name ?: "-",
+                        navigateToWaitingList = navigateToWaitingList,
+                        modifier = Modifier.padding(24.dp)
+                    )
+                }
+                item {
+                    BannerSlider(
+                        listBanner = banners,
+                        isLoading = refreshState,
+                        modifier = Modifier
+                            .padding(horizontal = 24.dp)
 
-            item {
-                SeeAllButton(
-                    label = stringResource(R.string.today_s_news),
-                    onClickButton = navigateToListArticle
-                )
-                Spacer(modifier = Modifier.height(6.dp))
-            }
-            items(items = articles?.articles.orEmpty(), key = { it?.articleId.orEmpty() }) {
-                ArticleHomeItem(
-                    id = it?.articleId ?: "",
-                    title = it?.title ?: "",
-                    content = it?.content ?: "",
-                    bannerUrl = it?.bannerUrl ?: "",
-                    modifier = Modifier
-                        .padding(vertical = 10.dp, horizontal = 24.dp)
-                        .clickable {
-                            navigateToDetailArticle(it?.articleId ?: "", it?.title ?: "")
-                        }
-                )
+                    )
+                }
+
+                item {
+                    HomeGridServiceCategoryView(
+                        listCategory = serviceCategories,
+                        navigateToListService = { id, title ->
+                            navigateToListService(id, title)
+                        },
+                        navigateToScanStore = navigateToScanStore,
+                        modifier = Modifier.padding(horizontal = 24.dp)
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                }
+
+                item {
+                    SeeAllButton(
+                        label = stringResource(R.string.today_s_news),
+                        onClickButton = navigateToListArticle
+                    )
+                    Spacer(modifier = Modifier.height(6.dp))
+                }
+                items(items = articles?.articles.orEmpty(), key = { it?.articleId.orEmpty() }) {
+                    ArticleHomeItem(
+                        id = it?.articleId ?: "",
+                        title = it?.title ?: "",
+                        content = it?.content ?: "",
+                        bannerUrl = it?.bannerUrl ?: "",
+                        modifier = Modifier
+                            .padding(vertical = 10.dp, horizontal = 24.dp)
+                            .clickable {
+                                navigateToDetailArticle(it?.articleId ?: "", it?.title ?: "")
+                            }
+                    )
+                }
             }
         }
     }

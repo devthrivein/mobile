@@ -44,8 +44,8 @@ class FileRepository @Inject constructor(
     fun sendFileToConsultation(file: File, userId: String, callback: (Uri?) -> Unit) {
         val ref = "$CONSULTATION/$CHATS/messages-from-$userId/${file.name}.${file.extension}"
         val child = storage.reference.child(ref)
-
-        child.putFile(Uri.fromFile(file))
+        val fileToSend = Uri.fromFile(file)
+        child.putFile(fileToSend)
             .continueWithTask { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let { throw it }

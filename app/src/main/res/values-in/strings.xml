@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ThriveIn</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="thrivein">ThriveIn</string>
+    <string name="welcome">Selamat datang di ThriveIn</string>
+    <string name="guarding_your_business_with">Melindungi Bisnis Anda dengan</string>
+    <string name="one_scan">Satu Pindai</string>
+    <string name="log_in">Masuk</string>
+    <string name="sign_up">Daftar</string>
+    <string name="enter_your_email_address">Masukkan alamat email Anda</string>
+    <string name="email">Email</string>
+    <string name="password">Kata Sandi</string>
+    <string name="enter_your_password">Masukkan kata sandi Anda</string>
+    <string name="new_to_thrivein">Baru di ThriveIn?</string>
+    <string name="create_an_account">Buat akun</string>
+    <string name="forgot_password">Lupa Kata Sandi?</string>
+    <string name="name">Nama</string>
+    <string name="enter_your_name">Masukkan nama Anda</string>
+    <string name="phone">Telepon</string>
+    <string name="enter_you_phone_number">Masukkan nomor telepon Anda</string>
+    <string name="register_your_business">Daftarkan\nBisnis Anda</string>
+    <string name="enter_your_business_name">Masukkan nama bisnis Anda</string>
+    <string name="enter_your_business_email">Masukkan email bisnis Anda</string>
+    <string name="address">Alamat</string>
+    <string name="enter_your_business_address">Masukkan alamat bisnis Anda</string>
+    <string name="already_have_an_account">Sudah punya akun?</string>
+    <string name="type_of_business">Jenis bisnis</string>
+    <string name="welcome_back">Selamat Datang Kembali!</string>
+    <string name="waiting_list">Daftar Tunggu</string>
+    <string name="hello">Halo %1$s</string>
+    <string name="today_s_news">Berita Hari Ini</string>
+    <string name="dummy_image">https://www.littlethings.info/wp-content/uploads/2014/04/dummy-image-green-e1398449160839.jpg</string>
+    <string name="see_all">Lihat semua</string>
+    <string name="back">Kembali</string>
+    <string name="to_detail">ke detail %1$s</string>
+    <string name="portfolio">Portofolio</string>
+    <string name="consult">Konsultasi</string>
+
+    <!--Button-->
+    <string name="home">Beranda</string>
+    <string name="history">Riwayat</string>
+    <string name="consultation">Konsultasi</string>
+    <string name="setting">Pengaturan</string>
+    <string name="services">Layanan</string>
+    <string name="trashbin">Tempat Sampah</string>
+    <string name="add_photo">Tambah Foto</string>
+    <string name="camera">Kamera</string>
+
+    <string name="your_photo">Foto Anda</string>
+    <string name="photo">Foto</string>
+    <string name="thrive_in">Thrive In</string>
+    <string name="go_to_transaction">Beralih ke Transaksi</string>
+    <string name="dummy_text">Lorem Ipsum hanya teks contoh dari industri percetakan dan penataan huruf</string>
+    <string name="type_here">Ketik di sini...</string>
+    <string name="send_message">Kirim pesan</string>
+    <string name="select">Pilih</string>
+    <string name="cancel">Batal</string>
+    <string name="consult_date">Tanggal Konsultasi</string>
+    <string name="detail_package">Paket Detail</string>
+    <string name="payment_details">Detail Pembayaran</string>
+    <string name="payment_method">Metode Pembayaran</string>
+    <string name="news">Berita</string>
+    <string name="total_order">Total Pesanan</string>
+    <string name="total">Total</string>
+    <string name="order_later">Pesanan Nanti</string>
+    <string name="order_now">Pesan Sekarang</string>
+    <string name="order_detail">Detail Pesanan</string>
+
+    <string name="published">Dipublikasikan</string>
+    <string name="go_to_home">Beralih ke Beranda</string>
+    <string name="info">Info</string>
+
+    <string name="rate">Beri Rating</string>
+    <string name="re_order">Pesan Ulang</string>
+    <string name="delete">Hapus</string>
+
+    <!--Setting-->
+    <string name="store_profile">Profil Toko</string>
+    <string name="FAQ">FAQ</string>
+    <string name="terms_and_conditions">Syarat dan Ketentuan</string>
+    <string name="delete_account">Hapus Akun</string>
+    <string name="logout">Keluar</string>
+    <string name="your_store">Toko Anda</string>
+    <string name="authentication">Autentikasi</string>
+    <string name="profile">Profil</string>
+    <string name="go_to_profile">Beralih ke Profil</string>
+    <string name="data_is_invalid">Data tidak valid!</string>
+    <string name="go_to_our_site">Beralih ke Situs Kami</string>
+    <string name="web_thrive_in">https://devthrivein.github.io/%1$s</string>
+    <string name="description">Deskripsi</string>
+    <string name="create_transaction_now">Buat Transaksi Sekarang?</string>
+    <string name="message_before_order">Setelah Anda memilih, ini tidak akan otomatis membuat pembayaran, Anda dapat memeriksanya dalam Konsultasi ini atau Anda dapat memesannya sekarang atau nanti!</string>
+
+    <!--Dialog Step Use Detect Store-->
+    <string name="dialog_step_detect_store">Ketahui sudut kamera Anda</string>
+    <string name="headline_step">Ikuti tips di bawah ini untuk mengambil foto yang jelas</string>
+    <string name="title_step_1">Langkah 1</string>
+    <string name="title_step_2">Langkah 2</string>
+    <string name="title_step_3">Langkah 3</string>
+    <string name="content_step_1">Pastikan tidak ada yang menghalangi toko Anda</string>
+    <string name="content_step_2">Pastikan seluruh toko Anda difoto</string>
+    <string name="content_step_3">Pastikan foto diambil dari depan</string>
+    <string name="continue_step">Lanjutkan</string>
+
+</resources>

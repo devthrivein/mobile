@@ -46,7 +46,9 @@ fun ListServiceScreen(
 ) {
 
     val context = LocalContext.current
-    var listServicesResponse: ListServicesResponse? = null
+    var listServicesResponse: ListServicesResponse? by remember {
+        mutableStateOf(null)
+    }
     var isLoading by remember { mutableStateOf(false) }
     var refreshState by remember { mutableStateOf(false) }
 
@@ -55,7 +57,7 @@ fun ListServiceScreen(
             is UiState.Loading -> {
                 isLoading = true
                 refreshState = true
-                listServiceViewModel.getAllServices(id)
+                listServiceViewModel.getAllServices(id.toLowerCase())
             }
 
             is UiState.Success -> {

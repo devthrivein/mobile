@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -21,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -37,6 +39,7 @@ import com.example.thrivein.ui.component.input.ThriveInChatInput
 import com.example.thrivein.ui.component.item.ChatConsultItem
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.ui.theme.Primary
+import kotlinx.coroutines.launch
 import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,6 +53,8 @@ fun ConsultationScreen(
 ) {
     var chatValue by remember { mutableStateOf("") }
     val user by authViewModel.getUser().observeAsState()
+    val lazyColumnListState = rememberLazyListState()
+    val corroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
     var selectedFile by remember {
         mutableStateOf<File?>(File(""))
@@ -123,7 +128,13 @@ fun ConsultationScreen(
                 .fillMaxSize()
                 .padding(innerPadding),
             reverseLayout = true,
+            state = lazyColumnListState,
         ) {
+            corroutineScope.launch {
+                if (messages.isNotEmpty()) {
+                    lazyColumnListState.animateScrollToItem(0)
+                }
+            }
             items(items = messages, key = { it.toString() }) { chat ->
 
                 if (chat.message != "") {

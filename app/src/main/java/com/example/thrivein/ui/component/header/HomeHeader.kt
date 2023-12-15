@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import com.example.thrivein.R
 import com.example.thrivein.ui.component.button.FavoriteButton
 import com.example.thrivein.ui.theme.Primary
@@ -33,13 +34,15 @@ fun HomeHeader(
                 text = stringResource(R.string.hello, username),
                 style = MaterialTheme.typography.titleLarge.copy(
                     color = Primary,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
                 )
             )
             Text(
                 text = stringResource(R.string.welcome_back),
                 style = MaterialTheme.typography.titleLarge.copy(
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 18.sp
                 ),
             )
         }
