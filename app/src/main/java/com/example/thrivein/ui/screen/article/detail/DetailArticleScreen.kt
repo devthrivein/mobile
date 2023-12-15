@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -162,8 +163,9 @@ fun DetailArticleScreen(
 
                                 }
                                 Row(
-                                    verticalAlignment = Alignment.CenterVertically
+                                    horizontalArrangement = Arrangement.End,
                                 ) {
+                                    Spacer(modifier = Modifier.width(40.dp))
                                     Icon(
                                         painter = painterResource(id = R.drawable.ic_date),
                                         contentDescription = null
@@ -175,18 +177,20 @@ fun DetailArticleScreen(
                                             fontWeight = FontWeight.Normal
                                         )
                                     )
-                                    Spacer(modifier = Modifier.width(3.dp))
+//                                    Spacer(modifier = Modifier.width(3.dp))
                                     Text(
                                         text = detailArticleResponse?.uploadedDate ?: "",
                                         style = MaterialTheme.typography.labelMedium.copy(
                                             fontWeight = FontWeight.Normal
+                                        ),
+                                        textAlign = TextAlign.Right,
                                         )
-                                    )
 
                                 }
                             }
                             Text(
-                                modifier = Modifier.padding(top = 10.dp, bottom = 40.dp),
+                                modifier = Modifier.padding(
+                                    top = 10.dp, bottom = 40.dp),
                                 text = detailArticleResponse?.content ?: "",
                                 style = MaterialTheme.typography.bodyMedium.copy(
                                     fontWeight = FontWeight.Normal
