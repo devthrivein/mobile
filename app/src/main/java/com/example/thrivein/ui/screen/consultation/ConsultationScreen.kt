@@ -40,7 +40,6 @@ import com.example.thrivein.ui.component.item.ChatConsultItem
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.ui.theme.Primary
 import kotlinx.coroutines.launch
-import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -57,21 +56,19 @@ fun ConsultationScreen(
     val corroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
     var selectedFile by remember {
-        mutableStateOf<File?>(File(""))
+        mutableStateOf<Uri?>(null)
     }
     val fileLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         uri?.let {
-            selectedFile = File(uri.path ?: "")
-            if (selectedFile != null) {
-                consultationViewModel.sendChatConsultation(
-                    isAdmin = false,
-                    message = chatValue,
-                    userId = user?.userId ?: "",
-                    file = selectedFile,
-                )
-            }
+            selectedFile = uri
+            consultationViewModel.sendChatConsultation(
+                isAdmin = false,
+                message = chatValue,
+                userId = user?.userId ?: "",
+                file = selectedFile,
+            )
         }
     }
 
@@ -115,7 +112,7 @@ fun ConsultationScreen(
                             chatValue = it
                         },
                         onOpenFileExplorer = {
-                            fileLauncher.launch("*/*")
+                            fileLauncher.launch("image/*")
                         },
                     )
                 }
@@ -136,13 +133,11 @@ fun ConsultationScreen(
                 }
             }
             items(items = messages, key = { it.toString() }) { chat ->
-
-                if (chat.message != "") {
-                    ChatConsultItem(
-                        isAdmin = chat.isAdmin ?: false,
-                        content = chat.message ?: ""
-                    )
-                }
+                ChatConsultItem(
+                    isAdmin = chat.isAdmin ?: false,
+                    fileUrl = chat.fileUrl,
+                    content = chat.message ?: ""
+                )
 
             }
         }

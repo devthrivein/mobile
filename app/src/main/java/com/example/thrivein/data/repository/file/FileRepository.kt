@@ -5,7 +5,6 @@ import com.example.thrivein.utils.CHATS
 import com.example.thrivein.utils.CONSULTATION
 import com.example.thrivein.utils.CONSULTATION_SERVICE
 import com.google.firebase.storage.FirebaseStorage
-import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,16 +15,16 @@ class FileRepository @Inject constructor(
 
 
     fun sendFileToConsultationService(
-        file: File,
+        file: Uri,
         serviceId: String,
         userId: String,
         callback: (Uri?) -> Unit,
     ) {
         val ref =
-            "$CONSULTATION_SERVICE/$serviceId/messages-from-$userId/${file.name}.${file.extension}"
+            "$CONSULTATION_SERVICE/$serviceId/messages-from-$userId/${file.lastPathSegment}"
         val child = storage.reference.child(ref)
 
-        child.putFile(Uri.fromFile(file))
+        child.putFile(file)
             .continueWithTask { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let { throw it }
@@ -34,18 +33,20 @@ class FileRepository @Inject constructor(
             }
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    callback(task.result)
+                    val downloadUri = task.result
+                    callback(downloadUri)
                 } else {
                     callback(null)
                 }
             }
     }
 
-    fun sendFileToConsultation(file: File, userId: String, callback: (Uri?) -> Unit) {
-        val ref = "$CONSULTATION/$CHATS/messages-from-$userId/${file.name}.${file.extension}"
+    fun sendFileToConsultation(file: Uri, userId: String, callback: (Uri?) -> Unit) {
+        val ref =
+            "$CONSULTATION/$CHATS/messages-from-$userId/${file.lastPathSegment}"
         val child = storage.reference.child(ref)
-        val fileToSend = Uri.fromFile(file)
-        child.putFile(fileToSend)
+
+        child.putFile(file)
             .continueWithTask { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let { throw it }
@@ -54,7 +55,8 @@ class FileRepository @Inject constructor(
             }
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    callback(task.result)
+                    val downloadUri = task.result
+                    callback(downloadUri)
                 } else {
                     callback(null)
                 }

@@ -1,4 +1,3 @@
 
-Rkotlin:S1172â"2Use "_" instead of these unused lambda parameters.(“Æ¥Û8à§¨œÆ1
-Zkotlin:S6615I";Remove this variable, which is assigned but never accessed.(Ü«™Ú8æ§¨œÆ1
-vkotlin:S37768"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(¿æÙåùÿÿÿÿ8ï§¨œÆ1
+Rkotlin:S1172Ş"2Use "_" instead of these unused lambda parameters.(“Æ¥Û8×‡àëÆ1
+Zkotlin:S6615H";Remove this variable, which is assigned but never accessed.(Ü«™Ú8ß‡àëÆ1

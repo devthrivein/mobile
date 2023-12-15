@@ -1,5 +1,6 @@
 package com.example.thrivein.ui.screen.consultation
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +13,6 @@ import com.example.thrivein.utils.CONSULTATION
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,7 +29,7 @@ class ConsultationViewModel @Inject constructor(
     fun sendChatConsultation(
         isAdmin: Boolean = false,
         message: String,
-        file: File?,
+        file: Uri?,
         userId: String,
     ) {
 
@@ -38,17 +38,25 @@ class ConsultationViewModel @Inject constructor(
         if (file != null) {
 
             fileRepository.sendFileToConsultation(file, userId) {
-                fileUrl = it?.path
+                fileUrl = it?.toString()
+
+                chatRepository.sendConsultationChat(
+                    isAdmin,
+                    message,
+                    fileUrl.toString(),
+                    userId,
+                )
             }
 
+        } else {
+            chatRepository.sendConsultationChat(
+                isAdmin,
+                message,
+                fileUrl ?: "",
+                userId,
+            )
         }
 
-        chatRepository.sendConsultationChat(
-            isAdmin,
-            message,
-            fileUrl ?: "",
-            userId,
-        )
     }
 
 

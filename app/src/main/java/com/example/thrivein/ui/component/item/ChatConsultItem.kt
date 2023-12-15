@@ -15,11 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.thrivein.R
 import com.example.thrivein.ui.theme.Primary
 
@@ -28,6 +30,7 @@ fun ChatConsultItem(
     modifier: Modifier = Modifier,
     isAdmin: Boolean,
     content: String,
+    fileUrl: String? = null,
 ) {
 
     Column(
@@ -45,11 +48,25 @@ fun ChatConsultItem(
                 .background(if (isAdmin) Color.White else Primary)
                 .padding(16.dp)
         ) {
-            Text(
-                text = content, style = MaterialTheme.typography.bodyMedium.copy(
-                    fontWeight = FontWeight.Normal
+
+            if (fileUrl != "") {
+                AsyncImage(
+                    model = fileUrl,
+                    contentDescription = content,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .background(Color.Gray)
+
                 )
-            )
+            } else {
+                Text(
+                    text = content, style = MaterialTheme.typography.bodyMedium.copy(
+                        fontWeight = FontWeight.Normal
+                    )
+                )
+            }
+
+
         }
         Spacer(modifier = Modifier.height(12.dp))
     }

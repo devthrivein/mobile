@@ -46,7 +46,6 @@ import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.ui.theme.Primary
 import com.example.thrivein.utils.UiState
 import kotlinx.coroutines.launch
-import java.io.File
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(
@@ -72,23 +71,21 @@ fun DetailConsultServiceScreen(
     val messages by detailConsultServiceViewModel.messages.observeAsState(initial = emptyList<ChatModel>())
     var welcomeMessages: WelcomeMessageResponse? = null
     var selectedFile by remember {
-        mutableStateOf<File?>(File(""))
+        mutableStateOf<Uri?>(null)
     }
     val fileLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         uri?.let {
-            selectedFile = File(uri.path ?: "")
-            if (selectedFile != null) {
-                detailConsultServiceViewModel.sendChatConsultService(
-                    isAdmin = false,
-                    isTransactionChat = false,
-                    message = chatValue,
-                    file = selectedFile,
-                    userId = user?.userId ?: "",
-                    serviceId = id,
-                )
-            }
+            selectedFile = uri
+            detailConsultServiceViewModel.sendChatConsultService(
+                isAdmin = false,
+                isTransactionChat = false,
+                message = chatValue,
+                file = selectedFile,
+                userId = user?.userId ?: "",
+                serviceId = id,
+            )
         }
     }
 
@@ -178,7 +175,7 @@ fun DetailConsultServiceScreen(
                             chatValue = it
                         },
                         onOpenFileExplorer = {
-                            fileLauncher.launch("*/*")
+                            fileLauncher.launch("image/*")
                         },
                     )
                 }
@@ -204,12 +201,11 @@ fun DetailConsultServiceScreen(
             items(items = messages, key = { it.createdAt.toString() }) { chat ->
 
 
-                if (chat.message != "") {
-                    ChatConsultItem(
-                        isAdmin = chat.isAdmin ?: false,
-                        content = chat.message ?: ""
-                    )
-                }
+                ChatConsultItem(
+                    isAdmin = chat.isAdmin ?: false,
+                    fileUrl = chat.fileUrl,
+                    content = chat.message ?: ""
+                )
 
             }
         }

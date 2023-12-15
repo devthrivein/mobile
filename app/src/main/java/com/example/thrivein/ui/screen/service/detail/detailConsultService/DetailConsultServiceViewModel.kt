@@ -1,5 +1,6 @@
 package com.example.thrivein.ui.screen.service.detail.detailConsultService
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,7 +20,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import java.io.File
 import javax.inject.Inject
 
 
@@ -57,26 +57,38 @@ class DetailConsultServiceViewModel @Inject constructor(
         message: String,
         userId: String,
         serviceId: String,
-        file: File?,
+        file: Uri?,
     ) {
         var fileUrl: String? = null
 
         if (file != null) {
 
             fileRepository.sendFileToConsultationService(file, serviceId, userId) {
-                fileUrl = it?.path
+                fileUrl = it?.toString()
+
+                chatRepository.sendConsultationServiceChat(
+                    isAdmin,
+                    isTransactionChat,
+                    message,
+                    fileUrl.toString(),
+                    userId,
+                    serviceId,
+                )
             }
 
+
+        } else {
+            chatRepository.sendConsultationServiceChat(
+                isAdmin,
+                isTransactionChat,
+                message,
+                fileUrl ?: "",
+                userId,
+                serviceId,
+            )
         }
 
-        chatRepository.sendConsultationServiceChat(
-            isAdmin,
-            isTransactionChat,
-            message,
-            fileUrl ?: "",
-            userId,
-            serviceId,
-        )
+
     }
 
 
