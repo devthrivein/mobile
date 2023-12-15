@@ -150,37 +150,37 @@ fun ScoreAndAdviceScreen(
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = scanStoreResponse.paragraf1 ?: "",
-                        textAlign = TextAlign.Start,
+                        textAlign = TextAlign.Justify,
                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Normal)
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(
                         text = scanStoreResponse.paragraf2 ?: "",
-                        textAlign = TextAlign.Start,
+                        textAlign = TextAlign.Justify,
                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Normal)
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(
                         text = scanStoreResponse.paragraf3 ?: "",
-                        textAlign = TextAlign.Start,
+                        textAlign = TextAlign.Justify,
                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Normal)
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(
                         text = scanStoreResponse.paragraf4 ?: "",
-                        textAlign = TextAlign.Start,
+                        textAlign = TextAlign.Justify,
                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Normal)
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(
                         text = scanStoreResponse.paragraf5 ?: "",
-                        textAlign = TextAlign.Start,
+                        textAlign = TextAlign.Justify,
                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Normal)
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(
                         text = scanStoreResponse.paragraf6 ?: "",
-                        textAlign = TextAlign.Start,
+                        textAlign = TextAlign.Justify,
                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Normal)
                     )
                     Spacer(modifier = Modifier.height((screenHeight.value * 0.2).dp))
