@@ -248,6 +248,9 @@ fun ThriveInApp(
                     },
                     navigateToWaitingList = {
                         navHostController.navigate(Screen.WaitingListService.route)
+                    },
+                    navigateToBanner = { bannerUrl ->
+                        navHostController.navigate(Screen.WebViewScreen.createRoute(bannerUrl))
                     }
                 )
             }

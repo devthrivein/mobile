@@ -50,6 +50,7 @@ fun HomeScreen(
     navigateToListArticle: () -> Unit,
     navigateToDetailArticle: (id: String, title: String) -> Unit,
     navigateToWaitingList: () -> Unit,
+    navigateToBanner: (String) -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
     authViewModel: AuthViewModel = hiltViewModel(),
 ) {
@@ -196,6 +197,7 @@ fun HomeScreen(
                     BannerSlider(
                         listBanner = banners,
                         isLoading = refreshState,
+                        navigateToBanner = navigateToBanner,
                         modifier = Modifier
                             .padding(horizontal = 24.dp)
 
@@ -250,5 +252,6 @@ fun HomeScreenPreview() {
         navigateToListArticle = {},
         navigateToScanStore = {},
         navigateToWaitingList = {},
+        navigateToBanner = {}
     )
 }

@@ -1,6 +1,7 @@
 package com.example.thrivein.ui.component.slider
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,6 +34,7 @@ import kotlinx.coroutines.yield
 fun BannerSlider(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
+    navigateToBanner: (String) -> Unit,
     listBanner: BannerResponse?,
 ) {
 
@@ -74,6 +76,9 @@ fun BannerSlider(
                         modifier = Modifier
                             .fillMaxSize()
                             .background(ShimmerBrush(targetValue = 1300f, showShimmer = isLoading))
+                            .clickable {
+                                navigateToBanner(banner.bannerTxt ?: "")
+                            }
                     )
                 }
 
@@ -92,5 +97,5 @@ fun BannerSlider(
 @Preview
 @Composable
 fun BannerSliderPreview() {
-    BannerSlider(listBanner = BannerResponse(), isLoading = false)
+    BannerSlider(listBanner = BannerResponse(), isLoading = false, navigateToBanner = {})
 }
