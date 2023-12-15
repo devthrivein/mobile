@@ -90,4 +90,15 @@
     <string name="description">Description</string>
     <string name="create_transaction_now">Create Transaction Now?</string>
     <string name="message_before_order">Once you select it, this will not automatically make a payment, you can check it in this Consultation or you can order it now or later!</string>
+
+    <!--Dialog Step Use Detect Store-->
+    <string name="dialog_step_detect_store">Know your camera angle</string>
+    <string name="headline_step">Follow the tips below to capture clear photos</string>
+    <string name="title_step_1">Step 1</string>
+    <string name="title_step_2">Step 2</string>
+    <string name="title_step_3">Step 3</string>
+    <string name="content_step_1">Ensure that nothing is blocking your store</string>
+    <string name="content_step_2">Ensure your entire store is photographed</string>
+    <string name="content_step_3">Make sure the photo is taken from the front</string>
+    <string name="continue_step">Continue</string>
 </resources>

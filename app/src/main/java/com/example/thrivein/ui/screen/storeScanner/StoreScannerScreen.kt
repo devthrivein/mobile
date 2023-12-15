@@ -16,6 +16,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -311,22 +312,31 @@ private fun CameraPreviewView(
     var showInfo by remember { mutableStateOf(false) }
 
 
-    Box(modifier = modifier.fillMaxSize()) {
-        AndroidView({ previewView }, modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+    ) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .border(30.dp, Color.Black)
+        ) {
+            AndroidView({ previewView },
+                modifier = Modifier.fillMaxSize()) {
 
+            }
+                ScanningLaser(
+                    modifier = Modifier
+                        .padding(start = 5.dp, top = 40.dp, end = 5.dp, bottom = 60.dp)
+                        .align(Alignment.TopCenter)
+                        .offset(y = (yPosition * screenHeight).dp),
+                )
         }
-
-        ScanningLaser(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .offset(y = (yPosition * screenHeight).dp),
-        )
-
         Column(
             modifier = Modifier.align(Alignment.BottomCenter),
             verticalArrangement = Arrangement.Bottom
         ) {
-            Row {
+            Row(modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween) {
                 ThriveInButton(
                     modifier = Modifier
                         .offset(y = (-550).dp)
@@ -344,6 +354,7 @@ private fun CameraPreviewView(
                     contentDescription = stringResource(id = R.string.info),
                     tint = Primary,
                     modifier = Modifier
+                        .offset(y = (-550).dp)
                         .scale(1f)
                         .clickable {
                             showInfo = true
