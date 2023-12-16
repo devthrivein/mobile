@@ -22,11 +22,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
@@ -60,6 +62,7 @@ import com.example.thrivein.ui.component.button.AddPhotoButton
 import com.example.thrivein.ui.component.button.CameraButton
 import com.example.thrivein.ui.component.button.SwitchButton
 import com.example.thrivein.ui.component.button.ThriveInButton
+import com.example.thrivein.ui.component.dialog.DialogStepUseDetectStore
 import com.example.thrivein.ui.component.loading.ThriveInLoading
 import com.example.thrivein.ui.theme.Primary
 import com.example.thrivein.utils.CameraUIAction
@@ -274,6 +277,8 @@ private fun CameraPreviewView(
     val lifecycleOwner = LocalLifecycleOwner.current
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp
+    val screenHeightDp = configuration.screenHeightDp.dp
+
 
     val preview = androidx.camera.core.Preview.Builder().build()
     val cameraSelector = CameraSelector.Builder()
@@ -310,62 +315,78 @@ private fun CameraPreviewView(
     )
 
     var showInfo by remember { mutableStateOf(false) }
+    var openAlertDialog by remember { mutableStateOf(false) }
 
+    when {
+        openAlertDialog -> {
+            DialogStepUseDetectStore(
+                onDismissRequest = { openAlertDialog = false },
+                onContinue = { openAlertDialog = false },
+                )
+        }
+    }
 
     Box(
         modifier = modifier
             .fillMaxSize()
     ) {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .border(30.dp, Color.Black)
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .border(30.dp, Color.Black)
         ) {
-            AndroidView({ previewView },
-                modifier = Modifier.fillMaxSize()) {
+            AndroidView(
+                { previewView },
+                modifier = Modifier.fillMaxSize()
+            ) {
 
             }
-                ScanningLaser(
-                    modifier = Modifier
-                        .padding(start = 5.dp, top = 40.dp, end = 5.dp, bottom = 60.dp)
-                        .align(Alignment.TopCenter)
-                        .offset(y = (yPosition * screenHeight).dp),
-                )
+            ScanningLaser(
+                modifier = Modifier
+                    .padding(start = 5.dp, top = 40.dp, end = 5.dp, bottom = 60.dp)
+                    .align(Alignment.TopCenter)
+                    .offset(y = (yPosition * screenHeight).dp),
+            )
         }
         Column(
-            modifier = Modifier.align(Alignment.BottomCenter),
-            verticalArrangement = Arrangement.Bottom
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 50.dp, horizontal = 10.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 ThriveInButton(
                     modifier = Modifier
-                        .offset(y = (-550).dp)
-                        .padding(50.dp)
+                        .padding(horizontal = 10.dp)
                         .scale(0.8f),
                     onClick = {
                         navigateToHome()
                     },
                     label = stringResource(id = R.string.go_to_home),
-                    isOutline = true
+                    isOutline = true,
+                    isNotWide = true
                 )
-
+                Spacer(modifier = Modifier.width(30.dp))
                 Icon(
                     imageVector = Icons.Default.Info,
                     contentDescription = stringResource(id = R.string.info),
                     tint = Primary,
                     modifier = Modifier
-                        .offset(y = (-550).dp)
                         .scale(1f)
                         .clickable {
-                            showInfo = true
+                            openAlertDialog = true
                         }
                 )
 
             }
+        }
+        Column(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
             CameraControls(cameraUIAction)
         }
-
-
     }
 }
 

@@ -97,8 +97,11 @@
     <string name="title_step_1">Step 1</string>
     <string name="title_step_2">Step 2</string>
     <string name="title_step_3">Step 3</string>
-    <string name="content_step_1">Ensure that nothing is blocking your store</string>
-    <string name="content_step_2">Ensure your entire store is photographed</string>
-    <string name="content_step_3">Make sure the photo is taken from the front</string>
+    <string name="content_step_1">1. Ensure that nothing is blocking your store</string>
+    <string name="content_step_2">2. Ensure your entire store is photographed</string>
+    <string name="content_step_3">3. Make sure the photo is taken from the front</string>
     <string name="continue_step">Continue</string>
+
+    <string name="false_img">Wrong Picture</string>
+    <string name="correct_img">Correct Picture</string>
 </resources>

@@ -103,4 +103,7 @@
     <string name="content_step_3">Pastikan foto diambil dari depan</string>
     <string name="continue_step">Lanjutkan</string>
 
+    <string name="false_img">Gambar Salah</string>
+    <string name="correct_img">Gambar Benar</string>
+
 </resources>
