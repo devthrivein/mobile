@@ -16,12 +16,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -55,7 +58,8 @@ import com.example.thrivein.ui.theme.Primary
 import com.example.thrivein.utils.UiState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+
 @Composable
 fun DetailHistoryServiceScreen(
     id: String,
@@ -111,86 +115,90 @@ fun DetailHistoryServiceScreen(
                 }
             })
         },
-        bottomBar = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
-                    .background(Color.White)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 24.dp, bottom = 32.dp)
-                ) {
+    ) {}
+    Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+                .background(Color.White)
+        ) {
+            val scaffoldState = rememberBottomSheetScaffoldState()
+            BottomSheetScaffold(
+                scaffoldState = scaffoldState,
+                sheetContainerColor = Background,
+                sheetContent = {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 48.dp)
+                            .padding(top = 24.dp, bottom = 32.dp)
                     ) {
-                        Text(
-                            text = stringResource(R.string.payment_details),
-                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        PaymentDetailItem(
-                            label = stringResource(R.string.payment_method),
-                            valueString = "COD",
-                        )
-                        Spacer(modifier = Modifier.height(6.dp))
-                        PaymentDetailItem(
-                            label = stringResource(id = R.string.address),
-                            valueString = "Jalan Tangkuban Perahu"
-                        )
-                        Spacer(modifier = Modifier.height(6.dp))
-                        PaymentDetailItem(
-                            label = stringResource(R.string.total_order), valueString = "Rp 300000"
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(18.dp))
-                    Divider(color = Primary)
-                    Spacer(modifier = Modifier.height(18.dp))
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 48.dp)
-                    ) {
-                        PaymentDetailItem(
-                            isImportant = true,
-                            label = stringResource(R.string.total),
-                            valueString = "Rp 300000",
-                        )
-                        Spacer(modifier = Modifier.height(24.dp))
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceEvenly,
-                            verticalAlignment = Alignment.CenterVertically
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 48.dp)
                         ) {
-                            ThriveInButton(
-                                onClick = { },
-                                label = stringResource(R.string.rate),
-                                isOutline = true,
-                                isNotWide = true,
-                                modifier = Modifier
-                                    .fillMaxWidth(0.47f)
+                            Text(
+                                text = stringResource(R.string.payment_details),
+                                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                             )
-                            Spacer(modifier = Modifier.width(20.dp))
-                            ThriveInButton(
-                                onClick = { },
-                                label = stringResource(R.string.re_order),
-                                isNotWide = true,
-                                modifier = Modifier.fillMaxWidth()
+                            Spacer(modifier = Modifier.height(16.dp))
+                            PaymentDetailItem(
+                                label = stringResource(R.string.payment_method),
+                                valueString = "COD",
+                            )
+                            Spacer(modifier = Modifier.height(6.dp))
+                            PaymentDetailItem(
+                                label = stringResource(id = R.string.address),
+                                valueString = "Jalan Tangkuban Perahu"
+                            )
+                            Spacer(modifier = Modifier.height(6.dp))
+                            PaymentDetailItem(
+                                label = stringResource(R.string.total_order),
+                                valueString = "Rp 300000"
                             )
                         }
+                        Spacer(modifier = Modifier.height(18.dp))
+                        Divider(color = Primary)
+                        Spacer(modifier = Modifier.height(18.dp))
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 48.dp)
+                        ) {
+                            PaymentDetailItem(
+                                isImportant = true,
+                                label = stringResource(R.string.total),
+                                valueString = "Rp 300000",
+                            )
+                            Spacer(modifier = Modifier.height(24.dp))
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceEvenly,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                ThriveInButton(
+                                    onClick = { },
+                                    label = stringResource(R.string.rate),
+                                    isOutline = true,
+                                    isNotWide = true,
+                                    modifier = Modifier
+                                        .fillMaxWidth(0.47f)
+                                )
+                                Spacer(modifier = Modifier.width(20.dp))
+                                ThriveInButton(
+                                    onClick = { },
+                                    label = stringResource(R.string.re_order),
+                                    isNotWide = true,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                            }
+                        }
                     }
-                }
-            }
-        },
-        containerColor = Background,
-    ) { innerPadding ->
-        Column(
-            modifier = modifier.padding(innerPadding)
-        ) {
+                },
+            ) {
+                Column(
+                    modifier = modifier.padding()
+                ) {
 //            if (isLoading) {
 //                ThriveInLoading()
 //            } else {
@@ -203,45 +211,43 @@ fun DetailHistoryServiceScreen(
 //                        refreshState = false
 //                        isLoading = false
 //                    }) {
-            HistoryMetaDataItem()
+                    HistoryMetaDataItem()
 
-            LazyColumn(
-                modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
-            ) {
-                stickyHeader {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp)
-                            .background(
-                                Background
-                            )
+                    LazyColumn(
+                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
                     ) {
-                        Text(
-                            text = stringResource(R.string.order_detail),
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
-                }
+                        stickyHeader {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 16.dp)
+                                    .background(
+                                        Background
+                                    )
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.order_detail),
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                            }
+                        }
 
-                items(count = 10) {
-                    PackageItem(
-                        title = "Lorem Ipsum 1x${it + 1}",
-                        qty = it,
-                        price = (it + 1) * 100000,
-                        bannerUrl = stringResource(
-                            id = R.string.dummy_image
-                        ),
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
+                        items(count = 10) {
+                            PackageItem(
+                                title = "Lorem Ipsum 1x${it + 1}",
+                                qty = it,
+                                price = (it + 1) * 100000,
+                                bannerUrl = stringResource(
+                                    id = R.string.dummy_image
+                                ),
+                                modifier = Modifier.padding(bottom = 16.dp)
+                            )
+                        }
+                    }
                 }
             }
         }
-    }
 }
-//    }
-//
-//}
 
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
