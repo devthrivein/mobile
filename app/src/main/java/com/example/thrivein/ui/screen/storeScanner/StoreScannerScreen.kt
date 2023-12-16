@@ -16,7 +16,6 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -314,7 +313,6 @@ private fun CameraPreviewView(
         label = "",
     )
 
-    var showInfo by remember { mutableStateOf(false) }
     var openAlertDialog by remember { mutableStateOf(false) }
 
     when {
@@ -322,7 +320,7 @@ private fun CameraPreviewView(
             DialogStepUseDetectStore(
                 onDismissRequest = { openAlertDialog = false },
                 onContinue = { openAlertDialog = false },
-                )
+            )
         }
     }
 
@@ -330,24 +328,17 @@ private fun CameraPreviewView(
         modifier = modifier
             .fillMaxSize()
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .border(30.dp, Color.Black)
+        AndroidView(
+            { previewView },
+            modifier = Modifier.fillMaxSize()
         ) {
-            AndroidView(
-                { previewView },
-                modifier = Modifier.fillMaxSize()
-            ) {
 
-            }
-            ScanningLaser(
-                modifier = Modifier
-                    .padding(start = 5.dp, top = 40.dp, end = 5.dp, bottom = 60.dp)
-                    .align(Alignment.TopCenter)
-                    .offset(y = (yPosition * screenHeight).dp),
-            )
         }
+        ScanningLaser(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .offset(y = (yPosition * screenHeight).dp),
+        )
         Column(
             modifier = Modifier
                 .fillMaxWidth()

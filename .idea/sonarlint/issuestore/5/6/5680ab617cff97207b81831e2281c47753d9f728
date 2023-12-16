@@ -1,10 +1,11 @@
 
-Gkotlin:S108c")Either remove or fill this block of code.(¯Í¥€8…áÀíÅ1
-Lkotlin:S108~")Either remove or fill this block of code.(€¸¦’üÿÿÿÿ8…áÀíÅ1
-Mkotlin:S108€")Either remove or fill this block of code.(€¸¦’üÿÿÿÿ8†áÀíÅ1
-Rkotlin:S1172¾"2Use "_" instead of these unused lambda parameters.(ÿâµ×8Å’ÁíÅ1
-Rkotlin:S1172—"2Use "_" instead of these unused lambda parameters.(Â†¬8‰áÀíÅ1
-ckotlin:S1172š">Use "_" instead of this unused lambda parameter "fromGallery".(ÂÔ¼«şÿÿÿÿ8ŠáÀíÅ1
-mkotlin:S1172­"HUse "_" instead of this unused lambda parameter "imageCaptureException".(˜èğÊüÿÿÿÿ8Æ’ÁíÅ1
-?kotlin:S6615T" Remove this useless initializer.(”Šˆ8‘áÀíÅ1
-vkotlin:S3776L"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(Šœõøÿÿÿÿ8áÀíÅ1
+Gkotlin:S108f")Either remove or fill this block of code.(¯Í¥€8…áÀíÅ1
+Mkotlin:S108")Either remove or fill this block of code.(€¸¦’üÿÿÿÿ8…áÀíÅ1
+Mkotlin:S108ƒ")Either remove or fill this block of code.(€¸¦’üÿÿÿÿ8†áÀíÅ1
+Rkotlin:S1172Á"2Use "_" instead of these unused lambda parameters.(ÿâµ×8Å’ÁíÅ1
+Rkotlin:S1172š"2Use "_" instead of these unused lambda parameters.(Â†¬8‰áÀíÅ1
+ckotlin:S1172">Use "_" instead of this unused lambda parameter "fromGallery".(ÂÔ¼«şÿÿÿÿ8ŠáÀíÅ1
+mkotlin:S1172°"HUse "_" instead of this unused lambda parameter "imageCaptureException".(˜èğÊüÿÿÿÿ8Æ’ÁíÅ1
+Skotlin:S1481—"3Remove this unused "screenHeightDp" local variable.(š¿·­8İÆÌŒÇ1
+?kotlin:S6615W" Remove this useless initializer.(”Šˆ8‘áÀíÅ1
+vkotlin:S3776O"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(Šœõøÿÿÿÿ8áÀíÅ1
