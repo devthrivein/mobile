@@ -1,14 +1,20 @@
 package com.example.thrivein.ui.component.header
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -40,7 +46,14 @@ fun ProfileHeader(
     iconUrl: String,
     title: String,
     navigateBack: () -> Unit,
+    editable: () -> Unit,
+    editProfile: () -> Unit
 ) {
+    var launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let { iconUrl }
+    }
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -66,29 +79,49 @@ fun ProfileHeader(
                         RoundedCornerShape(bottomStart = 150.dp, bottomEnd = 150.dp),
                         spotColor = Primary,
                         ambientColor = Color.Black
-                    ),
+                    )
+                    .clickable {
+                        launcher.launch("image/*")
+                    },
                 painter = painterResource(id = R.drawable.bg_profile),
                 contentScale = ContentScale.FillWidth,
-                contentDescription = null
-            )
-            Icon(
+                contentDescription = null,
+
+                )
+            Row(
                 modifier = Modifier
-                    .offset(y = 60.dp, x = 15.dp)
-                    .shadow(
-                        elevation = 10.dp,
-                        spotColor = Primary,
-                        ambientColor = Color.Blue,
-                        clip = true,
-                        shape = RoundedCornerShape(30.dp)
-                    )
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .background(color = Background)
-                    .clickable { navigateBack() },
-                imageVector = Icons.Default.ArrowBack,
-                tint = Primary,
-                contentDescription = stringResource(R.string.to_detail),
-            )
+                    .fillMaxWidth()
+                    .offset(y = 60.dp)
+                    .padding(horizontal = 15.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Icon(
+                    modifier = Modifier
+//                        .offset(y = 60.dp, x = 15.dp)
+                        .shadow(
+                            elevation = 10.dp,
+                            spotColor = Primary,
+                            ambientColor = Color.Blue,
+                            clip = true,
+                            shape = RoundedCornerShape(30.dp)
+                        )
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .background(color = Background)
+                        .clickable { navigateBack() },
+                    imageVector = Icons.Default.ArrowBack,
+                    tint = Primary,
+                    contentDescription = stringResource(R.string.to_detail),
+                )
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_edit),
+                    contentDescription = stringResource(id = R.string.edit),
+                    tint = Color.Gray,
+                    modifier = Modifier
+                        .clickable { editable }
+                )
+            }
             Text(
                 modifier = Modifier
                     .align(Alignment.TopCenter)
@@ -128,6 +161,8 @@ fun ProfileHeaderPreview() {
     ProfileHeader(
         title = "Store Profile",
         iconUrl = "https://th.bing.com/th/id/OIP.SdB_qPhbKS73WKzeP25VOgHaK9?rs=1&pid=ImgDetMain",
-        navigateBack = {}
+        navigateBack = {},
+        editable = {},
+        editProfile = {}
     )
 }
