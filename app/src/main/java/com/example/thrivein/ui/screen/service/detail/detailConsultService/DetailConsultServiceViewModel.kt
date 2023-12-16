@@ -106,7 +106,7 @@ class DetailConsultServiceViewModel @Inject constructor(
                     return@addSnapshotListener
                 }
 
-                var chats = arrayListOf<ChatModel>()
+                val chats = arrayListOf<ChatModel>()
 
                 if (value != null) {
                     for (doc in value) {
