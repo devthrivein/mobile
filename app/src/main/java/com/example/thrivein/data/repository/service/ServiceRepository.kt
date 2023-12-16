@@ -63,6 +63,4 @@ class ServiceRepository @Inject constructor(
             throw Throwable(errorMessage)
         }
     }
-
-
 }

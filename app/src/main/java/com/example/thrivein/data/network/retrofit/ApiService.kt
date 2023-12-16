@@ -125,5 +125,4 @@ interface ApiService {
         @Part image: MultipartBody.Part,
     ): ScanStoreResponse
 
-
 }

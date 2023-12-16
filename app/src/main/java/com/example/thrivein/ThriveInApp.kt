@@ -34,6 +34,7 @@ import com.example.thrivein.ui.screen.history_service.list.HistoryServiceScreen
 import com.example.thrivein.ui.screen.home.HomeScreen
 import com.example.thrivein.ui.screen.scoreAndAdvice.ScoreAndAdviceScreen
 import com.example.thrivein.ui.screen.service.detail.detailConsultService.DetailConsultServiceScreen
+import com.example.thrivein.ui.screen.service.detail.detailService.AllDisplayImageScreen
 import com.example.thrivein.ui.screen.service.detail.detailService.DetailServiceScreen
 import com.example.thrivein.ui.screen.service.detail.detailTransactionService.DetailTransactionServiceScreen
 import com.example.thrivein.ui.screen.service.list.ListServiceScreen
@@ -389,13 +390,13 @@ fun ThriveInApp(
                     navHostController.navigateUp()
                 })
             }
+
             composable(
                 route = Screen.DetailService.route,
                 arguments = listOf(
                     navArgument("serviceId") { type = NavType.StringType },
                     navArgument("title") { type = NavType.StringType },
-
-                    )
+                )
             ) {
                 val id = it.arguments?.getString("serviceId") ?: ""
                 val title = it.arguments?.getString("title") ?: ""
@@ -411,6 +412,13 @@ fun ThriveInApp(
                             Screen.DetailConsultService.createRoute(
                                 serviceId,
                                 serviceTitle
+                            )
+                        )
+                    },
+                    navigateToAllDisplayImage = { displayId ->
+                        navHostController.navigate(
+                            Screen.AllDisplayImage.createRoute(
+                                displayId
                             )
                         )
                     }
@@ -544,6 +552,19 @@ fun ThriveInApp(
                         )
                     },
                     navigateToHome = { navHostController.navigate(Screen.Home.route) }
+                )
+            }
+
+            composable(
+                route = Screen.AllDisplayImage.route,
+                arguments = listOf(
+                    navArgument("allDisplayImage") { type = NavType.StringType },
+                )
+            ) {
+                val id = it.arguments?.getString("allDisplayImage") ?: ""
+                AllDisplayImageScreen(
+                    id = id,
+                    navigateBack = { navHostController.navigateUp() }
                 )
             }
 

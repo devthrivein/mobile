@@ -59,6 +59,7 @@ fun DetailServiceScreen(
     navigateBack: () -> Unit,
     navigateToConsultService: (id: String, title: String) -> Unit,
     detailServiceViewModel: DetailServiceViewModel = hiltViewModel(),
+    navigateToAllDisplayImage: (id: String) -> Unit
 ) {
 
     val context = LocalContext.current
@@ -178,7 +179,11 @@ fun DetailServiceScreen(
 
                 item {
                     Spacer(modifier = Modifier.height(24.dp))
-                    SeeAllButton(label = stringResource(R.string.portfolio), onClickButton = {})
+                    SeeAllButton(
+                        label = stringResource(R.string.portfolio),
+                        onClickButton = {
+                            navigateToAllDisplayImage(id)
+                        })
                 }
 
                 item {
@@ -229,5 +234,6 @@ fun DetailServiceScreenPreview() {
         navigateBack = {},
         navigateToConsultService = { id, title -> },
         detailServiceViewModel = hiltViewModel(),
+        navigateToAllDisplayImage = {}
     )
 }
