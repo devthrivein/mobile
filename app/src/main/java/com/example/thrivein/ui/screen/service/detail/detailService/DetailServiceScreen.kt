@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -50,7 +49,6 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailServiceScreen(
     modifier: Modifier = Modifier,
@@ -59,12 +57,16 @@ fun DetailServiceScreen(
     navigateBack: () -> Unit,
     navigateToConsultService: (id: String, title: String) -> Unit,
     detailServiceViewModel: DetailServiceViewModel = hiltViewModel(),
-    navigateToAllDisplayImage: (id: String) -> Unit
+    navigateToAllDisplayImage: (id: String) -> Unit,
 ) {
 
     val context = LocalContext.current
-    var servicesResponse: ServiceResponse? = null
-    var portfolioResponse: PortfolioResponse? = null
+    var servicesResponse: ServiceResponse? by remember {
+        mutableStateOf(null)
+    }
+    var portfolioResponse: PortfolioResponse? by remember {
+        mutableStateOf(null)
+    }
     var isLoading by remember { mutableStateOf(false) }
     var refreshState by remember { mutableStateOf(false) }
 
@@ -94,13 +96,12 @@ fun DetailServiceScreen(
         when (uiState) {
             is UiState.Loading -> {
                 isLoading = true
-                detailServiceViewModel.getPortfolioByServiceId(id, size = 10, page = 1)
+                detailServiceViewModel.getPortfolioByServiceId(id, size = 4, page = 1)
             }
 
             is UiState.Success -> {
                 isLoading = false
                 portfolioResponse = uiState.data
-
             }
 
             is UiState.Error -> {
@@ -203,6 +204,7 @@ fun DetailServiceScreen(
                         items(
                             items = portfolioResponse?.portfolio ?: arrayListOf()
                         ) {
+
                             AsyncImage(
                                 model = it?.imageUrl ?: "",
                                 contentDescription = title,

@@ -551,7 +551,16 @@ fun ThriveInApp(
                             )
                         )
                     },
-                    navigateToHome = { navHostController.navigate(Screen.Home.route) }
+                    navigateToHistoryService = {
+                        navHostController.navigate(Screen.History.route) {
+                            popUpTo(navHostController.graph.startDestinationId) {
+                                saveState = true
+                            }
+
+                            restoreState = true
+                            launchSingleTop = true
+                        }
+                    }
                 )
             }
 

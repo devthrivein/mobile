@@ -37,6 +37,9 @@ import java.util.Date
 @Composable
 fun HistoryMetaDataItem(
     modifier: Modifier = Modifier,
+    status: String,
+    invoice: String,
+    orderDate: String,
 ) {
     Box(
         modifier = modifier
@@ -49,16 +52,16 @@ fun HistoryMetaDataItem(
         Column(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            HistoryMetaItem(label = "Status", icon = Icons.Default.Person, deskripsi = "Done")
+            HistoryMetaItem(label = "Status", icon = Icons.Default.Person, deskripsi = status)
             HistoryMetaItem(
                 label = "Invoice",
                 icon = painterResource(id = R.drawable.ic_invoice),
-                deskripsi = "INV2169886786782"
+                deskripsi = invoice
             )
             HistoryMetaItem(
                 label = "Order Date",
                 icon = Icons.Default.DateRange,
-                deskripsi = Date().toString()
+                deskripsi = orderDate,
             )
         }
 
@@ -68,7 +71,7 @@ fun HistoryMetaDataItem(
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
 fun HistoryMetaDataItemPreview() {
-    HistoryMetaDataItem()
+    HistoryMetaDataItem(status = "Done", invoice = "IN2739872", orderDate = "Today")
 }
 
 @Composable
@@ -96,6 +99,7 @@ fun HistoryMetaItem(
                         modifier = Modifier.size(18.dp)
                     )
                 }
+
                 is Painter -> {
                     Icon(
                         painter = icon,

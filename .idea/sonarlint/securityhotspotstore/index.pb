@@ -233,3 +233,11 @@ aapp/src/main/java/com/example/thrivein/ui/screen/waiting_service/list/WaitingLi
 dapp/src/main/java/com/example/thrivein/ui/screen/waiting_service/list/WaitingListServiceViewModel.kt,e\e\eee70f492b894b5409ed90c13085d5fa719f5ffc
 ’
 bapp/src/main/java/com/example/thrivein/ui/screen/waiting_service/detail/DetailWaitingListScreen.kt,8\c\8c7009a69b7f698374343dfeb6c345dc6a0ebc0c
+
+Oapp/src/main/java/com/example/thrivein/ui/component/item/HistoryMetaDataItem.kt,2\a\2a501b327a1b98b7f72b26f112869e4d92914a13
+‹
+[app/src/main/java/com/example/thrivein/data/network/response/waiting/WaitingListResponse.kt,c\c\cc1c04679329fd8861d67ef19ba9c61f3b9c1a68
+”
+dapp/src/main/java/com/example/thrivein/data/network/response/waiting/DetailWaitingServiceResponse.kt,d\b\db8163b27e6012fc2a48b6b116de75e355aeb16b
+•
+eapp/src/main/java/com/example/thrivein/ui/screen/waiting_service/detail/DetailWaitingListViewModel.kt,0\7\076642659558ad0fc957444e37f66c41e31fa524

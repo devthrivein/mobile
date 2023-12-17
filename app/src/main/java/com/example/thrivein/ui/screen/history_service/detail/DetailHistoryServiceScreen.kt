@@ -49,7 +49,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.thrivein.R
 import com.example.thrivein.data.network.response.history.DetailHistoryServiceResponse
-import com.example.thrivein.data.network.response.history.HistoryResponse
 import com.example.thrivein.data.network.response.service.orderPackage.OrderPackageResponse
 import com.example.thrivein.ui.component.button.ThriveInButton
 import com.example.thrivein.ui.component.header.DetailTopBar
@@ -59,6 +58,7 @@ import com.example.thrivein.ui.screen.history_service.list.HistoryViewModel
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.ui.theme.Primary
 import com.example.thrivein.utils.UiState
+import com.example.thrivein.utils.toRpString
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -73,50 +73,44 @@ fun DetailHistoryServiceScreen(
     historyViewModel: HistoryViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
-    var detailHistoryService: DetailHistoryServiceResponse? = null
-    var isLoading by remember { mutableStateOf(false) }
-    var refreshState by remember { mutableStateOf(false) }
-    var historyResponse: HistoryResponse? by remember { mutableStateOf(null) }
-    var orderPackageResponse: OrderPackageResponse? = null
+    var detailHistoryService: DetailHistoryServiceResponse? by remember { mutableStateOf(null) }
+    var orderPackageResponse: OrderPackageResponse? by remember { mutableStateOf(null) }
 
     historyViewModel.uiThriveInDetailHistoryServiceState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {
-                isLoading = true
-                refreshState = true
                 historyViewModel.getDetailHistoryById(id)
             }
 
             is UiState.Success -> {
-                isLoading = false
-                refreshState = false
                 detailHistoryService = uiState.data
             }
 
             is UiState.Error -> {
-                isLoading = false
-                refreshState = false
                 Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-//    historyViewModel.uiThriveInHistoryServiceState.collectAsState(initial = UiState.Loading).value.let { uiState ->
-//        when (uiState) {
-//            is UiState.Loading -> {
-////                historyViewModel.getOrderPackageByServiceId(id)
-//            }
-//
-//            is UiState.Success -> {
-//                historyResponse = uiState.data
-//
-//            }
-//
-//            is UiState.Error -> {
-//                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
+    historyViewModel.uiOrderPackageState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
+            is UiState.Loading -> {
+
+                historyViewModel.getOrderPackageByServiceId(id)
+            }
+
+            is UiState.Success -> {
+                orderPackageResponse = uiState.data
+
+
+            }
+
+            is UiState.Error -> {
+                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
             DetailTopBar(title = title, navigateBack = navigateBack, actions = {
@@ -137,152 +131,134 @@ fun DetailHistoryServiceScreen(
                 }
             })
         },
-    ) {}
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
-            .background(Color.White)
-    ) {
-        val scaffoldState = rememberBottomSheetScaffoldState()
-        BottomSheetScaffold(
-            scaffoldState = scaffoldState,
-            sheetContainerColor = Background,
-            sheetContent = {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 24.dp, bottom = 32.dp)
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 48.dp)
-                    ) {
-                        Text(
-                            text = stringResource(R.string.payment_details),
-                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        PaymentDetailItem(
-                            label = stringResource(R.string.payment_method),
-                            valueString = detailHistoryService?.paymentMethod.orEmpty(),
-                        )
-                        Spacer(modifier = Modifier.height(6.dp))
-                        PaymentDetailItem(
-                            label = stringResource(id = R.string.address),
-                            valueString = detailHistoryService?.address.orEmpty()
-                        )
-                        Spacer(modifier = Modifier.height(6.dp))
-                        PaymentDetailItem(
-                            label = stringResource(R.string.total_order),
-                            valueString = "Rp ${detailHistoryService?.totalOrder ?: 0}"
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(18.dp))
-                    Divider(color = Primary)
-                    Spacer(modifier = Modifier.height(18.dp))
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 48.dp)
-                    ) {
-                        PaymentDetailItem(
-                            isImportant = true,
-                            label = stringResource(R.string.total),
-                            valueString = "Rp ${detailHistoryService?.totalPay ?: 0}",
-                        )
-                        Spacer(modifier = Modifier.height(24.dp))
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceEvenly,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            ThriveInButton(
-                                onClick = { },
-                                label = stringResource(R.string.rate),
-                                isOutline = true,
-                                isNotWide = true,
-                                modifier = Modifier
-                                    .fillMaxWidth(0.47f)
-                            )
-                            Spacer(modifier = Modifier.width(20.dp))
-                            ThriveInButton(
-                                onClick = { },
-                                label = stringResource(R.string.re_order),
-                                isNotWide = true,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-                    }
-                }
-            },
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(innerPadding)
+                .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+                .background(Color.White)
         ) {
-            Column(
-                modifier = modifier.padding()
-            ) {
-//            if (isLoading) {
-//                ThriveInLoading()
-//            } else {
-//                SwipeRefresh(
-//                    state = rememberSwipeRefreshState(isRefreshing = refreshState),
-//                    onRefresh = {
-//                        refreshState = true
-//                        isLoading = true
-//                        historyViewModel.getDetailHistoryById(id)
-//                        refreshState = false
-//                        isLoading = false
-//                    }) {
-                HistoryMetaDataItem()
-
-                LazyColumn(
-                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
-                ) {
-                    stickyHeader {
-                        Box(
+            val scaffoldState = rememberBottomSheetScaffoldState()
+            BottomSheetScaffold(
+                scaffoldState = scaffoldState,
+                sheetContainerColor = Background,
+                sheetContent = {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 24.dp, bottom = 32.dp)
+                    ) {
+                        Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(bottom = 16.dp)
-                                .background(
-                                    Background
-                                )
+                                .padding(horizontal = 48.dp)
                         ) {
                             Text(
-                                text = stringResource(R.string.order_detail),
-                                style = MaterialTheme.typography.titleMedium
+                                text = stringResource(R.string.payment_details),
+                                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            PaymentDetailItem(
+                                label = stringResource(R.string.payment_method),
+                                valueString = detailHistoryService?.paymentMethod ?: "-",
+                            )
+                            Spacer(modifier = Modifier.height(6.dp))
+                            PaymentDetailItem(
+                                label = stringResource(id = R.string.address),
+                                valueString = detailHistoryService?.address ?: "-"
+                            )
+                            Spacer(modifier = Modifier.height(6.dp))
+                            PaymentDetailItem(
+                                label = stringResource(R.string.total_order),
+                                valueString = detailHistoryService?.totalPay?.toRpString() ?: "-"
                             )
                         }
+                        Spacer(modifier = Modifier.height(18.dp))
+                        Divider(color = Primary)
+                        Spacer(modifier = Modifier.height(18.dp))
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 48.dp)
+                        ) {
+                            PaymentDetailItem(
+                                isImportant = true,
+                                label = stringResource(R.string.total),
+                                valueString = detailHistoryService?.totalPay?.toRpString() ?: "-",
+                            )
+                            Spacer(modifier = Modifier.height(24.dp))
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceEvenly,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                ThriveInButton(
+                                    onClick = { },
+                                    label = stringResource(R.string.rate),
+                                    isOutline = true,
+                                    isNotWide = true,
+                                    modifier = Modifier
+                                        .fillMaxWidth(0.47f)
+                                )
+                                Spacer(modifier = Modifier.width(20.dp))
+                                ThriveInButton(
+                                    onClick = { },
+                                    label = stringResource(R.string.re_order),
+                                    isNotWide = true,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                            }
+                        }
                     }
+                },
+            ) {
+                Column(
+                    modifier = modifier.padding()
+                ) {
+                    HistoryMetaDataItem(
+                        status = detailHistoryService?.status ?: "-",
+                        invoice = detailHistoryService?.invoice ?: "-",
+                        orderDate = detailHistoryService?.transactionDate ?: "-"
+                    )
 
-//                        items(items = detailHistoryService?.serviceId ?: arrayListOf()) {
-//                    items(items = historyResponse?.historyServices ?: arrayListOf()) {
-//
-//                        PackageItem(
-//                            title = it?.title ?: "",
-//                            qty = it?.,
-//                            price = (it + 1) * 100000,
-//                            bannerUrl = stringResource(
-//                                id = R.string.dummy_image
-//                            ),
-//                            modifier = Modifier.padding(bottom = 16.dp)
-//                        )
-//                    }
-                    items(items = orderPackageResponse?.item ?: arrayListOf()) {
+                    LazyColumn(
+                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
+                    ) {
+                        stickyHeader {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 16.dp)
+                                    .background(
+                                        Background
+                                    )
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.order_detail),
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                            }
+                        }
 
-                        PackageItem(
-                            title = it?.title ?: "",
-                            qty = it?.qty ?: 0,
-                            price = it?.price ?: 0,
-                            bannerUrl = stringResource(
-                                id = R.string.dummy_image
-                            ),
-                            modifier = Modifier.padding(bottom = 16.dp)
-                        )
+                        items(items = orderPackageResponse?.item ?: arrayListOf()) {
+
+                            PackageItem(
+                                title = it?.title ?: "",
+                                qty = it?.qty ?: 0,
+                                price = it?.price ?: 0,
+                                bannerUrl = stringResource(
+                                    id = R.string.dummy_image
+                                ),
+                                modifier = Modifier.padding(bottom = 16.dp)
+                            )
+                        }
                     }
                 }
             }
         }
     }
+
 }
 
 @Preview(showBackground = true, device = Devices.PIXEL_4)

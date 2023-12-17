@@ -19,6 +19,7 @@ import com.example.thrivein.data.network.response.service.ServiceResponse
 import com.example.thrivein.data.network.response.service.message.WelcomeMessageResponse
 import com.example.thrivein.data.network.response.service.orderPackage.OrderPackageResponse
 import com.example.thrivein.data.network.response.service.portfolio.PortfolioResponse
+import com.example.thrivein.data.network.response.waiting.DetailWaitingServiceResponse
 import com.example.thrivein.data.network.response.waiting.WaitingListResponse
 import okhttp3.MultipartBody
 import retrofit2.http.Body
@@ -115,7 +116,7 @@ interface ApiService {
     @GET("waiting-order/{order_id}")
     suspend fun getWaitingOrderById(
         @Path("order_id") orderId: String,
-    ): DetailHistoryServiceResponse
+    ): DetailWaitingServiceResponse
 
 
     //    ML for predict

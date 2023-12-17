@@ -77,7 +77,7 @@ fun WaitingListServiceScreen(
                     id = it?.orderId ?: "",
                     title = it?.title ?: "",
                     date = it?.transactionDate,
-                    iconUrl = "",
+                    iconUrl = it?.iconUrl ?: "",
                     modifier = Modifier
                         .padding(horizontal = 24.dp, vertical = 12.dp)
 
