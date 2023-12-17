@@ -55,8 +55,8 @@ This project utilizes Jetpack Compose with the Kotlin language and Android Jetpa
 ## Logo <a name="logo"></a>
 
 ## Documentation <a name="documentation"></a>
-* Design UI/UX [Figma ThriveIn](https://www.figma.com/file/62OyW5VoVbrRuJ0rrcTisD/Thrive-In-UI%2FUX-Design?type=design&node-id=254-8359&mode=design&t=GR1X01t4Zn0SKK3u-0)
+* Design UI/UX: <a href="https://www.figma.com/file/62OyW5VoVbrRuJ0rrcTisD/Thrive-In-UI%2FUX-Design?type=design&node-id=254-8359&mode=design&t=GR1X01t4Zn0SKK3u-0" target="_blank">Figma ThriveIn</a>
 * Demo App [Youtube ThriveIn]()
 * Demo Video [Ads ThriveIn]()
-* Social Media [Instagram ThriveIn]()
-* Our [Website thrivein.id]()
+* Social Media: <a href="https://www.instagram.com/thrivein._/" target="_blank">Instagram ThriveIn</a>
+* Our Website: <a href="https://thrivein.id/" target="_blank">ThriveIn.id</a>
