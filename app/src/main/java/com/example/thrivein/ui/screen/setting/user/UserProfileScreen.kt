@@ -1,10 +1,7 @@
-package com.example.thrivein.ui.screen.setting
+package com.example.thrivein.ui.screen.setting.user
 
 import android.annotation.SuppressLint
-import android.net.Uri
 import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,16 +13,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -38,16 +31,13 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.rememberImagePainter
 import com.example.thrivein.AuthViewModel
 import com.example.thrivein.R
 import com.example.thrivein.ui.component.button.ThriveInButton
-import com.example.thrivein.ui.component.dialog.DialogStepUseDetectStore
 import com.example.thrivein.ui.component.header.ProfileHeader
 import com.example.thrivein.ui.component.input.ThriveInInputText
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserProfileScreen(
     modifier: Modifier = Modifier,
@@ -61,19 +51,41 @@ fun UserProfileScreen(
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val screenHeight = configuration.screenHeightDp.dp
-
-
-    val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
     val scrollState = rememberScrollState()
+
+    val notification = rememberSaveable() { mutableStateOf("") }
+    if (notification.value.isNotEmpty()) {
+        Toast.makeText(LocalContext.current, notification.value, Toast.LENGTH_SHORT).show()
+        notification.value = ""
+    }
 
 
     Scaffold(
         modifier = modifier
             .fillMaxSize(),
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        },
+        bottomBar = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                ThriveInButton(
+                    onClick = { navigateBack() },
+                    label = stringResource(id = R.string.cancel),
+                    isOutline = true,
+                    isNotWide = true,
+                    modifier = Modifier
+                        .fillMaxWidth(0.45f)
+                )
+                Spacer(modifier = Modifier.width(30.dp))
+                ThriveInButton(
+                    onClick = { notification.value = "Save" },
+                    label = stringResource(id = R.string.btn_save),
+                    isNotWide = false,
+                )
+            }
+        }
     ) {
 
         var name by remember { mutableStateOf(user?.name ?: "") }
@@ -81,33 +93,7 @@ fun UserProfileScreen(
         var password by remember { mutableStateOf("") }
         var phone by remember { mutableStateOf(user?.phone ?: "") }
         var photo by remember { mutableStateOf(user?.avatarUrl ?: "") }
-//        val iconUrl = rememberSaveable() { mutableStateOf("") }
-//        val painter = rememberImagePainter(
-//            if (iconUrl.value.isEmpty()) {
-//                R.drawable.bg_profile
-//            } else {
-//                iconUrl.value
-//            }
-//
-//        )
 
-
-//        val launcher = rememberLauncherForActivityResult(
-//            contract = ActivityResultContracts.GetContent()
-//        ) { uri: Uri? ->
-//            uri?.let { photo}
-//        }
-        var showEdit by remember { mutableStateOf(false) }
-
-        when {
-            showEdit -> {
-                ButtonEdit(
-                    onDismissRequest = { showEdit = false },
-                    onContinue = { showEdit = false },
-                    onClick = {}
-                )
-            }
-        }
 
         Column(
             modifier = Modifier
@@ -120,8 +106,6 @@ fun UserProfileScreen(
                 title = stringResource(id = R.string.profile),
                 iconUrl = photo,
                 navigateBack = navigateBack,
-                editable = { showEdit = true},
-                editProfile = {}
             )
             Column(
                 modifier = Modifier
@@ -168,27 +152,6 @@ fun UserProfileScreen(
                     placeholder = stringResource(R.string.enter_you_phone_number),
                     keyboardType = KeyboardType.Phone,
                 )
-                Spacer(modifier = Modifier.height(60.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                )
-                {
-//                    ThriveInButton(
-//                            onClick = { notification.value = "Cancel" },
-//                    label = stringResource(id = R.string.cancel),
-//                    isOutline = true,
-//                    isNotWide = true,
-//                    modifier = Modifier
-//                        .fillMaxWidth(0.45f)
-//                    )
-//                    Spacer(modifier = Modifier.width(30.dp))
-//                    ThriveInButton(
-//                        onClick = { notification.value = "Save" },
-//                        label = stringResource(id = R.string.btn_save),
-//                        isNotWide = false,
-//                    )
-                }
             }
         }
     }

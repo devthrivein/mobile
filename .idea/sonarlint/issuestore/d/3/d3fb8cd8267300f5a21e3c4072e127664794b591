@@ -1,3 +1,5 @@
 
-dkotlin:S63091"@Functions returning "Flow" or "Channel" should not be suspending(¥ıÿÿÿÿ8š‹®¡Ã1
-dkotlin:S6309V"@Functions returning "Flow" or "Channel" should not be suspending(ì¥Óşÿÿÿÿ8Ûõü¡Ã1
+dkotlin:S63093"@Functions returning "Flow" or "Channel" should not be suspending(¥ıÿÿÿÿ8š‹®¡Ã1
+dkotlin:S6309X"@Functions returning "Flow" or "Channel" should not be suspending(ì¥Óşÿÿÿÿ8Ûõü¡Ã1
+dkotlin:S6309}"@Functions returning "Flow" or "Channel" should not be suspending(¡É×Šùÿÿÿÿ8ñû±Ç1
+mkotlin:S1192Q"NDefine a constant instead of duplicating this literal "Unknown error" 3 times.(¯Çò¯8õ¯ü±Ç1

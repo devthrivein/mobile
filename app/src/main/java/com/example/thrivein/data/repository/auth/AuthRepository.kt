@@ -1,13 +1,15 @@
 package com.example.thrivein.data.repository.auth
 
 import android.util.Log
-import com.example.thrivein.data.model.StoreModel
-import com.example.thrivein.data.model.UserModel
 import com.example.thrivein.data.local.preferences.StorePreference
 import com.example.thrivein.data.local.preferences.UserPreference
+import com.example.thrivein.data.model.StoreModel
+import com.example.thrivein.data.model.UserModel
 import com.example.thrivein.data.network.request.LoginRequest
 import com.example.thrivein.data.network.request.RegisterRequest
+import com.example.thrivein.data.network.request.UpdateStoreRequest
 import com.example.thrivein.data.network.response.ErrorResponse
+import com.example.thrivein.data.network.response.MessageResponse
 import com.example.thrivein.data.network.response.auth.UserResponse
 import com.example.thrivein.data.network.retrofit.ApiService
 import com.google.gson.Gson
@@ -118,5 +120,31 @@ class AuthRepository @Inject constructor(
             throw Throwable(errorMessage)
         }
 
+    }
+
+    suspend fun updateStore(request: UpdateStoreRequest): Flow<MessageResponse> {
+        try {
+            val response = apiService.updateStore(request)
+
+            val store = StoreModel(
+                storeName = request.storeName,
+                storeEmail = request.storeEmail,
+                storePhone = request.storePhone,
+                type = request.storeType,
+                address = request.address,
+            )
+
+
+            saveStore(store)
+
+            return flow { emit(response) }
+        } catch (e: HttpException) {
+            e.printStackTrace()
+            val jsonInString = e.response()?.errorBody()?.string()
+            val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
+            val errorMessage = errorBody?.message ?: "Unknown error"
+            Log.d("AuthRepository", "updateStore: $errorMessage ")
+            throw Throwable(errorMessage)
+        }
     }
 }

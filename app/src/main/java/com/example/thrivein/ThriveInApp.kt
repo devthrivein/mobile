@@ -39,8 +39,8 @@ import com.example.thrivein.ui.screen.service.detail.detailService.DetailService
 import com.example.thrivein.ui.screen.service.detail.detailTransactionService.DetailTransactionServiceScreen
 import com.example.thrivein.ui.screen.service.list.ListServiceScreen
 import com.example.thrivein.ui.screen.setting.SettingScreen
-import com.example.thrivein.ui.screen.setting.StoreProfileScreen
-import com.example.thrivein.ui.screen.setting.UserProfileScreen
+import com.example.thrivein.ui.screen.setting.store.StoreProfileScreen
+import com.example.thrivein.ui.screen.setting.user.UserProfileScreen
 import com.example.thrivein.ui.screen.storeScanner.StoreScannerScreen
 import com.example.thrivein.ui.screen.waiting_service.list.WaitingListServiceScreen
 import com.example.thrivein.ui.screen.webView.WebViewScreen

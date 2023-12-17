@@ -4,6 +4,7 @@ package com.example.thrivein.data.network.retrofit
 import com.example.thrivein.data.network.request.LoginRequest
 import com.example.thrivein.data.network.request.OrderRequest
 import com.example.thrivein.data.network.request.RegisterRequest
+import com.example.thrivein.data.network.request.UpdateStoreRequest
 import com.example.thrivein.data.network.response.MessageResponse
 import com.example.thrivein.data.network.response.article.ArticlesResponse
 import com.example.thrivein.data.network.response.article.DetailArticleResponse
@@ -26,6 +27,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -125,5 +127,10 @@ interface ApiService {
     suspend fun predictStore(
         @Part image: MultipartBody.Part,
     ): ScanStoreResponse
+
+
+    //    Setting
+    @PUT("update-store")
+    suspend fun updateStore(@Body request: UpdateStoreRequest): MessageResponse
 
 }

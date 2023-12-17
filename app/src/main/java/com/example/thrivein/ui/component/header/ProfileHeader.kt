@@ -46,8 +46,7 @@ fun ProfileHeader(
     iconUrl: String,
     title: String,
     navigateBack: () -> Unit,
-    editable: () -> Unit,
-    editProfile: () -> Unit
+
 ) {
     var launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -98,7 +97,6 @@ fun ProfileHeader(
             ) {
                 Icon(
                     modifier = Modifier
-//                        .offset(y = 60.dp, x = 15.dp)
                         .shadow(
                             elevation = 10.dp,
                             spotColor = Primary,
@@ -113,13 +111,6 @@ fun ProfileHeader(
                     imageVector = Icons.Default.ArrowBack,
                     tint = Primary,
                     contentDescription = stringResource(R.string.to_detail),
-                )
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_edit),
-                    contentDescription = stringResource(id = R.string.edit),
-                    tint = Color.Gray,
-                    modifier = Modifier
-                        .clickable { editable }
                 )
             }
             Text(
@@ -162,7 +153,5 @@ fun ProfileHeaderPreview() {
         title = "Store Profile",
         iconUrl = "https://th.bing.com/th/id/OIP.SdB_qPhbKS73WKzeP25VOgHaK9?rs=1&pid=ImgDetMain",
         navigateBack = {},
-        editable = {},
-        editProfile = {}
     )
 }
