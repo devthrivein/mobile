@@ -213,6 +213,13 @@ fun DetailTransactionServiceScreen(
 
                                     detailTransactionServiceViewModel.orderLater(orderRequest)
 
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "Payment is not valid",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+
                                 }
                             },
                             label = stringResource(R.string.order_later),
@@ -233,7 +240,15 @@ fun DetailTransactionServiceScreen(
                                         totalPay = orderPackageResponse?.totalOrder ?: 0,
                                     )
 
+
                                     detailTransactionServiceViewModel.orderNow(orderRequest)
+
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "Payment is not valid",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
 
                                 }
 
@@ -277,9 +292,7 @@ fun DetailTransactionServiceScreen(
                             title = it?.title ?: "",
                             qty = it?.qty ?: 0,
                             price = it?.price ?: 0,
-                            bannerUrl = stringResource(
-                                id = R.string.dummy_image
-                            ),
+                            bannerUrl = it?.imageUrl ?: "",
                             modifier = Modifier.padding(bottom = 16.dp)
                         )
                     }

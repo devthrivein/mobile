@@ -118,6 +118,8 @@ class DetailConsultServiceViewModel @Inject constructor(
                             createdAt = data["createdAt"] as Timestamp?,
                             message = data["message"] as String?,
                             fileUrl = data["fileUrl"] as String?,
+                            serviceId = data["serviceId"] as String?,
+                            isTransactionChat = data["transactionChat"] as Boolean?
                         )
 
                         chats.add(chat)

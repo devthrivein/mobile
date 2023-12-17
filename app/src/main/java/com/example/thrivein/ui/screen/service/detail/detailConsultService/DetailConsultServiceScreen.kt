@@ -200,7 +200,6 @@ fun DetailConsultServiceScreen(
 
             items(items = messages, key = { it.createdAt.toString() }) { chat ->
 
-
                 ChatConsultItem(
                     isAdmin = chat.isAdmin ?: false,
                     fileUrl = chat.fileUrl,

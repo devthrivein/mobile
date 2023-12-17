@@ -77,6 +77,7 @@ fun ChatConsultItem(
 fun ChatConsultItemPreview() {
     ChatConsultItem(
         isAdmin = true,
+        fileUrl = "",
         content = stringResource(R.string.dummy_text)
     )
 }

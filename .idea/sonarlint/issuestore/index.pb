@@ -141,10 +141,6 @@ gapp/src/main/java/com/example/thrivein/ui/screen/service/detail/detailService/D
 \app/src/main/java/com/example/thrivein/data/network/response/service/ListServicesResponse.kt,6\3\639c413890ebcc3f53af34f4f0ebd89200b503d8
 á
 Wapp/src/main/java/com/example/thrivein/data/network/response/service/ServiceResponse.kt,4\1\41a1f1abf0e046bb4353bae035d1794854ac5949
-}
-Mapp/src/main/java/com/example/thrivein/ui/screen/setting/UserProfileScreen.kt,0\7\07df9dac61d2ef4ce090a369be2d2552a3494ef7
-~
-Napp/src/main/java/com/example/thrivein/ui/screen/setting/StoreProfileScreen.kt,b\8\b83fdc2e1e1ae11f29c333391fb95813372f23c8
 {
 Kapp/src/main/java/com/example/thrivein/ui/component/header/ProfileHeader.kt,b\a\ba2d19f24fdaeb4bfe9fe49ba079b373dc500438
 Å
@@ -245,8 +241,6 @@ eapp/src/main/java/com/example/thrivein/ui/screen/waiting_service/detail/DetailW
 fapp/src/main/java/com/example/thrivein/ui/screen/service/detail/detailService/AllDisplayImageScreen.kt,a\2\a2a0b5fa53c6cf52ef8b525aa0c19908e3b68cd4
 Å
 Qapp/src/main/java/com/example/thrivein/data/network/request/UpdateStoreRequest.kt,6\4\64dc04ed264ca72e1d396e2b4a85d00d69166718
-Ñ
-Tapp/src/main/java/com/example/thrivein/ui/screen/setting/SettingScreenExperiment1.kt,1\c\1c7bf6245df28ae8013859ba9199cd5a438bb58a
 Ñ
 Tapp/src/main/java/com/example/thrivein/ui/screen/setting/store/StoreProfileScreen.kt,2\e\2ec99b082f5f3fa29014e527b09cdaa188af6795
 Ç

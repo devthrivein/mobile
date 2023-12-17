@@ -84,6 +84,7 @@ fun DetailHistoryServiceScreen(
 
             is UiState.Success -> {
                 detailHistoryService = uiState.data
+                historyViewModel.getOrderPackageByServiceId(detailHistoryService?.serviceId ?: id)
             }
 
             is UiState.Error -> {
@@ -95,8 +96,7 @@ fun DetailHistoryServiceScreen(
     historyViewModel.uiOrderPackageState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {
-
-                historyViewModel.getOrderPackageByServiceId(id)
+                historyViewModel.getOrderPackageByServiceId(detailHistoryService?.serviceId ?: id)
             }
 
             is UiState.Success -> {
@@ -247,9 +247,7 @@ fun DetailHistoryServiceScreen(
                                 title = it?.title ?: "",
                                 qty = it?.qty ?: 0,
                                 price = it?.price ?: 0,
-                                bannerUrl = stringResource(
-                                    id = R.string.dummy_image
-                                ),
+                                bannerUrl = it?.imageUrl ?: "",
                                 modifier = Modifier.padding(bottom = 16.dp)
                             )
                         }

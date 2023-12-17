@@ -92,6 +92,9 @@ fun DetailWaitingListScreen(
 
             is UiState.Success -> {
                 detailWaitingServiceResponse = uiState.data
+                detailWaitingListViewModel.getOrderPackageByServiceId(
+                    detailWaitingServiceResponse?.serviceId ?: id
+                )
 
             }
 
@@ -105,7 +108,9 @@ fun DetailWaitingListScreen(
         when (uiState) {
             is UiState.Loading -> {
 
-                detailWaitingListViewModel.getOrderPackageByServiceId(id)
+                detailWaitingListViewModel.getOrderPackageByServiceId(
+                    detailWaitingServiceResponse?.serviceId ?: id
+                )
             }
 
             is UiState.Success -> {
@@ -234,11 +239,15 @@ fun DetailWaitingListScreen(
                                     onClick = {
 
                                         val orderRequest = OrderRequest(
-                                            serviceId = detailWaitingServiceResponse?.serviceId ?: "-",
-                                            totalOrder = detailWaitingServiceResponse?.totalOrder ?: 0,
+                                            serviceId = detailWaitingServiceResponse?.serviceId
+                                                ?: "-",
+                                            totalOrder = detailWaitingServiceResponse?.totalOrder
+                                                ?: 0,
                                             discount = detailWaitingServiceResponse?.discount ?: 0,
-                                            paymentMethod = detailWaitingServiceResponse?.paymentMethod ?: "",
-                                            totalPay = detailWaitingServiceResponse?.totalOrder ?: 0,
+                                            paymentMethod = detailWaitingServiceResponse?.paymentMethod
+                                                ?: "",
+                                            totalPay = detailWaitingServiceResponse?.totalOrder
+                                                ?: 0,
                                         )
 
                                         detailWaitingListViewModel.orderNow(orderRequest)
@@ -287,9 +296,7 @@ fun DetailWaitingListScreen(
                                 title = it?.title ?: "",
                                 qty = it?.qty ?: 0,
                                 price = it?.price ?: 0,
-                                bannerUrl = stringResource(
-                                    id = R.string.dummy_image
-                                ),
+                                bannerUrl = it?.imageUrl ?: "",
                                 modifier = Modifier.padding(bottom = 16.dp)
                             )
                         }
