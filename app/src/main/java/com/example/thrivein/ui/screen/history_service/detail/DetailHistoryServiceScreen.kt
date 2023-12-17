@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Divider
@@ -48,6 +49,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.thrivein.R
 import com.example.thrivein.data.network.response.history.DetailHistoryServiceResponse
+import com.example.thrivein.data.network.response.history.HistoryResponse
+import com.example.thrivein.data.network.response.service.orderPackage.OrderPackageResponse
 import com.example.thrivein.ui.component.button.ThriveInButton
 import com.example.thrivein.ui.component.header.DetailTopBar
 import com.example.thrivein.ui.component.item.HistoryMetaDataItem
@@ -73,6 +76,8 @@ fun DetailHistoryServiceScreen(
     var detailHistoryService: DetailHistoryServiceResponse? = null
     var isLoading by remember { mutableStateOf(false) }
     var refreshState by remember { mutableStateOf(false) }
+    var historyResponse: HistoryResponse? by remember { mutableStateOf(null) }
+    var orderPackageResponse: OrderPackageResponse? = null
 
     historyViewModel.uiThriveInDetailHistoryServiceState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
@@ -95,6 +100,23 @@ fun DetailHistoryServiceScreen(
             }
         }
     }
+
+//    historyViewModel.uiThriveInHistoryServiceState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+//        when (uiState) {
+//            is UiState.Loading -> {
+////                historyViewModel.getOrderPackageByServiceId(id)
+//            }
+//
+//            is UiState.Success -> {
+//                historyResponse = uiState.data
+//
+//            }
+//
+//            is UiState.Error -> {
+//                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
     Scaffold(
         topBar = {
             DetailTopBar(title = title, navigateBack = navigateBack, actions = {
@@ -117,88 +139,88 @@ fun DetailHistoryServiceScreen(
         },
     ) {}
     Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
-                .background(Color.White)
-        ) {
-            val scaffoldState = rememberBottomSheetScaffoldState()
-            BottomSheetScaffold(
-                scaffoldState = scaffoldState,
-                sheetContainerColor = Background,
-                sheetContent = {
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+            .background(Color.White)
+    ) {
+        val scaffoldState = rememberBottomSheetScaffoldState()
+        BottomSheetScaffold(
+            scaffoldState = scaffoldState,
+            sheetContainerColor = Background,
+            sheetContent = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 24.dp, bottom = 32.dp)
+                ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 24.dp, bottom = 32.dp)
+                            .padding(horizontal = 48.dp)
                     ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 48.dp)
+                        Text(
+                            text = stringResource(R.string.payment_details),
+                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        PaymentDetailItem(
+                            label = stringResource(R.string.payment_method),
+                            valueString = detailHistoryService?.paymentMethod.orEmpty(),
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        PaymentDetailItem(
+                            label = stringResource(id = R.string.address),
+                            valueString = detailHistoryService?.address.orEmpty()
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        PaymentDetailItem(
+                            label = stringResource(R.string.total_order),
+                            valueString = "Rp ${detailHistoryService?.totalOrder ?: 0}"
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(18.dp))
+                    Divider(color = Primary)
+                    Spacer(modifier = Modifier.height(18.dp))
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 48.dp)
+                    ) {
+                        PaymentDetailItem(
+                            isImportant = true,
+                            label = stringResource(R.string.total),
+                            valueString = "Rp ${detailHistoryService?.totalPay ?: 0}",
+                        )
+                        Spacer(modifier = Modifier.height(24.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(
-                                text = stringResource(R.string.payment_details),
-                                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                            ThriveInButton(
+                                onClick = { },
+                                label = stringResource(R.string.rate),
+                                isOutline = true,
+                                isNotWide = true,
+                                modifier = Modifier
+                                    .fillMaxWidth(0.47f)
                             )
-                            Spacer(modifier = Modifier.height(16.dp))
-                            PaymentDetailItem(
-                                label = stringResource(R.string.payment_method),
-                                valueString = "COD",
+                            Spacer(modifier = Modifier.width(20.dp))
+                            ThriveInButton(
+                                onClick = { },
+                                label = stringResource(R.string.re_order),
+                                isNotWide = true,
+                                modifier = Modifier.fillMaxWidth()
                             )
-                            Spacer(modifier = Modifier.height(6.dp))
-                            PaymentDetailItem(
-                                label = stringResource(id = R.string.address),
-                                valueString = "Jalan Tangkuban Perahu"
-                            )
-                            Spacer(modifier = Modifier.height(6.dp))
-                            PaymentDetailItem(
-                                label = stringResource(R.string.total_order),
-                                valueString = "Rp 300000"
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(18.dp))
-                        Divider(color = Primary)
-                        Spacer(modifier = Modifier.height(18.dp))
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 48.dp)
-                        ) {
-                            PaymentDetailItem(
-                                isImportant = true,
-                                label = stringResource(R.string.total),
-                                valueString = "Rp 300000",
-                            )
-                            Spacer(modifier = Modifier.height(24.dp))
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceEvenly,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                ThriveInButton(
-                                    onClick = { },
-                                    label = stringResource(R.string.rate),
-                                    isOutline = true,
-                                    isNotWide = true,
-                                    modifier = Modifier
-                                        .fillMaxWidth(0.47f)
-                                )
-                                Spacer(modifier = Modifier.width(20.dp))
-                                ThriveInButton(
-                                    onClick = { },
-                                    label = stringResource(R.string.re_order),
-                                    isNotWide = true,
-                                    modifier = Modifier.fillMaxWidth()
-                                )
-                            }
                         }
                     }
-                },
+                }
+            },
+        ) {
+            Column(
+                modifier = modifier.padding()
             ) {
-                Column(
-                    modifier = modifier.padding()
-                ) {
 //            if (isLoading) {
 //                ThriveInLoading()
 //            } else {
@@ -211,42 +233,56 @@ fun DetailHistoryServiceScreen(
 //                        refreshState = false
 //                        isLoading = false
 //                    }) {
-                    HistoryMetaDataItem()
+                HistoryMetaDataItem()
 
-                    LazyColumn(
-                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
-                    ) {
-                        stickyHeader {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 16.dp)
-                                    .background(
-                                        Background
-                                    )
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.order_detail),
-                                    style = MaterialTheme.typography.titleMedium
+                LazyColumn(
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
+                ) {
+                    stickyHeader {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 16.dp)
+                                .background(
+                                    Background
                                 )
-                            }
-                        }
-
-                        items(count = 10) {
-                            PackageItem(
-                                title = "Lorem Ipsum 1x${it + 1}",
-                                qty = it,
-                                price = (it + 1) * 100000,
-                                bannerUrl = stringResource(
-                                    id = R.string.dummy_image
-                                ),
-                                modifier = Modifier.padding(bottom = 16.dp)
+                        ) {
+                            Text(
+                                text = stringResource(R.string.order_detail),
+                                style = MaterialTheme.typography.titleMedium
                             )
                         }
+                    }
+
+//                        items(items = detailHistoryService?.serviceId ?: arrayListOf()) {
+//                    items(items = historyResponse?.historyServices ?: arrayListOf()) {
+//
+//                        PackageItem(
+//                            title = it?.title ?: "",
+//                            qty = it?.,
+//                            price = (it + 1) * 100000,
+//                            bannerUrl = stringResource(
+//                                id = R.string.dummy_image
+//                            ),
+//                            modifier = Modifier.padding(bottom = 16.dp)
+//                        )
+//                    }
+                    items(items = orderPackageResponse?.item ?: arrayListOf()) {
+
+                        PackageItem(
+                            title = it?.title ?: "",
+                            qty = it?.qty ?: 0,
+                            price = it?.price ?: 0,
+                            bannerUrl = stringResource(
+                                id = R.string.dummy_image
+                            ),
+                            modifier = Modifier.padding(bottom = 16.dp)
+                        )
                     }
                 }
             }
         }
+    }
 }
 
 @Preview(showBackground = true, device = Devices.PIXEL_4)
