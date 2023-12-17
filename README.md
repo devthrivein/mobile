@@ -38,7 +38,7 @@ This project utilizes Jetpack Compose with the Kotlin language and Android Jetpa
 * Setting Screen  
   * Edit profiles for store and personal profiles
   * Logout account and delete account
-  * For FAQ, T&C, Our website can direct to website [thrivein.id]()
+  * For FAQ, T&C, Our website can direct to website <a href="https://thrivein.id/" target="_blank">ThriveIn.id</a>
 * History Screen
     * Storing each consultation transaction
     * Display all history transaction
