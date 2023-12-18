@@ -51,8 +51,21 @@ This project utilizes Jetpack Compose with the Kotlin language and Android Jetpa
     * Can change depending on the default language of the phone
 
 ## Screenshots <a name="screenshots"></a>
+<div style="display:flex;">
+    <img alt="Login" title="Login" width="200px" src="assets/2.jpg" />
+    <img alt="Home" title="Home" width="200px" src="assets/3.jpg" />
+    <img alt="Detail" title="Detail" width="200px" src="assets/4.jpg" />
+    <img alt="Cart" title="Cart" width="200px" src="assets/5.jpg" />
+    <img alt="Checkout" title="Checkout" width="200px" src="assets/6.jpg" />
+    <img alt="Profile" title="Profile" width="200px" src="assets/7.jpg" />
+</div>
+
 
 ## Logo <a name="logo"></a>
+<div style="display:flex;">
+    <img alt="Logo before rebranding" title="Logo before rebranding" width="500px" src="images/logo_before_rebranding.png" />
+     <img alt="Logo after rebranding" title="Logo after rebranding" width="500px" src="images/logo_after_rebranding.png" />
+</div>
 
 ## Documentation <a name="documentation"></a>
 * Design UI/UX: <a href="https://www.figma.com/file/62OyW5VoVbrRuJ0rrcTisD/Thrive-In-UI%2FUX-Design?type=design&node-id=254-8359&mode=design&t=GR1X01t4Zn0SKK3u-0" target="_blank">Figma ThriveIn</a>
