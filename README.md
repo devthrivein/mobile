@@ -63,7 +63,7 @@ This project utilizes Jetpack Compose with the Kotlin language and Android Jetpa
       <img alt="Detail Article" title="Detail Article" width="200px" src="images/detail article.jpg" />
      <img alt="List Service" title="List Service" width="200px" src="images/list service.jpg" />
     <img alt="Detail Service" title="Detail Service" width="200px" src="images/detail service.jpg" />
-     <img alt="Consultation" title="Consultation" width="200px" src="images/consultation.jpg" />
+     <img alt="Consultation" title="Consultation" width="200px" src="images/consultation.png" />
     <img alt="Confirm Transaction" title="Confirm Transaction" width="200px" src="images/confirm transaction.jpg" />
      <img alt="Detail PreTransaction" title="Detail PreTransaction" width="200px" src="images/detail pretransaction.jpg" />
        <img alt="Waiting Order" title="Waiting Order" width="200px" src="images/waiting order.jpg" />
