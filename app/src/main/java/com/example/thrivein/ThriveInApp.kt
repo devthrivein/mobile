@@ -415,10 +415,11 @@ fun ThriveInApp(
                             )
                         )
                     },
-                    navigateToAllDisplayImage = { displayId ->
+                    navigateToAllDisplayImage = { serviceId, serviceTitle ->
                         navHostController.navigate(
                             Screen.AllDisplayImage.createRoute(
-                                displayId
+                                serviceId,
+                                serviceTitle,
                             )
                         )
                     }
@@ -567,12 +568,15 @@ fun ThriveInApp(
             composable(
                 route = Screen.AllDisplayImage.route,
                 arguments = listOf(
-                    navArgument("allDisplayImage") { type = NavType.StringType },
+                    navArgument("serviceId") { type = NavType.StringType },
+                    navArgument("title") { type = NavType.StringType },
                 )
             ) {
-                val id = it.arguments?.getString("allDisplayImage") ?: ""
+                val id = it.arguments?.getString("serviceId") ?: ""
+                val title = it.arguments?.getString("title") ?: ""
                 AllDisplayImageScreen(
                     id = id,
+                    title = title,
                     navigateBack = { navHostController.navigateUp() }
                 )
             }

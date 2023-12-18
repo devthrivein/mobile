@@ -28,7 +28,6 @@ import coil.compose.AsyncImage
 import com.example.thrivein.data.network.response.service.portfolio.PortfolioResponse
 import com.example.thrivein.ui.component.ShimmerBrush
 import com.example.thrivein.ui.component.header.DetailTopBar
-import com.example.thrivein.ui.theme.Primary
 import com.example.thrivein.utils.UiState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -38,11 +37,12 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 fun AllDisplayImageScreen(
     modifier: Modifier = Modifier,
     id: String,
+    title: String,
     navigateBack: () -> Unit,
     detailServiceViewModel: DetailServiceViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
-    var portfolioResponse: PortfolioResponse? = null
+    var portfolioResponse: PortfolioResponse? by remember { mutableStateOf(null) }
     var isLoading by remember { mutableStateOf(false) }
     var refreshState by remember { mutableStateOf(false) }
 
@@ -66,15 +66,13 @@ fun AllDisplayImageScreen(
     }
     Scaffold(
         topBar = {
-            DetailTopBar(title = "", navigateBack = navigateBack)
+            DetailTopBar(
+                title = title, navigateBack = navigateBack
+            )
         },
     ) { innerPadding ->
 
-//        LazyColumn(
-//            modifier = modifier.padding(innerPadding),
-//            userScrollEnabled = true
-//        ) {
-//            item {
+
         SwipeRefresh(
             state = rememberSwipeRefreshState(isRefreshing = refreshState),
             onRefresh = {
@@ -86,10 +84,9 @@ fun AllDisplayImageScreen(
             }) {
             LazyVerticalStaggeredGrid(
                 columns = StaggeredGridCells.Fixed(2),
-//            content ="",
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(),
+                    .padding(innerPadding),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalItemSpacing = 16.dp,
                 userScrollEnabled = true
@@ -115,8 +112,7 @@ fun AllDisplayImageScreen(
         }
     }
 }
-//    }
-//}
+
 
 @Preview
 @Composable
@@ -124,20 +120,7 @@ fun AllDisplayImageScreenPreview() {
     AllDisplayImageScreen(
         navigateBack = {},
         id = "1",
+        title = "test",
         detailServiceViewModel = hiltViewModel()
-    )
-}
-
-@Composable
-fun Image(
-    modifier: Modifier = Modifier
-) {
-    AsyncImage(
-        modifier = modifier
-            .background(Primary)
-            .clip(shape = RoundedCornerShape(4.dp)),
-        model = "https://th.bing.com/th/id/OIP.zwZX_4Qz6c-03jWp37mHzAHaFF?rs=1&pid=ImgDetMain",
-        contentDescription = "",
-        contentScale = ContentScale.Crop
     )
 }
