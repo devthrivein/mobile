@@ -66,10 +66,10 @@ This project utilizes Jetpack Compose with the Kotlin language and Android Jetpa
     <img alt="Detail Service" title="Detail Service" width="200px" src="images/detail service.jpg" />
     <img alt="Setting" title="Setting" width="200px" src="images/setting.jpg" />
     <img alt="Confirm Transaction" title="Confirm Transaction" width="200px" src="images/confirm transaction.jpg" />
-       <img alt="Waiting Order" title="Waiting Order" width="200px" src="waiting order.jpg" />
-    <img alt="Detail PreTransaction" title="Detail PreTransaction" width="200px" src="detail pretransaction.jpg" />
-     <img alt="History Transaction" title="History Transaction" width="200px" src="history transaction.jpg" />
-     <img alt="Invoice Transaction" title="Invoice Transaction" width="200px" src="invoice.jpg" />
+       <img alt="Waiting Order" title="Waiting Order" width="200px" src="images/waiting order.jpg" />
+    <img alt="Detail PreTransaction" title="Detail PreTransaction" width="200px" src="images/detail pretransaction.jpg" />
+     <img alt="History Transaction" title="History Transaction" width="200px" src="images/history transaction.jpg" />
+     <img alt="Invoice Transaction" title="Invoice Transaction" width="200px" src="images/invoice.jpg" />
      <img alt="User Profile" title="User Profile" width="200px" src="images/user profile.png" />
     <img alt="Store Profile" title="Store Profile" width="200px" src="images/store profile.png" />
 </div>
