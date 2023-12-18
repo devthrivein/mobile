@@ -57,7 +57,7 @@ This project utilizes Jetpack Compose with the Kotlin language and Android Jetpa
      <img alt="Register User" title="Register User" width="200px" src="images/register user.jpg" />
     <img alt="Register Store" title="Register Store" width="200px" src="images/register store.jpg" />
     <img alt="Login" title="Login" width="200px" src="images/login.jpg" />
-        <img alt="Detect Store" title="Detect Store" width="200px" src="images/detail store.jpg" />
+        <img alt="Detect Store" title="Detect Store" width="200px" src="images/detect store.jpg" />
          <img alt="Output Scanner" title="Output Scanner" width="200px" src="images/output scanner.jpg" />
     <img alt="Home" title="Home" width="200px" src="images/home.jpg" />
      <img alt="List Article" title="List Article" width="200px" src="images/list article.jpg" />
@@ -66,8 +66,8 @@ This project utilizes Jetpack Compose with the Kotlin language and Android Jetpa
     <img alt="Detail Service" title="Detail Service" width="200px" src="images/detail service.jpg" />
     <img alt="Setting" title="Setting" width="200px" src="images/setting.jpg" />
     <img alt="Confirm Transaction" title="Confirm Transaction" width="200px" src="images/confirm transaction.jpg" />
-       <img alt="Waiting Transaction" title="Waiting Transaction" width="200px" src="waiting order.jpg" />
-    <img alt="Detail PreTransaction" title="Detail PreTransaction" width="200px" src="detail transaction.jpg" />
+       <img alt="Waiting Order" title="Waiting Order" width="200px" src="waiting order.jpg" />
+    <img alt="Detail PreTransaction" title="Detail PreTransaction" width="200px" src="detail pretransaction.jpg" />
      <img alt="History Transaction" title="History Transaction" width="200px" src="history transaction.jpg" />
      <img alt="Invoice Transaction" title="Invoice Transaction" width="200px" src="invoice.jpg" />
      <img alt="User Profile" title="User Profile" width="200px" src="images/user profile.png" />
