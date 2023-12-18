@@ -53,19 +53,25 @@ This project utilizes Jetpack Compose with the Kotlin language and Android Jetpa
 ## Screenshots <a name="screenshots"></a>
 <div style="display:flex;">
     <img alt="Splash" title="Splash" width="200px" src="images/splash.jpg" />
+     <img alt="Portal" title="Portal" width="200px" src="images/portal.jpg" />
      <img alt="Register User" title="Register User" width="200px" src="images/register user.jpg" />
     <img alt="Register Store" title="Register Store" width="200px" src="images/register store.jpg" />
     <img alt="Login" title="Login" width="200px" src="images/login.jpg" />
+        <img alt="Detect Store" title="Detect Store" width="200px" src="images/detail store.jpg" />
+         <img alt="Output Scanner" title="Output Scanner" width="200px" src="images/output scanner.jpg" />
     <img alt="Home" title="Home" width="200px" src="images/home.jpg" />
      <img alt="List Article" title="List Article" width="200px" src="images/list article.jpg" />
       <img alt="Detail Article" title="Detail Article" width="200px" src="images/detail article.jpg" />
      <img alt="List Service" title="List Service" width="200px" src="images/list service.jpg" />
     <img alt="Detail Service" title="Detail Service" width="200px" src="images/detail service.jpg" />
     <img alt="Setting" title="Setting" width="200px" src="images/setting.jpg" />
-    <img alt="Select Transaction" title="Select Transaction" width="200px" src="images/select transaction.jpg" />
-    <img alt="Setting" title="Setting" width="200px" src="setting.jpg" />
-     <img alt="User Profile" title="User Profile" width="200px" src="images/profile.jpg" />
-    <img alt="Store Profile" title="Store Profile" width="200px" src="images/store profile.jpg" />
+    <img alt="Confirm Transaction" title="Confirm Transaction" width="200px" src="images/confirm transaction.jpg" />
+       <img alt="Waiting Transaction" title="Waiting Transaction" width="200px" src="waiting order.jpg" />
+    <img alt="Detail PreTransaction" title="Detail PreTransaction" width="200px" src="detail transaction.jpg" />
+     <img alt="History Transaction" title="History Transaction" width="200px" src="history transaction.jpg" />
+     <img alt="Invoice Transaction" title="Invoice Transaction" width="200px" src="invoice.jpg" />
+     <img alt="User Profile" title="User Profile" width="200px" src="images/user profile.png" />
+    <img alt="Store Profile" title="Store Profile" width="200px" src="images/store profile.png" />
 </div>
 
 
