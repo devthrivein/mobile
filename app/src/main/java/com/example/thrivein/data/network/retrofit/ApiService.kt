@@ -101,6 +101,9 @@ interface ApiService {
     @POST("order-later")
     suspend fun createOrderLater(@Body request: OrderRequest): OrderResponse
 
+    @PUT("order-update/{order_id}")
+    suspend fun updateOrder(@Path("order_id") orderId: String): MessageResponse
+
 
     //    History Order
     @GET("history-order")

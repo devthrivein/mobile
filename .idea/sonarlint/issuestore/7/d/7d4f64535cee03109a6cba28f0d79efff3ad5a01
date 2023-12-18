@@ -1,5 +1,6 @@
 
-_kotlin:S6309"@Functions returning "Flow" or "Channel" should not be suspending(‚ô®¥8äÔ×ÀÆ1
-_kotlin:S6309%"@Functions returning "Flow" or "Channel" should not be suspending(ä¿é8“ÙÀÆ1
-dkotlin:S63095"@Functions returning "Flow" or "Channel" should not be suspending(çü”¤şÿÿÿÿ8‚ëóÀÆ1
-mkotlin:S1192"NDefine a constant instead of duplicating this literal "Unknown error" 3 times.(¯Çò¯8„ëóÀÆ1
+_kotlin:S6309"@Functions returning "Flow" or "Channel" should not be suspending(‚ô®¥8äÔ×ÀÆ1
+_kotlin:S6309&"@Functions returning "Flow" or "Channel" should not be suspending(ä¿é8“ÙÀÆ1
+dkotlin:S63096"@Functions returning "Flow" or "Channel" should not be suspending(çü”¤şÿÿÿÿ8‚ëóÀÆ1
+_kotlin:S6309F"@Functions returning "Flow" or "Channel" should not be suspending(·™«·8Ì†½çÇ1
+mkotlin:S1192 "NDefine a constant instead of duplicating this literal "Unknown error" 4 times.(¯Çò¯8„ëóÀÆ1

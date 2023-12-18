@@ -2,8 +2,7 @@ package com.example.thrivein.ui.screen.waiting_service.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.thrivein.data.network.request.OrderRequest
-import com.example.thrivein.data.network.response.order.OrderResponse
+import com.example.thrivein.data.network.response.MessageResponse
 import com.example.thrivein.data.network.response.service.orderPackage.OrderPackageResponse
 import com.example.thrivein.data.network.response.waiting.DetailWaitingServiceResponse
 import com.example.thrivein.data.repository.order.OrderRepository
@@ -36,10 +35,10 @@ class DetailWaitingListViewModel @Inject constructor(
         get() = _uiOrderPackageState
 
 
-    private val _uiOrderNowState: MutableStateFlow<UiState<OrderResponse>> =
+    private val _uiOrderNowState: MutableStateFlow<UiState<MessageResponse>> =
         MutableStateFlow(UiState.Loading)
 
-    val uiOrderNowState: StateFlow<UiState<OrderResponse>>
+    val uiOrderNowState: StateFlow<UiState<MessageResponse>>
         get() = _uiOrderNowState
 
     fun getWaitingOrderById(orderId: String) {
@@ -65,9 +64,9 @@ class DetailWaitingListViewModel @Inject constructor(
         }
     }
 
-    fun orderNow(orderRequest: OrderRequest) {
+    fun orderUpdate(orderId: String) {
         viewModelScope.launch {
-            orderRepository.orderNow(orderRequest).catch {
+            orderRepository.orderUpdate(orderId).catch {
                 _uiOrderNowState.value = UiState.Error(it.message.toString())
             }
                 .collect { order ->

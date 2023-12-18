@@ -48,7 +48,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.thrivein.R
-import com.example.thrivein.data.network.request.OrderRequest
 import com.example.thrivein.data.network.response.service.orderPackage.OrderPackageResponse
 import com.example.thrivein.data.network.response.waiting.DetailWaitingServiceResponse
 import com.example.thrivein.ui.component.button.ThriveInButton
@@ -101,6 +100,8 @@ fun DetailWaitingListScreen(
             is UiState.Error -> {
                 Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
             }
+
+            else -> {}
         }
     }
 
@@ -122,6 +123,8 @@ fun DetailWaitingListScreen(
             is UiState.Error -> {
                 Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
             }
+
+            else -> {}
         }
     }
 
@@ -238,19 +241,10 @@ fun DetailWaitingListScreen(
                                 ThriveInButton(
                                     onClick = {
 
-                                        val orderRequest = OrderRequest(
-                                            serviceId = detailWaitingServiceResponse?.serviceId
-                                                ?: "-",
-                                            totalOrder = detailWaitingServiceResponse?.totalOrder
-                                                ?: 0,
-                                            discount = detailWaitingServiceResponse?.discount ?: 0,
-                                            paymentMethod = detailWaitingServiceResponse?.paymentMethod
-                                                ?: "",
-                                            totalPay = detailWaitingServiceResponse?.totalOrder
-                                                ?: 0,
-                                        )
 
-                                        detailWaitingListViewModel.orderNow(orderRequest)
+                                        detailWaitingListViewModel.orderUpdate(
+                                            detailWaitingServiceResponse?.orderId ?: ""
+                                        )
 
                                     },
                                     label = stringResource(R.string.order_now),

@@ -3,6 +3,7 @@ package com.example.thrivein.data.repository.order
 import android.util.Log
 import com.example.thrivein.data.network.request.OrderRequest
 import com.example.thrivein.data.network.response.ErrorResponse
+import com.example.thrivein.data.network.response.MessageResponse
 import com.example.thrivein.data.network.response.order.OrderResponse
 import com.example.thrivein.data.network.response.service.orderPackage.OrderPackageResponse
 import com.example.thrivein.data.network.retrofit.ApiService
@@ -62,6 +63,22 @@ class OrderRepository @Inject constructor(
             val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
             val errorMessage = errorBody?.message ?: "Unknown error"
             Log.d("OrderRepository", "orderLater: $errorMessage ")
+            throw Throwable(errorMessage)
+        }
+    }
+
+    suspend fun orderUpdate(
+        orderId: String,
+    ): Flow<MessageResponse> {
+        try {
+            val response = apiService.updateOrder(orderId)
+            return flow { emit(response) }
+        } catch (e: HttpException) {
+            e.printStackTrace()
+            val jsonInString = e.response()?.errorBody()?.string()
+            val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
+            val errorMessage = errorBody?.message ?: "Unknown error"
+            Log.d("OrderRepository", "orderUpdate: $errorMessage ")
             throw Throwable(errorMessage)
         }
     }
