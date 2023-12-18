@@ -52,19 +52,26 @@ This project utilizes Jetpack Compose with the Kotlin language and Android Jetpa
 
 ## Screenshots <a name="screenshots"></a>
 <div style="display:flex;">
-    <img alt="Login" title="Login" width="200px" src="assets/2.jpg" />
-    <img alt="Home" title="Home" width="200px" src="assets/3.jpg" />
-    <img alt="Detail" title="Detail" width="200px" src="assets/4.jpg" />
-    <img alt="Cart" title="Cart" width="200px" src="assets/5.jpg" />
-    <img alt="Checkout" title="Checkout" width="200px" src="assets/6.jpg" />
-    <img alt="Profile" title="Profile" width="200px" src="assets/7.jpg" />
+    <img alt="Splash" title="Splash" width="200px" src="images/splash.jpg" />
+     <img alt="Register User" title="Register User" width="200px" src="images/register user.jpg" />
+    <img alt="Register Store" title="Register Store" width="200px" src="images/register store.jpg" />
+    <img alt="Login" title="Login" width="200px" src="images/login.jpg" />
+    <img alt="Home" title="Home" width="200px" src="images/home.jpg" />
+     <img alt="List Article" title="List Article" width="200px" src="images/list article.jpg" />
+      <img alt="Detail Article" title="Detail Article" width="200px" src="images/detail article.jpg" />
+     <img alt="List Service" title="List Service" width="200px" src="images/list service.jpg" />
+    <img alt="Detail Service" title="Detail Service" width="200px" src="images/detail service.jpg" />
+    <img alt="Setting" title="Setting" width="200px" src="images/setting.jpg" />
+    <img alt="Select Transaction" title="Select Transaction" width="200px" src="images/select transaction.jpg" />
+    <img alt="Setting" title="Setting" width="200px" src="setting.jpg" />
+     <img alt="User Profile" title="User Profile" width="200px" src="images/profile.jpg" />
+    <img alt="Store Profile" title="Store Profile" width="200px" src="images/store profile.jpg" />
 </div>
 
 
 ## Logo <a name="logo"></a>
 <div style="display:flex;">
-    <img alt="Logo before rebranding" title="Logo before rebranding" width="500px" src="images/logo_before_rebranding.png" />
-     <img alt="Logo after rebranding" title="Logo after rebranding" width="500px" src="images/logo_after_rebranding.png" />
+     <img alt="Logo after rebranding" title="Logo after rebranding" width="300px" src="images/logo_after_rebranding.png" />
 </div>
 
 ## Documentation <a name="documentation"></a>
