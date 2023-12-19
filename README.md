@@ -13,8 +13,7 @@
 This project utilizes Jetpack Compose with the Kotlin language and Android Jetpack library to build a declarative user interface. The Compose Runtime Library serves as an infrastructure provider for efficient UI and state management. The use of Kotlin Coroutines supports asynchronous operations, while integration with Material Design ensures a consistent and appealing UI.
 
 ### Note
->This Project is a beta release and for next project it will release feature for .......Tnya ml ya
-
+>This Project is a beta release and for next project it will release feature for and for future updates/for next project, we will improve the AI to be capable of analyzing and giving design recommendations to our customers.
 
 ## Features <a name="features"></a>
 * Login and Register
@@ -64,6 +63,7 @@ This project utilizes Jetpack Compose with the Kotlin language and Android Jetpa
       <img alt="Detail Article" title="Detail Article" width="200px" src="images/detail article.jpg" />
      <img alt="List Service" title="List Service" width="200px" src="images/list service.jpg" />
     <img alt="Detail Service" title="Detail Service" width="200px" src="images/detail service.jpg" />
+     <img alt="Consultation" title="Consultation" width="200px" src="images/consultation.png" />
     <img alt="Confirm Transaction" title="Confirm Transaction" width="200px" src="images/confirm transaction.jpg" />
      <img alt="Detail PreTransaction" title="Detail PreTransaction" width="200px" src="images/detail pretransaction.jpg" />
        <img alt="Waiting Order" title="Waiting Order" width="200px" src="images/waiting order.jpg" />
@@ -81,8 +81,8 @@ This project utilizes Jetpack Compose with the Kotlin language and Android Jetpa
 </div>
 
 ## Documentation <a name="documentation"></a>
-* Design UI/UX: <a href="https://www.figma.com/file/62OyW5VoVbrRuJ0rrcTisD/Thrive-In-UI%2FUX-Design?type=design&node-id=254-8359&mode=design&t=GR1X01t4Zn0SKK3u-0" target="_blank">Figma ThriveIn</a>
-* Demo App [Youtube ThriveIn]()
-* Demo Video [Ads ThriveIn]()
-* Social Media: <a href="https://www.instagram.com/thrivein._/" target="_blank">Instagram ThriveIn</a>
-* Our Website: <a href="https://thrivein.id/" target="_blank">ThriveIn.id</a>
+* Design UI/UX : <a href="https://www.figma.com/file/62OyW5VoVbrRuJ0rrcTisD/Thrive-In-UI%2FUX-Design?type=design&node-id=254-8359&mode=design&t=GR1X01t4Zn0SKK3u-0" target="_blank">Figma ThriveIn</a>
+* Demo App : <a href="https://drive.google.com/drive/folders/1VS-ZbANnpH7CVgm_BzAY2l_am7W4Z-kA?usp=sharing" target="_blank">ThriveIn</a>
+* Demo Video : <a href="https://drive.google.com/drive/folders/1VS-ZbANnpH7CVgm_BzAY2l_am7W4Z-kA?usp=sharing">Ads ThriveIn</a>
+* Social Media : <a href="https://www.instagram.com/thrivein._/" target="_blank">Instagram ThriveIn</a>
+* Our Website : <a href="https://thrivein.id/" target="_blank">ThriveIn.id</a>
