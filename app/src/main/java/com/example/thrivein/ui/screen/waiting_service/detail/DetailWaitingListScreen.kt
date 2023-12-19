@@ -149,7 +149,7 @@ fun DetailWaitingListScreen(
         topBar = {
             DetailTopBar(title = title, navigateBack = navigateBack, actions = {
                 IconButton(onClick = {
-                    navigateToConsultService(id, title)
+                    navigateToConsultService(detailWaitingServiceResponse?.serviceId ?: "", title)
                 }) {
                     Row(
                         modifier = Modifier

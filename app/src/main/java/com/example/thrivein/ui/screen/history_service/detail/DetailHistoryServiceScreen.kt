@@ -115,7 +115,7 @@ fun DetailHistoryServiceScreen(
         topBar = {
             DetailTopBar(title = title, navigateBack = navigateBack, actions = {
                 IconButton(onClick = {
-                    navigateToConsultService(id, title)
+                    navigateToConsultService(detailHistoryService?.serviceId ?: "", title)
                 }) {
                     Row(
                         modifier = Modifier
