@@ -10,7 +10,7 @@
 5. [Documentation](#documentation)
 
 ## Technology <a name="technology"></a>
-This project utilizes Jetpack Compose with the Kotlin language and Android Jetpack library to build a declarative user interface. The Compose Runtime Library serves as an infrastructure provider for efficient UI and state management. The use of Kotlin Coroutines supports asynchronous operations, while integration with Material Design ensures a consistent and appealing UI.
+This project utilizes Jetpack Compose with the Kotlin language and Android Jetpack library to build a declarative user interface. The Compose Runtime Library serves as an infrastructure provider for efficient UI and state management. The use of Kotlin Coroutines supports asynchronous operations, while integration with Material Design ensures a consistent and appealing UI. And Firebase Firestore to make real time communication.
 
 ### Note
 >This Project is a beta release and for next project it will release feature for and for future updates/for next project, we will improve the AI to be capable of analyzing and giving design recommendations to our customers.
