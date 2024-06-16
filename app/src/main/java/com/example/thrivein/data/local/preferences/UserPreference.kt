@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.thrivein.data.model.UserModel
@@ -20,7 +21,7 @@ class UserPreference @Inject constructor(private val dataUserStore: DataStore<Pr
     fun getUser(): Flow<UserModel> {
         return dataUserStore.data.map { preferences ->
             UserModel(
-                userId = preferences[ID_KEY] ?: "",
+                userId = preferences[ID_KEY] ?: 0,
                 token = preferences[TOKEN_KEY] ?: "null",
                 email = preferences[EMAIL_KEY] ?: "",
                 name = preferences[NAME_KEY] ?: "",
@@ -32,7 +33,7 @@ class UserPreference @Inject constructor(private val dataUserStore: DataStore<Pr
 
     suspend fun saveUser(user: UserModel) {
         dataUserStore.edit { preferences ->
-            preferences[ID_KEY] = user.userId ?: ""
+            preferences[ID_KEY] = user.userId ?: 0
             preferences[NAME_KEY] = user.name
             preferences[TOKEN_KEY] = user.token ?: "null"
             preferences[EMAIL_KEY] = user.email
@@ -49,7 +50,7 @@ class UserPreference @Inject constructor(private val dataUserStore: DataStore<Pr
 
     companion object {
 
-        private val ID_KEY = stringPreferencesKey("userId")
+        private val ID_KEY = longPreferencesKey("userId")
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val NAME_KEY = stringPreferencesKey("name")
         private val EMAIL_KEY = stringPreferencesKey("email")

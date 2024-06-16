@@ -24,7 +24,7 @@ data class User(
 	val phone: String? = null,
 
 	@field:SerializedName("user_id")
-	val userId: String? = null,
+	val userId: Long? = null,
 
 	@field:SerializedName("name")
 	val name: String? = null,

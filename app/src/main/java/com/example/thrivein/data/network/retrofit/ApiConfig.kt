@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,6 +36,9 @@ class ApiConfig @Inject constructor() {
         val client = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(authInterceptor)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
             .build()
 
         val retrofit = Retrofit.Builder()
@@ -58,6 +62,7 @@ class ApiConfig @Inject constructor() {
     companion object {
 
         //        private val BASE_URL = "https://thrivein-api-v1-ihovaneucq-et.a.run.app/"
-        private val BASE_URL = "https://thrivein-api-v1-0-0-sxbz2gldiq-et.a.run.app/"
+//        private val BASE_URL = "https://thrivein-api-v1-0-0-sxbz2gldiq-et.a.run.app/"
+        private val BASE_URL = "http://ec2-47-128-240-202.ap-southeast-1.compute.amazonaws.com/"
     }
 }

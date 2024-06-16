@@ -13,13 +13,13 @@ data class ArticlesResponse(
 
 data class ArticlesItem(
 
-	@field:SerializedName("article_id")
-	val articleId: String? = null,
+	@field:SerializedName("articleId")
+	val articleId: Int? = null,
 
-	@field:SerializedName("uploaded_date")
+	@field:SerializedName("updatedAt")
 	val uploadedDate: String? = null,
 
-	@field:SerializedName("banner_url")
+	@field:SerializedName("bannerUrl")
 	val bannerUrl: String? = null,
 
 	@field:SerializedName("title")

@@ -48,7 +48,7 @@ fun HomeScreen(
     navigateToListService: (id: String, title: String) -> Unit,
     navigateToScanStore: () -> Unit,
     navigateToListArticle: () -> Unit,
-    navigateToDetailArticle: (id: String, title: String) -> Unit,
+    navigateToDetailArticle: (id: Int, title: String) -> Unit,
     navigateToWaitingList: () -> Unit,
     navigateToBanner: (String) -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
@@ -224,16 +224,16 @@ fun HomeScreen(
                     )
                     Spacer(modifier = Modifier.height(6.dp))
                 }
-                items(items = articles?.articles.orEmpty(), key = { it?.articleId.orEmpty() }) {
+                items(items = articles?.articles.orEmpty(), key = { it?.articleId ?: 0 }) {
                     ArticleHomeItem(
-                        id = it?.articleId ?: "",
+                        id = it?.articleId ?: 0,
                         title = it?.title ?: "",
                         content = it?.content ?: "",
                         bannerUrl = it?.bannerUrl ?: "",
                         modifier = Modifier
                             .padding(vertical = 10.dp, horizontal = 24.dp)
                             .clickable {
-                                navigateToDetailArticle(it?.articleId ?: "", it?.title ?: "")
+                                navigateToDetailArticle(it?.articleId ?: 0, it?.title ?: "")
                             }
                     )
                 }

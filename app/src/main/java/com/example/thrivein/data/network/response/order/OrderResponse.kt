@@ -1,22 +1,22 @@
 package com.example.thrivein.data.network.response.order
 
-import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class OrderResponse(
 
-	@field:SerializedName("transaction_date")
+	@field:SerializedName("transactionDate")
 	val transactionDate: String? = null,
 
-	@field:SerializedName("total_pay")
+	@field:SerializedName("totalPay")
 	val totalPay: Int? = null,
 
-	@field:SerializedName("user_id")
+	@field:SerializedName("userIid")
 	val userId: String? = null,
 
-	@field:SerializedName("service_id")
+	@field:SerializedName("serviceId")
 	val serviceId: String? = null,
 
 	@field:SerializedName("name")
@@ -31,15 +31,15 @@ data class OrderResponse(
 	@field:SerializedName("title")
 	val title: String? = null,
 
-	@field:SerializedName("order_id")
+	@field:SerializedName("orderId")
 	val orderId: String? = null,
 
-	@field:SerializedName("payment_method")
+	@field:SerializedName("paymentMethod")
 	val paymentMethod: String? = null,
 
 	@field:SerializedName("status")
 	val status: String? = null,
 
-	@field:SerializedName("total_order")
+	@field:SerializedName("totalOrder")
 	val totalOrder: Int? = null
 ) : Parcelable

@@ -92,7 +92,7 @@ interface ApiService {
 
     @GET("order-packages/{service_id}")
     suspend fun getOrderPackagesByServiceId(
-        @Path("service_id") serviceId: String,
+        @Path("service_id") serviceId: Any,
     ): OrderPackageResponse
 
     @POST("order-now")

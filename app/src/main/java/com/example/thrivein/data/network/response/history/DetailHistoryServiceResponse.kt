@@ -40,7 +40,7 @@ data class DetailHistoryServiceResponse(
 	@field:SerializedName("invoice")
 	val invoice: String? = null,
 
-	@field:SerializedName("order_id")
+	@field:SerializedName("orderId")
 	val orderId: String? = null,
 
 	@field:SerializedName("payment_method")

@@ -39,7 +39,7 @@ sealed class Screen(val route: String) {
 
     //    Detail
     object DetailArticle : Screen("home/article/{articleId}/{articleTitle}") {
-        fun createRoute(articleId: String, articleTitle: String) =
+        fun createRoute(articleId: Int, articleTitle: String) =
             "home/article/$articleId/$articleTitle"
     }
 

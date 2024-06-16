@@ -7,7 +7,7 @@ data class ChatModel(
     val isAdmin: Boolean? = false,
     val isTransactionChat: Boolean? = false,
     val message: String?,
-    val userId: String?,
+    val userId: Long?,
     val serviceId: String? = "",
     val fileUrl: String? = "",
     val createdAt: com.google.firebase.Timestamp? = com.google.firebase.Timestamp(

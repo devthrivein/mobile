@@ -247,3 +247,9 @@ Tapp/src/main/java/com/example/thrivein/ui/screen/setting/store/StoreProfileScre
 Rapp/src/main/java/com/example/thrivein/ui/screen/setting/user/UserProfileScreen.kt,b\d\bd3b4ba55f614263b53f8e761c23f70375ba711a
 ‡
 Wapp/src/main/java/com/example/thrivein/ui/screen/setting/store/StoreProfileViewModel.kt,c\5\c51688fa26fc0b7280780bf5f832e89b0cc230d9
+œ
+lapp/src/main/java/com/example/thrivein/ui/screen/history_service/detail/DetailConsultHistoryServiceScreen.kt,2\e\2e356fbde797d875b8dc7c57bafd6fca16f21fb4
+n
+>app/src/main/java/com/example/thrivein/data/model/UserModel.kt,7\c\7cd4897fee0c63164c82a00634c4b520511dac20
+w
+Gapp/src/main/java/com/example/thrivein/ui/component/item/ArticleItem.kt,6\6\664e072530289429ba871fcbda27e7ccc25f2b23

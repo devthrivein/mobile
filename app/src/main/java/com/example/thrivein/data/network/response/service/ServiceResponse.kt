@@ -7,10 +7,10 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ServiceResponse(
 
-    @field:SerializedName("icon_url")
+    @field:SerializedName("iconUrl")
     val iconUrl: String? = null,
 
-    @field:SerializedName("service_id")
+    @field:SerializedName("serviceId")
     val serviceId: String? = null,
 
     @field:SerializedName("description")

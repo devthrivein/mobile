@@ -45,7 +45,7 @@ class ChatRepository @Inject constructor(
         isTransactionChat: Boolean = false,
         message: String,
         fileUrl: String,
-        userId: String,
+        userId: Long,
         serviceId: String,
     ) {
         val chat = ChatModel(
@@ -74,7 +74,7 @@ class ChatRepository @Inject constructor(
         isAdmin: Boolean = false,
         message: String,
         fileUrl: String,
-        userId: String,
+        userId: Long,
     ) {
         val chat = ChatModel(
             isAdmin = isAdmin,

@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.thrivein.data.model.ChatModel
 import com.example.thrivein.data.network.response.service.message.WelcomeMessageResponse
 import com.example.thrivein.data.repository.file.FileRepository
@@ -18,8 +17,6 @@ import com.google.firebase.firestore.Query
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -39,23 +36,23 @@ class DetailConsultServiceViewModel @Inject constructor(
     val uiWelcomeMessageState: StateFlow<UiState<WelcomeMessageResponse>>
         get() = _uiWelcomeMessageState
 
-    fun getWelcomeMessageByServiceId(serviceId: String) {
-        viewModelScope.launch {
-            chatRepository.getWelcomeMessageByServiceId(serviceId).catch {
-                _uiWelcomeMessageState.value = UiState.Error(it.message.toString())
-            }
-                .collect { welcomeMessage ->
-                    _uiWelcomeMessageState.value = UiState.Success(welcomeMessage)
-                }
-        }
-    }
+//    fun getWelcomeMessageByServiceId(serviceId: String) {
+//        viewModelScope.launch {
+//            chatRepository.getWelcomeMessageByServiceId(serviceId).catch {
+//                _uiWelcomeMessageState.value = UiState.Error(it.message.toString())
+//            }
+//                .collect { welcomeMessage ->
+//                    _uiWelcomeMessageState.value = UiState.Success(welcomeMessage)
+//                }
+//        }
+//    }
 
 
     fun sendChatConsultService(
         isAdmin: Boolean = false,
         isTransactionChat: Boolean = false,
         message: String,
-        userId: String,
+        userId: Long,
         serviceId: String,
         file: Uri?,
     ) {
@@ -92,7 +89,7 @@ class DetailConsultServiceViewModel @Inject constructor(
     }
 
 
-    fun getMessages(userId: String, serviceId: String) {
+    fun getMessages(userId: Long, serviceId: String) {
         val collectionReference = database
             .collection(CONSULTATION_SERVICE)
             .document(serviceId)
@@ -114,7 +111,7 @@ class DetailConsultServiceViewModel @Inject constructor(
 
                         val chat = ChatModel(
                             isAdmin = data["admin"] as Boolean?,
-                            userId = data["userId"] as String?,
+                            userId = data["userId"] as Long?,
                             createdAt = data["createdAt"] as Timestamp?,
                             message = data["message"] as String?,
                             fileUrl = data["fileUrl"] as String?,

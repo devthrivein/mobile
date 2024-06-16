@@ -10,7 +10,7 @@ data class OrderPackageResponse(
     @field:SerializedName("item")
     val item: List<ItemItem?>? = null,
 
-    @field:SerializedName("total_order")
+    @field:SerializedName("totalOrder")
     val totalOrder: Int? = null,
 ) : Parcelable
 
@@ -29,7 +29,7 @@ data class ItemItem(
     @field:SerializedName("title")
     val title: String? = null,
 
-    @field:SerializedName("image_url")
+    @field:SerializedName("imageUrl")
     val imageUrl: String? = null,
 
     ) : Parcelable

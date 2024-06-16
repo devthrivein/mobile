@@ -2,7 +2,6 @@ package com.example.thrivein.ui.screen.service.detail.detailConsultService
 
 import android.annotation.SuppressLint
 import android.net.Uri
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -19,7 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -44,7 +42,6 @@ import com.example.thrivein.ui.component.input.ThriveInChatInput
 import com.example.thrivein.ui.component.item.ChatConsultItem
 import com.example.thrivein.ui.theme.Background
 import com.example.thrivein.ui.theme.Primary
-import com.example.thrivein.utils.UiState
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -83,34 +80,34 @@ fun DetailConsultServiceScreen(
                 isTransactionChat = false,
                 message = chatValue,
                 file = selectedFile,
-                userId = user?.userId ?: "",
+                userId = user?.userId ?: 0,
                 serviceId = id,
             )
         }
     }
 
     detailConsultServiceViewModel.getMessages(
-        userId = user?.userId ?: "",
+        userId = user?.userId ?: 0,
         serviceId = id
     )
 
-    detailConsultServiceViewModel.uiWelcomeMessageState.collectAsState(initial = UiState.Loading).value.let { uiState ->
-        when (uiState) {
-            is UiState.Loading -> {
-
-                detailConsultServiceViewModel.getWelcomeMessageByServiceId(id)
-            }
-
-            is UiState.Success -> {
-                welcomeMessages = uiState.data
-
-            }
-
-            is UiState.Error -> {
-                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
+//    detailConsultServiceViewModel.uiWelcomeMessageState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+//        when (uiState) {
+//            is UiState.Loading -> {
+//
+//                detailConsultServiceViewModel.getWelcomeMessageByServiceId(id)
+//            }
+//
+//            is UiState.Success -> {
+//                welcomeMessages = uiState.data
+//
+//            }
+//
+//            is UiState.Error -> {
+//                Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
 
 
 
@@ -164,7 +161,7 @@ fun DetailConsultServiceScreen(
                                     isTransactionChat = false,
                                     message = chatValue,
                                     file = null,
-                                    userId = user?.userId ?: "",
+                                    userId = user?.userId ?: 0,
                                     serviceId = id,
                                 )
                                 chatValue = ""

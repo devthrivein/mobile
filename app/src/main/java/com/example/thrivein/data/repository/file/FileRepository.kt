@@ -17,7 +17,7 @@ class FileRepository @Inject constructor(
     fun sendFileToConsultationService(
         file: Uri,
         serviceId: String,
-        userId: String,
+        userId: Long,
         callback: (Uri?) -> Unit,
     ) {
         val ref =
@@ -41,7 +41,7 @@ class FileRepository @Inject constructor(
             }
     }
 
-    fun sendFileToConsultation(file: Uri, userId: String, callback: (Uri?) -> Unit) {
+    fun sendFileToConsultation(file: Uri, userId: Long, callback: (Uri?) -> Unit) {
         val ref =
             "$CONSULTATION/$CHATS/messages-from-$userId/${file.lastPathSegment}"
         val child = storage.reference.child(ref)

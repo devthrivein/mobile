@@ -14,15 +14,15 @@ data class HistoryResponse(
 @Parcelize
 data class HistoryServicesItem(
 
-	@field:SerializedName("icon_url")
+	@field:SerializedName("iconUrl")
 	val iconUrl: String? = null,
 
 	@field:SerializedName("title")
 	val title: String? = null,
 
-	@field:SerializedName("transaction_date")
+	@field:SerializedName("transactionDate")
 	val transactionDate: String? = null,
 
-	@field:SerializedName("order_id")
+	@field:SerializedName("orderId")
 	val orderId: String? = null
 ) : Parcelable

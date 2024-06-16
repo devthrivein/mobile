@@ -14,7 +14,7 @@ data class ServiceCategoriesResponse(
 @Parcelize
 data class ServicesItem(
 
-    @field:SerializedName("icon_url")
+    @field:SerializedName("iconUrl")
     val iconUrl: String? = null,
 
     @field:SerializedName("color")

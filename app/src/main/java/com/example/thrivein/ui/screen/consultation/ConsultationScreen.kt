@@ -66,7 +66,7 @@ fun ConsultationScreen(
             consultationViewModel.sendChatConsultation(
                 isAdmin = false,
                 message = chatValue,
-                userId = user?.userId ?: "",
+                userId = user?.userId ?: 0,
                 file = selectedFile,
             )
         }
@@ -74,7 +74,7 @@ fun ConsultationScreen(
 
     val messages: List<ChatModel> by consultationViewModel.messages.observeAsState(initial = emptyList())
 
-    consultationViewModel.getMessages(userId = user?.userId ?: "")
+    consultationViewModel.getMessages(userId = user?.userId ?: 0)
 
     Scaffold(
         topBar = {
@@ -102,7 +102,7 @@ fun ConsultationScreen(
                                 consultationViewModel.sendChatConsultation(
                                     isAdmin = false,
                                     message = chatValue,
-                                    userId = user?.userId ?: "",
+                                    userId = user?.userId ?: 0,
                                     file = null,
                                 )
                                 chatValue = ""

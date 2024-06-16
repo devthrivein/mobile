@@ -32,7 +32,7 @@ import com.example.thrivein.utils.UiState
 fun ListArticleScreen(
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
-    navigateToDetailArticle: (id: String, title: String) -> Unit,
+    navigateToDetailArticle: (id: Int, title: String) -> Unit,
 ) {
 
     val listArticleViewModel = hiltViewModel<ListArticleViewModel>()
@@ -68,14 +68,14 @@ fun ListArticleScreen(
         ) {
             items(items = articles?.articles ?: arrayListOf(), key = { it?.articleId ?: "" }) {
                 ArticleItem(
-                    id = it?.articleId ?: "",
+                    id = it?.articleId ?: 0,
                     title = it?.title ?: "",
                     content = it?.content ?: "",
                     bannerUrl = it?.bannerUrl ?: "",
                     modifier = Modifier
                         .padding(horizontal = 24.dp, vertical = 12.dp)
                         .background(Background)
-                        .clickable { navigateToDetailArticle(it?.articleId ?: "", it?.title ?: "") }
+                        .clickable { navigateToDetailArticle(it?.articleId ?: 0, it?.title ?: "") }
                 )
             }
         }

@@ -30,7 +30,7 @@ class ConsultationViewModel @Inject constructor(
         isAdmin: Boolean = false,
         message: String,
         file: Uri?,
-        userId: String,
+        userId: Long,
     ) {
 
         var fileUrl: String? = null
@@ -60,7 +60,7 @@ class ConsultationViewModel @Inject constructor(
     }
 
 
-    fun getMessages(userId: String) {
+    fun getMessages(userId: Long) {
         val collectionReference = database
             .collection(CONSULTATION)
             .document(CHATS)
@@ -83,7 +83,7 @@ class ConsultationViewModel @Inject constructor(
 
                         val chat = ChatModel(
                             isAdmin = data["admin"] as Boolean?,
-                            userId = data["userId"] as String?,
+                            userId = data["userId"] as Long?,
                             createdAt = data["createdAt"] as com.google.firebase.Timestamp?,
                             message = data["message"] as String?,
                             fileUrl = data["fileUrl"] as String?,

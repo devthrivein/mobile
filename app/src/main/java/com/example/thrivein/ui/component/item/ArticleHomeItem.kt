@@ -17,19 +17,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.thrivein.R
-import com.example.thrivein.data.network.response.article.ArticlesItem
 import com.example.thrivein.ui.theme.Gray
 
 @Composable
 fun ArticleHomeItem(
-    id: String,
+    id: Int,
     modifier: Modifier = Modifier,
     title: String,
     content: String,
@@ -86,6 +83,6 @@ fun ArticleHomeItemPreview() {
         title = "Lorem Ipsum Dolor sit amet",
         content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt........",
         bannerUrl = "",
-        id = ""
+        id = 0,
     )
 }
