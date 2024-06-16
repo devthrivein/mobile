@@ -10,7 +10,7 @@
 5. [Documentation](#documentation)
 
 ## Technology <a name="technology"></a>
-This project utilizes Jetpack Compose with the Kotlin language and Android Jetpack library to build a declarative user interface. The Compose Runtime Library serves as an infrastructure provider for efficient UI and state management. The use of Kotlin Coroutines supports asynchronous operations, while integration with Material Design ensures a consistent and appealing UI.
+This project utilizes Jetpack Compose with the Kotlin language and Android Jetpack library to build a declarative user interface. The Compose Runtime Library serves as an infrastructure provider for efficient UI and state management. The use of Kotlin Coroutines supports asynchronous operations, while integration with Material Design ensures a consistent and appealing UI. And Firebase Firestore to make real time communication.
 
 ### Note
 >This Project is a beta release and for next project it will release feature for and for future updates/for next project, we will improve the AI to be capable of analyzing and giving design recommendations to our customers.
@@ -82,7 +82,7 @@ This project utilizes Jetpack Compose with the Kotlin language and Android Jetpa
 
 ## Documentation <a name="documentation"></a>
 * Design UI/UX : <a href="https://www.figma.com/file/62OyW5VoVbrRuJ0rrcTisD/Thrive-In-UI%2FUX-Design?type=design&node-id=254-8359&mode=design&t=GR1X01t4Zn0SKK3u-0" target="_blank">Figma ThriveIn</a>
-* Demo App : <a href="https://drive.google.com/drive/folders/1VS-ZbANnpH7CVgm_BzAY2l_am7W4Z-kA?usp=sharing" target="_blank">ThriveIn</a>
-* Demo Video : <a href="https://drive.google.com/drive/folders/1VS-ZbANnpH7CVgm_BzAY2l_am7W4Z-kA?usp=sharing">Ads ThriveIn</a>
+* Demo App : <a href="https://youtu.be/yoH3r_B47-k" target="_blank">ThriveIn</a>
+* Demo Video : <a href="https://youtu.be/yoH3r_B47-k?si=o_d4QQCgt5LYJz67">Introduction of Thrive In</a>
 * Social Media : <a href="https://www.instagram.com/thrivein._/" target="_blank">Instagram ThriveIn</a>
 * Our Website : <a href="https://thrivein.id/" target="_blank">ThriveIn.id</a>
